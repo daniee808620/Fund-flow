@@ -1,78 +1,71 @@
-/* General styling */
-body {
-    background: #FAF3E0; /* Light beige background */
-    font-family: Arial, sans-serif;
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Header */
-.header {
-    background: #1F4500;
-    text-align: center;
-    padding: 20px;
+body {
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.header h1 {
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.green {
-    color: #00B200;
-}
-
-/* Form container */
 .container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 90%;
     max-width: 400px;
-    background: white;
-    padding: 20px;
-    margin: 30px auto;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Form title */
-h2 {
     text-align: center;
-    color: #1F4500;
-    font-weight: bold;
 }
 
-/* Labels */
-label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
+h1 {
+    color: #2D8CFF;
+    font-size: 26px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 600;
     display: block;
-    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
-/* Input fields */
-input {
+.form-group input {
     width: 100%;
-    padding: 12px;
-    margin: 5px 0;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 16px;
 }
 
-/* Button */
 button {
     width: 100%;
-    padding: 12px;
-    background: #00B200;
+    background-color: #2D8CFF;
     color: white;
+    padding: 12px;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
+    font-size: 18px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-top: 15px;
 }
 
 button:hover {
-    background: #008A00;
+    background-color: #1A6EDC;
 }
