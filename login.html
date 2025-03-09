@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form onsubmit="login(event)">
+        <label>Email:</label>
+        <input type="email" id="email" required><br><br>
+
+        <label>Password:</label>
+        <input type="password" id="password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p><a href="index.html">Back to Home</a></p>
+
+    <script>
+        function login(event) {
+            event.preventDefault(); // Prevent page reload
+
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            // Get stored user data
+            let storedEmail = localStorage.getItem("email");
+            let storedPassword = localStorage.getItem("password");
+
+            if (email === storedEmail && password === storedPassword) {
+                alert("Login successful!");
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                alert("Invalid email or password.");
+            }
+        }
+    </script>
+</body>
+</html>
