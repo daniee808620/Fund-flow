@@ -1,28 +1,25 @@
-<?php
-require 'config.php';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <h2>Sign Up</h2>
+    <form action="#" method="POST">
+        <label>Username:</label>
+        <input type="text" name="username" required><br><br>
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $country = $_POST['country'];
-    $coupon = $_POST['coupon'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        <label>Email:</label>
+        <input type="email" name="email" required><br><br>
 
-    // Check if the coupon has been used
-    $stmt = $conn->prepare("SELECT * FROM users WHERE coupon_code = ?");
-    $stmt->execute([$coupon]);
-    if ($stmt->rowCount() > 0) {
-        echo "Coupon code already used!";
-        exit;
-    }
+        <label>Password:</label>
+        <input type="password" name="password" required><br><br>
 
-    // Insert new user
-    $stmt = $conn->prepare("INSERT INTO users (username, email, phone, country, coupon_code, password_hash, used_coupon) VALUES (?, ?, ?, ?, ?, ?, 1)");
-    if ($stmt->execute([$username, $email, $phone, $country, $coupon, $password])) {
-        echo "Signup successful!";
-    } else {
-        echo "Error: Signup failed.";
-    }
-}
-?>￼Enter
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p><a href="index.html">Back to Home</a></p>
+</body>
+</html>
