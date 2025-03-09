@@ -1,41 +1,78 @@
-/* Apply background image */
+/* General styling */
 body {
-    background: url('https://imgur.com/a/2Z8yNkg') no-repeat center center fixed;
-    background-size: cover;
+    background: #FAF3E0; /* Light beige background */
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* Center the form */
+/* Header */
+.header {
+    background: #1F4500;
+    text-align: center;
+    padding: 20px;
+}
+
+.header h1 {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.green {
+    color: #00B200;
+}
+
+/* Form container */
 .container {
     width: 90%;
     max-width: 400px;
-    background: rgba(255, 255, 255, 0.8);
+    background: white;
     padding: 20px;
-    margin: 50px auto;
+    margin: 30px auto;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style input fields */
+/* Form title */
+h2 {
+    text-align: center;
+    color: #1F4500;
+    font-weight: bold;
+}
+
+/* Labels */
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Input fields */
 input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 5px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
-/* Style the button */
+/* Button */
 button {
     width: 100%;
-    padding: 10px;
-    background: blue;
+    padding: 12px;
+    background: #00B200;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 16px;
     cursor: pointer;
+    margin-top: 15px;
 }
 
 button:hover {
-    background: darkblue;
+    background: #008A00;
 }
