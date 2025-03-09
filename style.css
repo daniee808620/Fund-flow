@@ -1,55 +1,41 @@
+/* Apply background image */
 body {
     background: url('https://imgur.com/a/2Z8yNkg') no-repeat center center fixed;
     background-size: cover;
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
 }
 
+/* Center the form */
 .container {
-    background: rgba(255, 255, 255, 0.9); /* White box with slight transparency */
+    width: 90%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.8);
     padding: 20px;
+    margin: 50px auto;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 350px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-h2 {
-    text-align: center;
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-}
-
+/* Style input fields */
 input {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+    padding: 10px;
+    margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
+/* Style the button */
 button {
     width: 100%;
-    background: #007bff;
+    padding: 10px;
+    background: blue;
     color: white;
     border: none;
-    padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 button:hover {
-    background: #0056b3;
+    background: darkblue;
 }
