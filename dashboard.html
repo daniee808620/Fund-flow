@@ -4,18 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f2ff; /* Light blue background */
+            text-align: center;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #007bff; /* Blue */
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar img {
+            height: 40px;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        /* Dashboard Summary */
+        .dashboard {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .balance-box {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: #0056b3; /* Dark blue */
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .info-box div {
+            flex: 1;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 5px;
+            background: #cce5ff; /* Light blue */
+            font-size: 16px;
+            font-weight: bold;
+            color: #0056b3; /* Dark blue text */
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #007bff; /* Blue */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background: #0056b3; /* Dark blue */
+        }
+    </style>
 </head>
 <body>
-    <h2>Welcome, <span id="user-name"></span>!</h2>
-    <button onclick="logout()">Logout</button>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <img src="logo.png" alt="FundFlow Logo"> <!-- Replace 'logo.png' with your logo -->
+        <h2>Dashboard</h2>
+    </div>
+
+    <!-- User Welcome -->
+    <div class="dashboard">
+        <h3>Welcome, <span id="user-name"></span>!</h3>
+
+        <!-- Total Balance -->
+        <div class="balance-box">
+            Total Balance: ₦<span id="total-balance">0</span>
+        </div>
+
+        <!-- Other Balances -->
+        <div class="info-box">
+            <div>Game Balance: ₦<span id="game-balance">0</span></div>
+            <div>Indirect Bonus: ₦<span id="indirect-bonus">0</span></div>
+            <div>Total Withdrawn: ₦<span id="total-withdrawal">0</span></div>
+        </div>
+
+        <!-- Logout Button -->
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
 
     <script>
-        document.getElementById("user-name").innerText = localStorage.getItem("username");
+        // Load user details from localStorage
+        document.getElementById("user-name").innerText = localStorage.getItem("username") || "User";
 
+        // Load user balances (these should be fetched from a backend in a real application)
+        document.getElementById("total-balance").innerText = localStorage.getItem("total_balance") || "0";
+        document.getElementById("game-balance").innerText = localStorage.getItem("game_balance") || "0";
+        document.getElementById("indirect-bonus").innerText = localStorage.getItem("indirect_bonus") || "0";
+        document.getElementById("total-withdrawal").innerText = localStorage.getItem("total_withdrawal") || "0";
+
+        // Logout function
         function logout() {
             alert("Logged out!");
             window.location.href = "index.html";
         }
     </script>
+
 </body>
-</html>￼Enter
+            </html>
