@@ -5,18 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FundFlow</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Make the buttons larger */
+        .btn-large {
+            font-size: 18px;
+            padding: 12px 24px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .btn-large:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to FundFlow</h1>
     <p>This is the official website of FundFlow.</p>
 
     <!-- FundFlow Logo -->
-    <img src="images/IMG-20250308-WA0406(1).jpg" alt="FundFlow Logo" width="300">
+    <img src="images/fundflow-logo.jpg" alt="FundFlow Logo" width="300">
 
     <!-- Login and Signup Buttons -->
     <br><br>
-    <button onclick="window.location.href='signup.html'">Sign Up</button>
-    <button onclick="window.location.href='login.html'">Login</button>
+    <button class="btn-large" onclick="window.location.href='signup.html'">Sign Up</button>
+    <button class="btn-large" onclick="window.location.href='login.html'">Login</button>
 
     <br><br>
     <button onclick="alert('Thanks for visiting!')">Click Me</button>
