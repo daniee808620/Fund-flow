@@ -1,5 +1,6 @@
 body {
-    background-color: #007bff; /* Blue Background */
+    background: url('https://imgur.com/a/2Z8yNkg') no-repeat center center fixed;
+    background-size: cover;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -9,11 +10,11 @@ body {
 }
 
 .container {
-    background: white;
+    background: rgba(255, 255, 255, 0.9); /* White box with slight transparency */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 300px;
+    width: 350px;
 }
 
 h2 {
@@ -21,9 +22,13 @@ h2 {
     color: #333;
 }
 
+.form-group {
+    margin-bottom: 15px;
+}
+
 label {
     display: block;
-    margin-top: 10px;
+    font-weight: bold;
 }
 
 input {
@@ -40,7 +45,7 @@ button {
     color: white;
     border: none;
     padding: 10px;
-    margin-top: 15px;
+    margin-top: 10px;
     cursor: pointer;
     border-radius: 5px;
 }
