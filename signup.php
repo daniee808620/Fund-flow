@@ -1,35 +1,3 @@
-<?php
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form values
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt password
-
-    // Database connection (update with your DB details)
-    $conn = new mysqli("localhost", "root", "", "fundflow");
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Insert user into database
-    $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $username, $email, $password);
-
-    if ($stmt->execute()) {
-        echo "Signup successful! <a href='login.html'>Login here</a>";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,19 +7,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h2>Sign Up</h2>
-    <form action="signup.php" method="POST">  <!-- Ensure it submits to itself -->
+    <form onsubmit="signup(event)">
         <label>Username:</label>
-        <input type="text" name="username" required><br><br>
+        <input type="text" id="username" required><br><br>
 
         <label>Email:</label>
-        <input type="email" name="email" required><br><br>
+        <input type="email" id="email" required><br><br>
 
         <label>Password:</label>
-        <input type="password" name="password" required><br><br>
+        <input type="password" id="password" required><br><br>
 
         <button type="submit">Sign Up</button>
     </form>
 
     <p><a href="index.html">Back to Home</a></p>
+
+    <script>
+        function signup(event) {
+            event.preventDefault(); // Prevent page reload
+
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            // Save user data to LocalStorage
+            localStorage.setItem("username", username);
+            localStorage.setItem("email", email);
+            localStorage.setItem("password", password);
+
+            alert("Signup successful! Now login.");
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
 </body>
 </html>
