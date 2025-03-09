@@ -3,44 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FundFlow Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Welcome, <span id="username">User</span>!</h1>
+        </header>
 
-    <div class="dashboard">
-        <h2>Welcome, <span id="username">User</span>!</h2>
-        
-        <div class="balance-box">
-            <h3>Total Balance: <span id="total-balance">₦0</span></h3>
-        </div>
-
-        <div class="info-boxes">
-            <div class="info-box">
-                <h4>Game Balance:</h4>
+        <section class="balance-info">
+            <div class="balance-card">
+                <h3>Total Balance</h3>
+                <p id="total-balance">₦0</p>
+            </div>
+            <div class="balance-card">
+                <h3>Game Balance</h3>
                 <p id="game-balance">₦0</p>
             </div>
-            <div class="info-box">
-                <h4>Total Withdrawn:</h4>
+            <div class="balance-card">
+                <h3>Total Withdrawn</h3>
                 <p id="total-withdrawn">₦0</p>
             </div>
-        </div>
+        </section>
 
-        <button id="logout-btn">Logout</button>
-    </div>
+        <nav class="menu">
+            <button class="submenu-btn">Withdraw</button>
+            <div class="submenu">
+                <a href="#">Withdraw Funds</a>
+                <a href="#">Withdrawal History</a>
+            </div>
 
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-        <a href="#">Withdraw</a>
-        <a href="#">Top Referral</a>
-        <a href="#">Play Games</a>
-        <a href="#">Daily Pay</a>
-        <a href="#">SP Post</a>
-        <a href="#">Bank</a>
-        <a href="#">Spin and Win</a>
-        <a href="#">Loan</a>
+            <button class="submenu-btn">Games</button>
+            <div class="submenu">
+                <a href="#">Play Games</a>
+                <a href="#">Spin & Win</a>
+            </div>
+
+            <button class="submenu-btn">Earnings</button>
+            <div class="submenu">
+                <a href="#">Daily Tasks</a>
+                <a href="#">Top Referral</a>
+            </div>
+
+            <button class="submenu-btn">Bank</button>
+            <div class="submenu">
+                <a href="#">Set Bank Details</a>
+                <a href="#">Loan Services</a>
+            </div>
+        </nav>
+
+        <button id="logout-btn" class="logout">Logout</button>
     </div>
 
     <script src="script.js"></script>
 </body>
-</html>
+                </html>
