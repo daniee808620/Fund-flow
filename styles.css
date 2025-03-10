@@ -17,15 +17,18 @@ body {
     margin: auto;
 }
 
-/* Logout button */
+/* Logout button - Now Blue */
 .logout-btn {
-    background-color: red;
+    background-color: #007bff; /* Blue */
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 16px;
 }
 
+/* Button hover effect */
 .logout-btn:hover {
-    background-color: darkred;
+    background-color: #0056b3; /* Darker Blue */
+}
