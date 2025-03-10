@@ -3,230 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Fund Flow</title>
+    <title>FundFlow Guide</title>
+
+    <!-- Swiper.js CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: skyblue;
-            padding: 20px;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
-        .menu-btn {
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            position: absolute;
-            top: 10px;
-            left: 10px;
+
+        body {
+            background: #f8f9fa;
         }
-        .menu {
-            display: none;
-            background: white;
-            position: absolute;
-            top: 40px;
-            left: 10px;
-            width: 220px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .swiper {
+            width: 100%;
+            height: 100vh;
         }
-        .menu a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: white;
-            background: blue;
-            border-bottom: 2px solid white;
-            font-weight: bold;
-            border-radius: 5px;
-            margin: 5px;
-        }
-        .menu a:hover {
-            background: darkblue;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            width: 80%;
-            max-width: 400px;
-            margin: auto;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-            text-align: left;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-        }
-        input {
-            width: 90%;
-            padding: 12px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .coupon-container {
+
+        .swiper-slide {
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-        }
-        .coupon-container input {
-            width: 60%;
-        }
-        .btn {
-            width: 90%;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            color: white;
-            background-color: blue;
-            margin-top: 10px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        /* Motivational Section */
-        .motivation-section {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 255, 0.8);
-            color: white;
             text-align: center;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: transform 0.5s ease-in-out;
+            padding: 20px;
+            font-size: 22px;
+            color: white;
         }
-        /* Image Slider */
-        .slider {
-            width: 100%;
-            max-width: 400px;
-            margin: auto;
-            overflow: hidden;
-            border-radius: 10px;
-            position: relative;
+
+        /* Section Backgrounds */
+        .slide1 { background: linear-gradient(to bottom, #007bff, #004080); }
+        .slide2 { background: linear-gradient(to bottom, #28a745, #006400); }
+        .slide3 { background: linear-gradient(to bottom, #ffc107, #d39e00); }
+        .slide4 { background: linear-gradient(to bottom, #dc3545, #8b0000); }
+        .slide5 { background: linear-gradient(to bottom, #6c757d, #343a40); }
+
+        /* Contact Icons */
+        .contact-icons a {
+            margin: 10px;
+            text-decoration: none;
+            font-size: 30px;
+            color: white;
         }
-        .slider img {
-            width: 100%;
-            display: none;
-        }
-        .slider img.active {
-            display: block;
+
+        /* Swipe Indicator */
+        .swiper-pagination {
+            position: absolute;
+            bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Hamburger Menu Button -->
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <!-- Swiper Container -->
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            
+            <!-- Section 1: How to Register -->
+            <div class="swiper-slide slide1">
+                <h2>How to Register</h2>
+                <p>1. Visit our official website.</p>
+                <p>2. Click on the **Sign Up** button.</p>
+                <p>3. Enter your details (Username, Email, Phone Number, and Coupon Code).</p>
+                <p>4. Click **Register** and log in to your account.</p>
+                <img src="https://via.placeholder.com/300x200" alt="Registration Process">
+            </div>
 
-    <!-- Navigation Menu -->
-    <div class="menu" id="navMenu">
-        <a href="signup.html">Home</a>
-        <a href="checkcoupon.html">Check Coupon</a>  
-        <a href="buy_coupon.html">Buy Coupon</a>
-        <a href="login.html">Login</a>
-    </div>
+            <!-- Section 2: How to Earn on FundFlow -->
+            <div class="swiper-slide slide2">
+                <h2>How to Earn on FundFlow</h2>
+                <p>1. Complete daily tasks to earn points.</p>
+                <p>2. Refer friends and earn referral commissions.</p>
+                <p>3. Participate in games and bonuses.</p>
+                <img src="https://via.placeholder.com/300x200" alt="Earning Methods">
+            </div>
 
-    <!-- Image Slider -->
-    <div class="slider">
-        <img src="https://i.postimg.cc/SQ9Fs1Kh/fundflow-logo.jpg" class="active" alt="Motivation 1">
-        <img src="https://i.postimg.cc/SQ9Fs1Kh/fundflow-logo.jpg" alt="Motivation 2">
-        <img src="https://i.postimg.cc/SQ9Fs1Kh/fundflow-logo.jpg" alt="Motivation 3">
-    </div>
+            <!-- Section 3: Withdrawal Process -->
+            <div class="swiper-slide slide3">
+                <h2>Withdrawal Process</h2>
+                <p>1. Ensure your balance meets the minimum withdrawal limit.</p>
+                <p>2. Go to the **Withdraw** section.</p>
+                <p>3. Enter your bank details and request a withdrawal.</p>
+                <p>4. Your payment will be processed within 24 hours.</p>
+                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Guide">
+            </div>
 
-    <div class="container">
-        <h2>Sign Up</h2>
+            <!-- Section 4: Contact Us -->
+            <div class="swiper-slide slide4">
+                <h2>Contact Us</h2>
+                <p>Need help? Reach out to us on:</p>
+                <div class="contact-icons">
+                    <a href="https://wa.me/your-number" target="_blank">📱 WhatsApp</a>
+                    <a href="https://t.me/your-telegram" target="_blank">💬 Telegram</a>
+                    <a href="https://facebook.com/your-page" target="_blank">📘 Facebook</a>
+                </div>
+            </div>
 
-        <label for="username">Enter your Username</label>
-        <input type="text" id="username">
+            <!-- Section 5: Motivational Messages -->
+            <div class="swiper-slide slide5">
+                <h2>Stay Motivated</h2>
+                <p id="motivation-text">"Success starts with you. Stay consistent and never give up!"</p>
+                <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation">
+            </div>
 
-        <label for="email">Enter your Email</label>
-        <input type="email" id="email">
-
-        <label for="phone">Enter your Phone Number</label>
-        <input type="tel" id="phone">
-
-        <label for="password">Enter your Password</label>
-        <input type="password" id="password">
-
-        <label for="coupon">Enter Coupon Code</label>
-        <div class="coupon-container">
-            <input type="text" id="coupon">
-            <button class="btn" onclick="buyCoupon()">Buy Code</button>
         </div>
 
-        <button class="btn" onclick="registerUser()">Sign Up</button>
-        <button class="btn" onclick="window.location.href='login.html'">Log In</button>
-    </div>
-
-    <!-- Motivational Section -->
-    <div class="motivation-section" id="motivation">
-        "Success is not final, failure is not fatal: it is the courage to continue that counts."
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
     </div>
 
     <script>
-        function toggleMenu() {
-            var menu = document.getElementById("navMenu");
-            menu.style.display = (menu.style.display === "block") ? "none" : "block";
-        }
-
-        function buyCoupon() {
-            window.location.href = "buy_coupon.html";
-        }
-
-        function registerUser() {
-            let username = document.getElementById("username").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let phone = document.getElementById("phone").value.trim();
-            let password = document.getElementById("password").value.trim();
-            let coupon = document.getElementById("coupon").value.trim();
-
-            if (!username || !email || !phone || !password || !coupon) {
-                alert("Please fill all fields!");
-                return;
-            }
-
-            alert("Registration successful!");
-            window.location.href = "login.html";
-        }
-
-        // Motivational Text Change on Scroll
-        const messages = [
-            "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-            "Every great journey starts with a single step. Keep moving forward!",
-            "Believe in yourself, and you’re already halfway there.",
-            "Opportunities don’t happen. You create them.",
-            "Your future is created by what you do today, not tomorrow."
-        ];
-        let msgIndex = 0;
-        window.addEventListener("scroll", function() {
-            let motivation = document.getElementById("motivation");
-            msgIndex = (msgIndex + 1) % messages.length;
-            motivation.textContent = messages[msgIndex];
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper', {
+            direction: 'vertical',
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
         });
 
-        // Image Slider
-        let currentImage = 0;
-        function changeImage() {
-            let images = document.querySelectorAll(".slider img");
-            images[currentImage].classList.remove("active");
-            currentImage = (currentImage + 1) % images.length;
-            images[currentImage].classList.add("active");
-        }
-        setInterval(changeImage, 5000); // Change image every 5 seconds
+        // Motivational Texts & Images
+        const motivationTexts = [
+            "Success starts with you. Stay consistent and never give up!",
+            "Every small step is progress. Keep moving forward.",
+            "Opportunities don't happen, you create them!",
+            "Believe in yourself and all that you are.",
+            "Your dreams are valid. Work hard and make them real!"
+        ];
+
+        const motivationImages = [
+            "https://via.placeholder.com/300x200?text=Success+Journey",
+            "https://via.placeholder.com/300x200?text=Never+Give+Up",
+            "https://via.placeholder.com/300x200?text=Opportunities",
+            "https://via.placeholder.com/300x200?text=Believe+In+Yourself",
+            "https://via.placeholder.com/300x200?text=Dreams+Come+True"
+        ];
+
+        // Change text and image on swipe
+        let currentIndex = 0;
+        swiper.on('slideChange', function () {
+            if (swiper.realIndex === 4) { // Motivational Section
+                currentIndex = (currentIndex + 1) % motivationTexts.length;
+                document.getElementById("motivation-text").innerText = motivationTexts[currentIndex];
+                document.getElementById("motivation-image").src = motivationImages[currentIndex];
+            }
+        });
     </script>
 
 </body>
-    </html>
+                                                                         </html>
