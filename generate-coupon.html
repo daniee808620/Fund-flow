@@ -1,85 +1,103 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Coupons</title>
+    <title>Generate Coupon</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: white;
+            margin: 0;
             padding: 20px;
+            background-color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .generate-btn {
             background-color: blue;
             color: white;
-            padding: 10px 20px;
+            padding: 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: 100%;
             font-size: 16px;
         }
-        .coupon-container {
+        .coupon-list {
             margin-top: 20px;
-        }
-        .coupon-block {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin: 10px auto;
-            width: 80%;
-            max-width: 350px;
             text-align: left;
         }
-        .coupon-block p {
-            margin: 5px 0;
-            font-size: 16px;
-        }
-        .active {
-            color: green;
-            font-weight: bold;
-        }
-        .used {
-            color: red;
-            font-weight: bold;
+        .coupon {
+            padding: 10px;
+            margin: 10px 0;
+            background: #f4f4f4;
+            border-left: 5px solid blue;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-    <h2>Generate Coupon</h2>
-    <button class="generate-btn" onclick="generateCoupons()">Generate Coupons</button>
-
-    <div class="coupon-container" id="couponList"></div>
+    <h2>Generate Coupons</h2>
+    <div class="container">
+        <button class="generate-btn" onclick="generateCoupons()">Generate Coupons</button>
+        <div class="coupon-list" id="couponList"></div>
+    </div>
 
     <script>
         function generateCoupons() {
-            let count = prompt("Enter the number of coupons to generate:");
-            if (count === null || isNaN(count) || count <= 0) {
+            let numCoupons = prompt("How many coupons do you want to generate?");
+            if (numCoupons !== null && !isNaN(numCoupons) && numCoupons > 0) {
+                let couponList = document.getElementById("couponList");
+                couponList.innerHTML = "";
+                let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+
+                for (let i = 0; i < numCoupons; i++) {
+                    let code = "F" + Math.random().toString(36).substr(2, 14).toUpperCase();
+                    while (code.length < 15) {
+                        code += Math.random().toString(36).substr(2, 1).toUpperCase(); 
+                    }
+                    let timeGenerated = new Date().toLocaleString();
+                    let couponData = { code, timeGenerated, active: true, usedBy: null };
+                    coupons.push(couponData);
+
+                    let couponDiv = document.createElement("div");
+                    couponDiv.className = "coupon";
+                    couponDiv.innerHTML = `<strong>Coupon:</strong> ${code}<br>
+                                           <strong>Time Generated:</strong> ${timeGenerated}<br>
+                                           <strong>Status:</strong> Active`;
+                    couponList.appendChild(couponDiv);
+                }
+
+                localStorage.setItem("coupons", JSON.stringify(coupons));
+            } else {
                 alert("Please enter a valid number.");
-                return;
-            }
-
-            let couponList = document.getElementById("couponList");
-            couponList.innerHTML = ""; // Clear previous coupons
-
-            for (let i = 0; i < count; i++) {
-                let couponCode = "COUP-" + Math.random().toString(36).substr(2, 8).toUpperCase();
-                let timestamp = new Date().toLocaleString();
-                let couponDiv = document.createElement("div");
-                couponDiv.className = "coupon-block";
-                couponDiv.innerHTML = `
-                    <p><strong>Coupon:</strong> ${couponCode}</p>
-                    <p><strong>Time:</strong> ${timestamp}</p>
-                    <p><strong>Status:</strong> <span class="active">Active</span></p>
-                    <p><strong>Used By:</strong> -</p>
-                `;
-                couponList.appendChild(couponDiv);
             }
         }
+
+        function loadCoupons() {
+            let couponList = document.getElementById("couponList");
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+
+            coupons.forEach(coupon => {
+                let couponDiv = document.createElement("div");
+                couponDiv.className = "coupon";
+                couponDiv.innerHTML = `<strong>Coupon:</strong> ${coupon.code}<br>
+                                       <strong>Time Generated:</strong> ${coupon.timeGenerated}<br>
+                                       <strong>Status:</strong> ${coupon.active ? "Active" : "Used by " + coupon.usedBy}`;
+                couponList.appendChild(couponDiv);
+            });
+        }
+
+        window.onload = loadCoupons;
     </script>
 
 </body>
-</html>￼Enter
+</html>
