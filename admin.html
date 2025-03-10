@@ -6,19 +6,17 @@
     <title>Admin Panel</title>
     <style>
         body {
-            background-color: white;
-            color: black;
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
+            background-color: white;
         }
         .menu-btn {
             font-size: 24px;
             cursor: pointer;
             background: none;
             border: none;
-            color: black;
             position: absolute;
             top: 10px;
             left: 10px;
@@ -47,26 +45,27 @@
         .menu a:hover {
             background: darkblue;
         }
-        .section {
-            margin-top: 80px;
-            padding: 20px;
+        .card {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px auto;
             width: 80%;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .section h2 {
-            color: black;
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-        .section p {
-            font-size: 28px;
+        .total-users {
+            font-size: 24px;
             font-weight: bold;
             color: blue;
+        }
+        .update-btn {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -86,20 +85,33 @@
         <a href="#">Add Sponsored Post</a>
     </div>
 
-    <!-- Total Users Section -->
-    <div class="section">
+    <!-- Total Users Card -->
+    <div class="card">
         <h2>TOTAL USERS</h2>
-        <p id="totalUsers">Loading...</p>
+        <p class="total-users" id="totalUsers">0</p>
+        <button class="update-btn" onclick="updateTotalUsers()">Update Users</button>
     </div>
 
     <script>
+        // Toggle Menu
         function toggleMenu() {
             var menu = document.getElementById("navMenu");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
-        // Simulating fetching total users count
-        document.getElementById("totalUsers").innerText = "1,235"; // Replace this with real data
+        // Load saved user count from localStorage
+        document.getElementById("totalUsers").innerText = localStorage.getItem("totalUsers") || "0";
+
+        // Function to update user count
+        function updateTotalUsers() {
+            let newCount = prompt("Enter the new total user count:");
+            if (newCount !== null && !isNaN(newCount) && newCount >= 0) {
+                localStorage.setItem("totalUsers", newCount);
+                document.getElementById("totalUsers").innerText = newCount;
+            } else {
+                alert("Please enter a valid number.");
+            }
+        }
     </script>
 
 </body>
