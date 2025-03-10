@@ -14,6 +14,53 @@
             padding: 0;
         }
 
+        /* Hamburger Menu */
+        .menu-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 150px;
+            text-align: left;
+        }
+
+        .menu a {
+            display: block;
+            padding: 10px;
+            color: black;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .menu a:last-child {
+            border-bottom: none;
+        }
+
+        .menu a:hover {
+            background: #f2f2f2;
+        }
+
+        h1 {
+            color: blue;
+        }
+
         .container {
             max-width: 400px;
             margin: 50px auto;
@@ -21,10 +68,6 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: blue;
         }
 
         input {
@@ -81,6 +124,16 @@
 </head>
 <body>
 
+    <!-- Hamburger Menu -->
+    <div class="menu-container">
+        <span class="menu-icon" onclick="toggleMenu()">☰</span>
+        <div class="menu" id="menu">
+            <a href="index.html">🏠 Home</a>
+            <a href="login.html">🔑 Login</a>
+            <a href="signup.html">📝 Sign Up</a>
+        </div>
+    </div>
+
     <div class="container">
         <h1>Join FundFlow</h1>
         <p>Sign up now and start earning today!</p>
@@ -111,5 +164,16 @@
         <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Logo">
     </div>
 
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
+        }
+    </script>
+
 </body>
-</html>
+    </html>
