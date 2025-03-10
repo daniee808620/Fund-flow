@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FundFlow Guide</title>
+    <title>FundFlow Swipe Sections</title>
 
     <!-- Swiper.js CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
@@ -38,11 +38,44 @@
         }
 
         /* Section Backgrounds */
+        .slide-signup { background: linear-gradient(to bottom, #ff9800, #e65100); }
         .slide1 { background: linear-gradient(to bottom, #007bff, #004080); }
         .slide2 { background: linear-gradient(to bottom, #28a745, #006400); }
         .slide3 { background: linear-gradient(to bottom, #ffc107, #d39e00); }
         .slide4 { background: linear-gradient(to bottom, #dc3545, #8b0000); }
         .slide5 { background: linear-gradient(to bottom, #6c757d, #343a40); }
+
+        /* Signup Form */
+        .signup-form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: black;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .signup-form input, .signup-form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .signup-form input {
+            background: #f1f1f1;
+        }
+
+        .signup-form button {
+            background: #ff9800;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
         /* Contact Icons */
         .contact-icons a {
@@ -57,6 +90,14 @@
             position: absolute;
             bottom: 10px;
         }
+
+        /* Motivational Text */
+        #motivation-text {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px;
+            max-width: 80%;
+        }
     </style>
 </head>
 <body>
@@ -64,54 +105,57 @@
     <!-- Swiper Container -->
     <div class="swiper">
         <div class="swiper-wrapper">
-            
-            <!-- Section 1: How to Register -->
+
+            <!-- Signup Section (Default Screen) -->
+            <div class="swiper-slide slide-signup">
+                <h2>Join FundFlow</h2>
+                <p>Sign up now and start earning today!</p>
+                <div class="signup-form">
+                    <input type="text" placeholder="Username">
+                    <input type="email" placeholder="Email">
+                    <input type="password" placeholder="Password">
+                    <button>Sign Up</button>
+                </div>
+            </div>
+
+            <!-- Section 1: How FundFlow Works -->
             <div class="swiper-slide slide1">
-                <h2>How to Register</h2>
-                <p>1. Visit our official website.</p>
-                <p>2. Click on the **Sign Up** button.</p>
-                <p>3. Enter your details (Username, Email, Phone Number, and Coupon Code).</p>
-                <p>4. Click **Register** and log in to your account.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Registration Process">
+                <h2>How FundFlow Works</h2>
+                <p>Earn money easily by completing tasks and referring friends.</p>
+                <img src="https://via.placeholder.com/300x200" alt="FundFlow Process">
             </div>
 
-            <!-- Section 2: How to Earn on FundFlow -->
+            <!-- Section 2: Exciting Withdrawal Schedule -->
             <div class="swiper-slide slide2">
-                <h2>How to Earn on FundFlow</h2>
-                <p>1. Complete daily tasks to earn points.</p>
-                <p>2. Refer friends and earn referral commissions.</p>
-                <p>3. Participate in games and bonuses.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Earning Methods">
+                <h2>Exciting Withdrawal Schedule</h2>
+                <p>Withdraw anytime with our flexible payout system.</p>
+                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Schedule">
             </div>
 
-            <!-- Section 3: Withdrawal Process -->
+            <!-- Section 3: Withdrawals Are Combined -->
             <div class="swiper-slide slide3">
-                <h2>Withdrawal Process</h2>
-                <p>1. Ensure your balance meets the minimum withdrawal limit.</p>
-                <p>2. Go to the **Withdraw** section.</p>
-                <p>3. Enter your bank details and request a withdrawal.</p>
-                <p>4. Your payment will be processed within 24 hours.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Guide">
+                <h2>Withdrawals Are Combined</h2>
+                <p>Your withdrawals are processed together for fast payouts.</p>
+                <img src="https://via.placeholder.com/300x200" alt="Combined Withdrawals">
             </div>
 
             <!-- Section 4: Contact Us -->
             <div class="swiper-slide slide4">
                 <h2>Contact Us</h2>
-                <p>Need help? Reach out to us on:</p>
+                <p>Stay connected with us on social media.</p>
                 <div class="contact-icons">
-                    <a href="https://wa.me/your-number" target="_blank">📱 WhatsApp</a>
-                    <a href="https://t.me/your-telegram" target="_blank">💬 Telegram</a>
-                    <a href="https://facebook.com/your-page" target="_blank">📘 Facebook</a>
+                    <a href="https://wa.me/your-number" target="_blank">📱</a>
+                    <a href="https://t.me/your-telegram" target="_blank">💬</a>
+                    <a href="https://facebook.com/your-page" target="_blank">📘</a>
                 </div>
             </div>
 
-            <!-- Section 5: Motivational Messages -->
+            <!-- Section 5: Motivational Quotes & Images -->
             <div class="swiper-slide slide5">
                 <h2>Stay Motivated</h2>
-                <p id="motivation-text">"Success starts with you. Stay consistent and never give up!"</p>
+                <p id="motivation-text">"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off."</p>
                 <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation">
             </div>
-
         </div>
 
         <!-- Pagination -->
@@ -122,7 +166,7 @@
         // Initialize Swiper
         var swiper = new Swiper('.swiper', {
             direction: 'vertical',
-            loop: true,
+            loop: false,
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
@@ -131,25 +175,25 @@
 
         // Motivational Texts & Images
         const motivationTexts = [
-            "Success starts with you. Stay consistent and never give up!",
-            "Every small step is progress. Keep moving forward.",
-            "Opportunities don't happen, you create them!",
-            "Believe in yourself and all that you are.",
-            "Your dreams are valid. Work hard and make them real!"
+            "\"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off.\"",
+            "\"Your journey to greatness starts with a single step. Don't be afraid to fail, because every failure brings you closer to success. Stay determined, keep learning, and never stop believing in yourself.\"",
+            "\"Success is not about how fast you reach the top, but about how well you handle the journey. Stay patient, trust the process, and remember that great things take time. Keep going, and you'll get there.\"",
+            "\"Dream big, work hard, and stay focused. The difference between winners and losers is persistence. Keep moving forward, even when things seem tough. Your dedication will lead you to success.\"",
+            "\"Hard work, dedication, and resilience will always pay off. When you feel like giving up, remember why you started. Keep going, keep growing, and never stop chasing your dreams.\""
         ];
 
         const motivationImages = [
             "https://via.placeholder.com/300x200?text=Success+Journey",
             "https://via.placeholder.com/300x200?text=Never+Give+Up",
-            "https://via.placeholder.com/300x200?text=Opportunities",
-            "https://via.placeholder.com/300x200?text=Believe+In+Yourself",
-            "https://via.placeholder.com/300x200?text=Dreams+Come+True"
+            "https://via.placeholder.com/300x200?text=Trust+The+Process",
+            "https://via.placeholder.com/300x200?text=Stay+Focused",
+            "https://via.placeholder.com/300x200?text=Hard+Work+Pays+Off"
         ];
 
         // Change text and image on swipe
         let currentIndex = 0;
         swiper.on('slideChange', function () {
-            if (swiper.realIndex === 4) { // Motivational Section
+            if (swiper.realIndex === 5) { // 6th Slide
                 currentIndex = (currentIndex + 1) % motivationTexts.length;
                 document.getElementById("motivation-text").innerText = motivationTexts[currentIndex];
                 document.getElementById("motivation-image").src = motivationImages[currentIndex];
@@ -158,4 +202,4 @@
     </script>
 
 </body>
-                                                                         </html>
+    </html>
