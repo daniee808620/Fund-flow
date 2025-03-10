@@ -99,15 +99,11 @@
             max-width: 80%;
         }
 
-        /* FundFlow Banner Image */
-        .banner-img {
-            width: 100%;
-            max-width: 300px;
-            height: 300px;
-            object-fit: cover;
-            display: block;
-            margin: 10px auto;
-            border-radius: 10px;
+        /* Cube Image */
+        .cube-image {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -119,12 +115,9 @@
 
             <!-- Signup Section (Default Screen) -->
             <div class="swiper-slide slide-signup">
+                <img src="cube.png" alt="Cube Icon" class="cube-image">
                 <h2>Join FundFlow</h2>
                 <p>Sign up now and start earning today!</p>
-                
-                <!-- FundFlow Banner Image -->
-                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Banner" class="banner-img">
-                
                 <div class="signup-form">
                     <input type="text" placeholder="Username">
                     <input type="email" placeholder="Email">
@@ -139,7 +132,7 @@
             <div class="swiper-slide slide1">
                 <h2>How FundFlow Works</h2>
                 <p>Earn money easily by completing tasks and referring friends.</p>
-                <img src="https://via.placeholder.com/300x200" alt="FundFlow Process">
+                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Process">
             </div>
 
             <!-- Section 2: Exciting Withdrawal Schedule -->
@@ -210,7 +203,7 @@
         // Change text and image on swipe
         let currentIndex = 0;
         swiper.on('slideChange', function () {
-            if (swiper.realIndex === 5) {
+            if (swiper.realIndex === 5) { // 6th Slide
                 currentIndex = (currentIndex + 1) % motivationTexts.length;
                 document.getElementById("motivation-text").innerText = motivationTexts[currentIndex];
                 document.getElementById("motivation-image").src = motivationImages[currentIndex];
