@@ -105,6 +105,14 @@
             height: 50px;
             margin-bottom: 10px;
         }
+
+        /* Responsive Image Styling */
+        .responsive-image {
+            max-width: 90%;  /* Ensures it scales with the screen */
+            height: auto;    /* Maintains aspect ratio */
+            border-radius: 10px; /* Optional: Adds rounded corners */
+            margin-top: 20px; /* Adjusts spacing */
+        }
     </style>
 </head>
 <body>
@@ -132,21 +140,21 @@
             <div class="swiper-slide slide1">
                 <h2>How FundFlow Works</h2>
                 <p>Earn money easily by completing tasks and referring friends.</p>
-                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Process">
+                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Process" class="responsive-image">
             </div>
 
             <!-- Section 2: Exciting Withdrawal Schedule -->
             <div class="swiper-slide slide2">
                 <h2>Exciting Withdrawal Schedule</h2>
                 <p>Withdraw anytime with our flexible payout system.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Schedule">
+                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Schedule" class="responsive-image">
             </div>
 
             <!-- Section 3: Withdrawals Are Combined -->
             <div class="swiper-slide slide3">
                 <h2>Withdrawals Are Combined</h2>
                 <p>Your withdrawals are processed together for fast payouts.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Combined Withdrawals">
+                <img src="https://via.placeholder.com/300x200" alt="Combined Withdrawals" class="responsive-image">
             </div>
 
             <!-- Section 4: Contact Us -->
@@ -164,7 +172,7 @@
             <div class="swiper-slide slide5">
                 <h2>Stay Motivated</h2>
                 <p id="motivation-text">"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off."</p>
-                <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation">
+                <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation" class="responsive-image">
             </div>
         </div>
 
@@ -200,13 +208,10 @@
             "https://via.placeholder.com/300x200?text=Hard+Work+Pays+Off"
         ];
 
-        // Change text and image on swipe
-        let currentIndex = 0;
         swiper.on('slideChange', function () {
             if (swiper.realIndex === 5) { // 6th Slide
-                currentIndex = (currentIndex + 1) % motivationTexts.length;
-                document.getElementById("motivation-text").innerText = motivationTexts[currentIndex];
-                document.getElementById("motivation-image").src = motivationImages[currentIndex];
+                document.getElementById("motivation-text").innerText = motivationTexts[swiper.realIndex % motivationTexts.length];
+                document.getElementById("motivation-image").src = motivationImages[swiper.realIndex % motivationImages.length];
             }
         });
     </script>
