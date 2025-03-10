@@ -37,12 +37,21 @@
             background: red;
             color: white;
         }
+        .no-records {
+            font-size: 18px;
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <h2>Withdrawal Requests</h2>
-    <table>
+    
+    <div id="noWithdrawals" class="no-records">No Withdrawal Records</div>
+
+    <table id="withdrawalTable" style="display: none;">
         <thead>
             <tr>
                 <th>Username</th>
@@ -53,43 +62,54 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody id="withdrawalTable"></tbody>
+        <tbody id="withdrawalBody"></tbody>
     </table>
 
     <script>
-        // Load withdrawal requests from localStorage
         function loadWithdrawals() {
             let withdrawals = JSON.parse(localStorage.getItem("withdrawals")) || [];
+            let table = document.getElementById("withdrawalTable");
+            let tableBody = document.getElementById("withdrawalBody");
+            let noWithdrawalsDiv = document.getElementById("noWithdrawals");
 
-            let tableBody = document.getElementById("withdrawalTable");
-            tableBody.innerHTML = ""; // Clear existing rows before adding
+            tableBody.innerHTML = ""; // Clear existing rows
 
-            withdrawals.forEach((withdrawal, index) => {
-                let row = document.createElement("tr");
+            if (withdrawals.length === 0) {
+                table.style.display = "none";
+                noWithdrawalsDiv.style.display = "block";
+            } else {
+                table.style.display = "table";
+                noWithdrawalsDiv.style.display = "none";
 
-                row.innerHTML = `
-                    <td>${withdrawal.username}</td>
-                    <td>₦${withdrawal.amount}</td>
-                    <td>${withdrawal.accountNumber} - ${withdrawal.accountName} (${withdrawal.bank})</td>
-                    <td>${withdrawal.time}</td>
-                    <td id="status-${index}">${withdrawal.status}</td>
-                    <td>
-                        <button class="approve-btn" onclick="updateStatus(${index}, 'Approved')">Approve</button>
-                        <button class="reject-btn" onclick="updateStatus(${index}, 'Rejected')">Reject</button>
-                    </td>
-                `;
+                withdrawals.forEach((withdrawal, index) => {
+                    let row = document.createElement("tr");
 
-                tableBody.appendChild(row);
-            });
+                    row.innerHTML = `
+                        <td>${withdrawal.username}</td>
+                        <td>₦${withdrawal.amount}</td>
+                        <td>${withdrawal.accountNumber} - ${withdrawal.accountName} (${withdrawal.bank})</td>
+                        <td>${withdrawal.time}</td>
+                        <td id="status-${index}">${withdrawal.status}</td>
+                        <td>
+                            ${withdrawal.status === "Pending" ? `
+                                <button class="approve-btn" onclick="updateStatus(${index}, 'Approved')">Approve</button>
+                                <button class="reject-btn" onclick="updateStatus(${index}, 'Rejected')">Reject</button>
+                            ` : withdrawal.status}
+                        </td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+            }
         }
 
-        // Update withdrawal status
         function updateStatus(index, newStatus) {
             let withdrawals = JSON.parse(localStorage.getItem("withdrawals")) || [];
             withdrawals[index].status = newStatus;
             localStorage.setItem("withdrawals", JSON.stringify(withdrawals));
 
             document.getElementById(`status-${index}`).innerText = newStatus;
+            loadWithdrawals(); // Refresh table to keep all records
         }
 
         // Load withdrawals on page load
