@@ -7,16 +7,19 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    <!-- Navigation Menu -->
-    <nav class="admin-nav">
-        <button onclick="showSection('generateCoupon')">Generate Coupon</button>
-        <button onclick="showSection('withdrawals')">Withdrawals</button>
-        <button onclick="showSection('openWithdrawal')">Open Withdrawal</button>
-        <button onclick="showSection('closeWithdrawal')">Close Withdrawal</button>
-        <button onclick="showSection('totalUsers')">Total Users</button>
-        <button onclick="showSection('addDailyPay')">Add Daily Pay</button>
-        <button onclick="showSection('addSponsoredPost')">Add Sponsored Post</button>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <button class="menu-btn" onclick="toggleMenu()">🕹️</button>
+        <div class="menu-dropdown" id="menuDropdown">
+            <button onclick="showSection('generateCoupon')">Generate Coupon</button>
+            <button onclick="showSection('withdrawals')">Withdrawals</button>
+            <button onclick="showSection('openWithdrawal')">Open Withdrawal</button>
+            <button onclick="showSection('closeWithdrawal')">Close Withdrawal</button>
+            <button onclick="showSection('totalUsers')">Total Users</button>
+            <button onclick="showSection('addDailyPay')">Add Daily Pay</button>
+            <button onclick="showSection('addSponsoredPost')">Add Sponsored Post</button>
+        </div>
     </nav>
 
     <!-- Admin Panel Content -->
@@ -35,6 +38,16 @@
     <div id="addSponsoredPost" class="admin-section">Add Sponsored Post Section</div>
 
     <script>
+        // Toggle the navigation menu
+        function toggleMenu() {
+            let menu = document.getElementById("menuDropdown");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
+        }
+
         // Hide all sections except the first one
         document.addEventListener("DOMContentLoaded", function() {
             let sections = document.querySelectorAll(".admin-section");
@@ -46,8 +59,9 @@
             let sections = document.querySelectorAll(".admin-section");
             sections.forEach(section => section.style.display = "none"); // Hide all
             document.getElementById(sectionId).style.display = "block"; // Show selected
+            document.getElementById("menuDropdown").style.display = "none"; // Hide menu after selection
         }
     </script>
 
 </body>
-        </html>
+    </html>
