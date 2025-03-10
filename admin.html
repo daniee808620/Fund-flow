@@ -76,13 +76,13 @@
 
     <!-- Navigation Menu -->
     <div class="menu" id="navMenu">
-        <a href="#">Generate Coupon</a>
-        <a href="#">Withdrawals</a>
-        <a href="#">Open Withdrawal</a>
-        <a href="#">Close Withdrawal</a>
-        <a href="#">Total Users</a>
-        <a href="#">Add Daily Pay</a>
-        <a href="#">Add Sponsored Post</a>
+        <a href="generate-coupon.html">Generate Coupon</a>
+        <a href="withdrawals.html">Withdrawals</a>
+        <a href="open-withdrawal.html">Open Withdrawal</a>
+        <a href="close-withdrawal.html">Close Withdrawal</a>
+        <a href="total-users.html">Total Users</a>
+        <a href="add-daily-pay.html">Add Daily Pay</a>
+        <a href="add-sponsored-post.html">Add Sponsored Post</a>
     </div>
 
     <!-- Total Users Card -->
@@ -93,16 +93,13 @@
     </div>
 
     <script>
-        // Toggle Menu
         function toggleMenu() {
             var menu = document.getElementById("navMenu");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
-        // Load saved user count from localStorage
         document.getElementById("totalUsers").innerText = localStorage.getItem("totalUsers") || "0";
 
-        // Function to update user count
         function updateTotalUsers() {
             let newCount = prompt("Enter the new total user count:");
             if (newCount !== null && !isNaN(newCount) && newCount >= 0) {
