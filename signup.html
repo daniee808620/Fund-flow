@@ -89,11 +89,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .small-btn {
-            width: 30%;
-            padding: 12px;
-            font-size: 14px;
-        }
     </style>
 </head>
 <body>
@@ -104,7 +99,7 @@
     <!-- Navigation Menu -->
     <div class="menu" id="navMenu">
         <a href="#">Home</a>
-        <a href="#" onclick="checkCoupon()">Check Coupon</a>
+        <a href="checkcoupon.html">Check Coupon</a>  <!-- Updated -->
         <a href="buy_coupon.html">Buy Coupon</a>
         <a href="login.html">Login</a>
     </div>
@@ -118,41 +113,21 @@
 
         <div class="coupon-container">
             <input type="text" id="coupon" placeholder="Enter Coupon Code">
-            <button class="btn small-btn" onclick="checkCoupon()">Check</button>
-            <button class="btn small-btn" onclick="buyCoupon()">Buy</button>
+            <button class="btn" onclick="buyCoupon()">Buy Code</button>
         </div>
 
-        <!-- Sign Up and Login buttons at the bottom -->
         <button class="btn" onclick="registerUser()">Sign Up</button>
         <button class="btn" onclick="window.location.href='login.html'">Log In</button>
     </div>
 
     <script>
-        // Toggle Menu
         function toggleMenu() {
             var menu = document.getElementById("navMenu");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
-        function checkCoupon() {
-            let coupon = document.getElementById("coupon").value.trim();
-            if (!coupon) {
-                alert("Please enter a coupon code!");
-                return;
-            }
-
-            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
-            let foundCoupon = coupons.find(c => c.code === coupon);
-
-            if (foundCoupon) {
-                alert(`Coupon Status: ${foundCoupon.status}`);
-            } else {
-                alert("Invalid coupon code!");
-            }
-        }
-
         function buyCoupon() {
-            window.location.href = "buy_coupon.html"; // Redirect to buy coupon page
+            window.location.href = "buy_coupon.html";
         }
 
         function registerUser() {
@@ -167,29 +142,10 @@
                 return;
             }
 
-            // Check if coupon exists and is active
-            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
-            let couponIndex = coupons.findIndex(c => c.code === coupon && c.status === "Active");
-
-            if (couponIndex === -1) {
-                alert("Invalid or already used coupon!");
-                return;
-            }
-
-            // Store user data in localStorage
-            let users = JSON.parse(localStorage.getItem("users")) || [];
-            users.push({ username, email, phone, password, coupon });
-            localStorage.setItem("users", JSON.stringify(users));
-
-            // Mark coupon as used
-            coupons[couponIndex].status = "Used";
-            coupons[couponIndex].usedBy = username;
-            localStorage.setItem("coupons", JSON.stringify(coupons));
-
             alert("Registration successful!");
             window.location.href = "login.html";
         }
     </script>
 
 </body>
-            </html>
+</html>
