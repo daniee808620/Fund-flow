@@ -3,49 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS -->
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Ensure this file exists -->
 </head>
 <body>
-
-    <div id="loginSection">
-        <h2>Admin Login</h2>
-        <label>Username:</label>
-        <input type="text" id="adminUsername" placeholder="Enter Username"><br>
-        <label>Password:</label>
-        <input type="password" id="adminPassword" placeholder="Enter Password"><br>
-        <button onclick="adminLogin()">Login</button>
-    </div>
-
-    <div id="adminPanel" style="display: none;">
-        <h2>Admin Panel</h2>
-        <button onclick="adminLogout()">Logout</button>
+    <div class="admin-container">
+        <h1>Admin Panel</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
     <script>
-        function adminLogin() {
-            let username = document.getElementById("adminUsername").value;
-            let password = document.getElementById("adminPassword").value;
-
-            if (username === "admin" && password === "12345") {
-                localStorage.setItem("adminLoggedIn", "true");
-                document.getElementById("loginSection").style.display = "none";
-                document.getElementById("adminPanel").style.display = "block";
-            } else {
-                alert("Invalid credentials!");
-            }
-        }
-
-        function adminLogout() {
-            localStorage.removeItem("adminLoggedIn");
-            location.reload();
-        }
-
-        if (localStorage.getItem("adminLoggedIn") === "true") {
-            document.getElementById("loginSection").style.display = "none";
-            document.getElementById("adminPanel").style.display = "block";
+        function logout() {
+            alert("Logged out successfully!");
+            window.location.href = "login.html"; // Redirect to login page
         }
     </script>
-
 </body>
-</html
+</html>
