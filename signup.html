@@ -45,6 +45,15 @@
         .slide4 { background: linear-gradient(to bottom, #dc3545, #8b0000); }
         .slide5 { background: linear-gradient(to bottom, #6c757d, #343a40); }
 
+        /* Fixed Image Style */
+        .fixed-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
         /* Signup Form */
         .signup-form {
             background: white;
@@ -99,20 +108,6 @@
             max-width: 80%;
         }
 
-        /* Cube Image */
-        .cube-image {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
-        }
-
-        /* Responsive Image Styling */
-        .responsive-image {
-            max-width: 90%;  /* Ensures it scales with the screen */
-            height: auto;    /* Maintains aspect ratio */
-            border-radius: 10px; /* Optional: Adds rounded corners */
-            margin-top: 20px; /* Adjusts spacing */
-        }
     </style>
 </head>
 <body>
@@ -123,7 +118,7 @@
 
             <!-- Signup Section (Default Screen) -->
             <div class="swiper-slide slide-signup">
-                <img src="cube.png" alt="Cube Icon" class="cube-image">
+                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Logo" class="fixed-image">
                 <h2>Join FundFlow</h2>
                 <p>Sign up now and start earning today!</p>
                 <div class="signup-form">
@@ -140,21 +135,21 @@
             <div class="swiper-slide slide1">
                 <h2>How FundFlow Works</h2>
                 <p>Earn money easily by completing tasks and referring friends.</p>
-                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Process" class="responsive-image">
+                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Process" class="fixed-image">
             </div>
 
             <!-- Section 2: Exciting Withdrawal Schedule -->
             <div class="swiper-slide slide2">
                 <h2>Exciting Withdrawal Schedule</h2>
                 <p>Withdraw anytime with our flexible payout system.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Schedule" class="responsive-image">
+                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Schedule" class="fixed-image">
             </div>
 
             <!-- Section 3: Withdrawals Are Combined -->
             <div class="swiper-slide slide3">
                 <h2>Withdrawals Are Combined</h2>
                 <p>Your withdrawals are processed together for fast payouts.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Combined Withdrawals" class="responsive-image">
+                <img src="https://via.placeholder.com/300x200" alt="Combined Withdrawals" class="fixed-image">
             </div>
 
             <!-- Section 4: Contact Us -->
@@ -172,7 +167,7 @@
             <div class="swiper-slide slide5">
                 <h2>Stay Motivated</h2>
                 <p id="motivation-text">"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off."</p>
-                <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation" class="responsive-image">
+                <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation" class="fixed-image">
             </div>
         </div>
 
@@ -195,26 +190,25 @@
         const motivationTexts = [
             "\"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off.\"",
             "\"Your journey to greatness starts with a single step. Don't be afraid to fail, because every failure brings you closer to success. Stay determined, keep learning, and never stop believing in yourself.\"",
-            "\"Success is not about how fast you reach the top, but about how well you handle the journey. Stay patient, trust the process, and remember that great things take time. Keep going, and you'll get there.\"",
-            "\"Dream big, work hard, and stay focused. The difference between winners and losers is persistence. Keep moving forward, even when things seem tough. Your dedication will lead you to success.\"",
-            "\"Hard work, dedication, and resilience will always pay off. When you feel like giving up, remember why you started. Keep going, keep growing, and never stop chasing your dreams.\""
+            "\"Success is not about how fast you reach the top, but about how well you handle the journey. Stay patient, trust the process, and remember that great things take time. Keep going, and you'll get there.\""
         ];
 
         const motivationImages = [
             "https://via.placeholder.com/300x200?text=Success+Journey",
             "https://via.placeholder.com/300x200?text=Never+Give+Up",
-            "https://via.placeholder.com/300x200?text=Trust+The+Process",
-            "https://via.placeholder.com/300x200?text=Stay+Focused",
             "https://via.placeholder.com/300x200?text=Hard+Work+Pays+Off"
         ];
 
+        // Change text and image on swipe
+        let currentIndex = 0;
         swiper.on('slideChange', function () {
-            if (swiper.realIndex === 5) { // 6th Slide
-                document.getElementById("motivation-text").innerText = motivationTexts[swiper.realIndex % motivationTexts.length];
-                document.getElementById("motivation-image").src = motivationImages[swiper.realIndex % motivationImages.length];
+            if (swiper.realIndex === 4) { // Motivational Slide
+                currentIndex = (currentIndex + 1) % motivationTexts.length;
+                document.getElementById("motivation-text").innerText = motivationTexts[currentIndex];
+                document.getElementById("motivation-image").src = motivationImages[currentIndex];
             }
         });
     </script>
 
 </body>
-    </html>
+                    </html>
