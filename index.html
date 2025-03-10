@@ -3,44 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FundFlow - Signup</title>
+    <title>FundFlow - Home</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            menu.classList.toggle("show");
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, blue, yellow);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: yellow;
+        }
+
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            background: white;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .menu.show {
+            display: block;
+        }
+
+        .menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu a:hover {
+            background: #f0f0f0;
+        }
+
+        .section {
+            margin-top: 20px;
+        }
+
+        .logo {
+            width: 150px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
+    <!-- Hamburger Menu -->
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div id="menu" class="menu">
+        <a href="signup.html">Sign Up</a>
+        <a href="login.html">Login</a>
+        <a href="about.html">About Us</a>
+    </div>
+
     <div class="container">
         <h1>FUND<b>FLOW</b></h1>
-        <h2>Signup</h2>
+        <h2>How FundFlow Works</h2>
+        <p>FundFlow is a platform where users can earn money through referrals, tasks, and investments.</p>
 
-        <form action="#" method="POST">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" placeholder="Enter your username" required>
-            </div>
+        <div class="section">
+            <h2>Withdrawal & Earnings</h2>
+            <p>Withdraw your earnings instantly once you reach the minimum withdrawal limit.</p>
+        </div>
 
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" placeholder="Enter your email" required>
-            </div>
+        <div class="section">
+            <h2>Contact Us</h2>
+            <p>Have any questions? Reach out to our support team at <b>support@fundflow.com</b></p>
+        </div>
 
-            <div class="form-group">
-                <label>Phone Number</label>
-                <input type="tel" placeholder="Enter your phone number" required>
-            </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" placeholder="Enter your password" required>
-            </div>
-
-            <div class="form-group">
-                <label>Coupon Code (Optional)</label>
-                <input type="text" placeholder="Enter coupon code">
-            </div>
-
-            <button type="submit">Sign Up</button>
-        </form>
+        <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" class="logo">
     </div>
 
 </body>
-                    </html>
+    </html>
