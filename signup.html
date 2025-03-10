@@ -3,213 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FundFlow Swipe Sections</title>
-
-    <!-- Swiper.js CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
+    <title>FundFlow - Sign Up</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff7f00, #ffcc00);
+            text-align: center;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
-        body {
-            background: #f8f9fa;
-        }
-
-        .swiper {
-            width: 100%;
-            height: 100vh;
-        }
-
-        .swiper-slide {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            font-size: 22px;
-            color: white;
-        }
-
-        /* Section Backgrounds */
-        .slide-signup { background: linear-gradient(to bottom, #ff9800, #e65100); }
-        .slide1 { background: linear-gradient(to bottom, #007bff, #004080); }
-        .slide2 { background: linear-gradient(to bottom, #28a745, #006400); }
-        .slide3 { background: linear-gradient(to bottom, #ffc107, #d39e00); }
-        .slide4 { background: linear-gradient(to bottom, #dc3545, #8b0000); }
-        .slide5 { background: linear-gradient(to bottom, #6c757d, #343a40); }
-
-        /* Signup Form */
-        .signup-form {
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
             background: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            color: black;
-            width: 90%;
-            max-width: 400px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .signup-form input, .signup-form button {
-            width: 100%;
+        h1 {
+            color: #ff7f00;
+        }
+
+        input {
+            width: 90%;
             padding: 10px;
             margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .signup-btn {
+            width: 95%;
+            padding: 12px;
+            background: #ff7f00;
+            color: white;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
             font-size: 16px;
         }
 
-        .signup-form input {
-            background: #f1f1f1;
+        .signup-btn:hover {
+            background: #e06b00;
         }
 
-        .signup-form button {
-            background: #ff9800;
+        .motivation {
+            margin-top: 20px;
             color: white;
-            cursor: pointer;
-            font-weight: bold;
+            font-size: 18px;
         }
 
-        /* Contact Icons */
-        .contact-icons a {
-            margin: 10px;
-            text-decoration: none;
-            font-size: 30px;
-            color: white;
-        }
-
-        /* Swipe Indicator */
-        .swiper-pagination {
-            position: absolute;
-            bottom: 10px;
-        }
-
-        /* Motivational Text */
-        #motivation-text {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px;
-            max-width: 80%;
-        }
-
-        /* Cube Image */
-        .cube-image {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
+        .motivation img {
+            width: 80%;
+            max-width: 300px;
+            margin-top: 10px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Swiper Container -->
-    <div class="swiper">
-        <div class="swiper-wrapper">
-
-            <!-- Signup Section (Default Screen) -->
-            <div class="swiper-slide slide-signup">
-                <img src="cube.png" alt="Cube Icon" class="cube-image">
-                <h2>Join FundFlow</h2>
-                <p>Sign up now and start earning today!</p>
-                <div class="signup-form">
-                    <input type="text" placeholder="Username">
-                    <input type="email" placeholder="Email">
-                    <input type="tel" placeholder="Phone Number">
-                    <input type="text" placeholder="Coupon Code">
-                    <input type="password" placeholder="Password">
-                    <button>Sign Up</button>
-                </div>
-            </div>
-
-            <!-- Section 1: How FundFlow Works -->
-            <div class="swiper-slide slide1">
-                <h2>How FundFlow Works</h2>
-                <p>Earn money easily by completing tasks and referring friends.</p>
-                <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Process">
-            </div>
-
-            <!-- Section 2: Exciting Withdrawal Schedule -->
-            <div class="swiper-slide slide2">
-                <h2>Exciting Withdrawal Schedule</h2>
-                <p>Withdraw anytime with our flexible payout system.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Withdrawal Schedule">
-            </div>
-
-            <!-- Section 3: Withdrawals Are Combined -->
-            <div class="swiper-slide slide3">
-                <h2>Withdrawals Are Combined</h2>
-                <p>Your withdrawals are processed together for fast payouts.</p>
-                <img src="https://via.placeholder.com/300x200" alt="Combined Withdrawals">
-            </div>
-
-            <!-- Section 4: Contact Us -->
-            <div class="swiper-slide slide4">
-                <h2>Contact Us</h2>
-                <p>Stay connected with us on social media.</p>
-                <div class="contact-icons">
-                    <a href="https://wa.me/your-number" target="_blank">📱</a>
-                    <a href="https://t.me/your-telegram" target="_blank">💬</a>
-                    <a href="https://facebook.com/your-page" target="_blank">📘</a>
-                </div>
-            </div>
-
-            <!-- Section 5: Motivational Quotes & Images -->
-            <div class="swiper-slide slide5">
-                <h2>Stay Motivated</h2>
-                <p id="motivation-text">"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off."</p>
-                <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation">
-            </div>
-        </div>
-
-        <!-- Pagination -->
-        <div class="swiper-pagination"></div>
+    <div class="container">
+        <h1>Join FundFlow</h1>
+        <p>Sign up now and start earning today!</p>
+        
+        <form action="your-backend-script.php" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="text" name="coupon" placeholder="Coupon Code" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="signup-btn">Sign Up</button>
+        </form>
     </div>
 
-    <script>
-        // Initialize Swiper
-        var swiper = new Swiper('.swiper', {
-            direction: 'vertical',
-            loop: false,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
-
-        // Motivational Texts & Images
-        const motivationTexts = [
-            "\"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off.\"",
-            "\"Your journey to greatness starts with a single step. Don't be afraid to fail, because every failure brings you closer to success. Stay determined, keep learning, and never stop believing in yourself.\"",
-            "\"Success is not about how fast you reach the top, but about how well you handle the journey. Stay patient, trust the process, and remember that great things take time. Keep going, and you'll get there.\"",
-            "\"Dream big, work hard, and stay focused. The difference between winners and losers is persistence. Keep moving forward, even when things seem tough. Your dedication will lead you to success.\"",
-            "\"Hard work, dedication, and resilience will always pay off. When you feel like giving up, remember why you started. Keep going, keep growing, and never stop chasing your dreams.\""
-        ];
-
-        const motivationImages = [
-            "https://via.placeholder.com/300x200?text=Success+Journey",
-            "https://via.placeholder.com/300x200?text=Never+Give+Up",
-            "https://via.placeholder.com/300x200?text=Trust+The+Process",
-            "https://via.placeholder.com/300x200?text=Stay+Focused",
-            "https://via.placeholder.com/300x200?text=Hard+Work+Pays+Off"
-        ];
-
-        // Change text and image on swipe
-        let currentIndex = 0;
-        swiper.on('slideChange', function () {
-            if (swiper.realIndex === 5) { // 6th Slide
-                currentIndex = (currentIndex + 1) % motivationTexts.length;
-                document.getElementById("motivation-text").innerText = motivationTexts[currentIndex];
-                document.getElementById("motivation-image").src = motivationImages[currentIndex];
-            }
-        });
-    </script>
+    <!-- Motivational Text & Image Section -->
+    <div class="motivation">
+        <p>💡 Unlock your earning potential with FundFlow!</p>
+        <p>💰 Your journey to financial freedom starts here.</p>
+        <p>🚀 Take the first step today!</p>
+        <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Motivation">
+    </div>
 
 </body>
-                </html>
+</html>
