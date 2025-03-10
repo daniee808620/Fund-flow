@@ -3,40 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>FundFlow - Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ff7f00, #ffcc00);
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: blue;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-btn {
+            width: 95%;
+            padding: 12px;
+            background: #ff7f00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-btn:hover {
+            background: #e06b00;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
-    <form onsubmit="login(event)">
-        <label>Email:</label>
-        <input type="email" id="email" required><br><br>
 
-        <label>Password:</label>
-        <input type="password" id="password" required><br><br>
+    <div class="container">
+        <h2>Login to FundFlow</h2>
+        <p>Enter your details below:</p>
 
-        <button type="submit">Login</button>
-    </form>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="text" id="coupon" placeholder="Enter Coupon Code" required>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
 
-    <p><a href="index.html">Back to Home</a></p>
+        <p class="error" id="errorMsg"></p>
+    </div>
 
     <script>
-        function login(event) {
-            event.preventDefault(); // Prevent page reload
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let couponCode = document.getElementById("coupon").value.trim().toUpperCase();
+            let errorMsg = document.getElementById("errorMsg");
 
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
-
-            // Get stored user data
-            let storedEmail = localStorage.getItem("email");
-            let storedPassword = localStorage.getItem("password");
-
-            if (email === storedEmail && password === storedPassword) {
-                alert("Login successful!");
-                window.location.href = "dashboard.html"; // Redirect to dashboard
-            } else {
-                alert("Invalid email or password.");
+            if (!username || !password || !couponCode) {
+                errorMsg.innerText = "All fields are required!";
+                return;
             }
-        }
+
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+            let couponIndex = coupons.findIndex(c => c.code === couponCode);
+
+            if (couponIndex === -1) {
+                errorMsg.innerText = "Invalid coupon code!";
+                return;
+            }
+
+            if (!coupons[couponIndex].active) {
+                errorMsg.innerText = "This coupon has already been used!";
+                return;
+            }
+
+            // Mark coupon as used
+            coupons[couponIndex].active = false;
+            coupons[couponIndex].usedBy = username;
+            localStorage.setItem("coupons", JSON.stringify(coupons));
+
+            // Store user session
+            localStorage.setItem("loggedInUser", JSON.stringify({ username, password }));
+
+            alert("Login successful!");
+            window.location.href = "dashboard.html"; // Redirect to dashboard
+        });
     </script>
+
 </body>
 </html>
