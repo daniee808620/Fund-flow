@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS -->
 </head>
 <body>
 
@@ -20,64 +20,17 @@
     <div id="adminPanel" style="display: none;">
         <h2>Admin Panel</h2>
         <button onclick="adminLogout()">Logout</button>
-
-        <h3>Generate Coupon</h3>
-        <input type="number" id="couponAmount" placeholder="Enter amount"><br>
-        <button onclick="generateCoupon()">Generate Coupon</button>
-
-        <h3>All Coupons</h3>
-        <ul id="couponList"></ul>
-
-        <hr>
-
-        <h3>All Users</h3>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Country</th>
-                    <th>Balance</th>
-                </tr>
-            </thead>
-            <tbody id="userTable"></tbody>
-        </table>
-
-        <hr>
-
-        <h3>Withdrawals</h3>
-        <button onclick="toggleWithdraw(true)">Open Withdraw</button>
-        <button onclick="toggleWithdraw(false)">Close Withdraw</button>
-        <p>Status: <span id="withdrawStatus">Loading...</span></p>
-
-        <hr>
-
-        <h3>Add Daily Pay</h3>
-        <input type="number" id="dailyPayAmount" placeholder="Enter amount"><br>
-        <button onclick="addDailyPay()">Add Daily Pay</button>
-
-        <hr>
-
-        <h3>Add Sponsored Post</h3>
-        <input type="text" id="postTitle" placeholder="Enter post title"><br>
-        <input type="text" id="postLink" placeholder="Enter post link"><br>
-        <button onclick="addSponsoredPost()">Add Sponsored Post</button>
-
-        <h3>All Sponsored Posts</h3>
-        <ul id="sponsoredPostList"></ul>
     </div>
 
     <script>
-        const ADMIN_USERNAME = "admin";
-        const ADMIN_PASSWORD = "12345"; // Change this to a stronger password
-
         function adminLogin() {
             let username = document.getElementById("adminUsername").value;
             let password = document.getElementById("adminPassword").value;
 
-            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+            if (username === "admin" && password === "12345") {
                 localStorage.setItem("adminLoggedIn", "true");
-                showAdminPanel();
+                document.getElementById("loginSection").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
             } else {
                 alert("Invalid credentials!");
             }
@@ -88,123 +41,11 @@
             location.reload();
         }
 
-        function showAdminPanel() {
+        if (localStorage.getItem("adminLoggedIn") === "true") {
             document.getElementById("loginSection").style.display = "none";
             document.getElementById("adminPanel").style.display = "block";
-            displayCoupons();
-            displayUsers();
-            updateWithdrawStatus();
-            displaySponsoredPosts();
         }
-
-        function checkAdminLogin() {
-            if (localStorage.getItem("adminLoggedIn") === "true") {
-                showAdminPanel();
-            }
-        }
-
-        function generateCoupon() {
-            let amount = document.getElementById("couponAmount").value;
-            if (!amount) {
-                alert("Enter a valid amount!");
-                return;
-            }
-
-            let couponCode = "COUPON" + Math.floor(100000 + Math.random() * 900000);
-            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
-
-            coupons.push({ code: couponCode, amount: amount, used: false });
-            localStorage.setItem("coupons", JSON.stringify(coupons));
-
-            alert("Coupon Generated: " + couponCode);
-            displayCoupons();
-        }
-
-        function displayCoupons() {
-            let couponList = document.getElementById("couponList");
-            couponList.innerHTML = "";
-            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
-
-            coupons.forEach((coupon) => {
-                let status = coupon.used ? "Used" : "Available";
-                couponList.innerHTML += `<li>${coupon.code} - ₦${coupon.amount} [${status}]</li>`;
-            });
-        }
-
-        function displayUsers() {
-            let userTable = document.getElementById("userTable");
-            userTable.innerHTML = "";
-            let users = JSON.parse(localStorage.getItem("users")) || [];
-
-            users.forEach(user => {
-                userTable.innerHTML += `
-                    <tr>
-                        <td>${user.username}</td>
-                        <td>${user.email}</td>
-                        <td>${user.country}</td>
-                        <td>₦${user.balance}</td>
-                    </tr>
-                `;
-            });
-        }
-
-        function toggleWithdraw(status) {
-            localStorage.setItem("withdrawStatus", status ? "open" : "closed");
-            updateWithdrawStatus();
-            alert(`Withdrawals are now ${status ? "OPEN" : "CLOSED"}`);
-        }
-
-        function updateWithdrawStatus() {
-            let status = localStorage.getItem("withdrawStatus") || "closed";
-            document.getElementById("withdrawStatus").innerText = status.toUpperCase();
-        }
-
-        function addDailyPay() {
-            let amount = document.getElementById("dailyPayAmount").value;
-            if (!amount) {
-                alert("Enter a valid amount!");
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem("users")) || [];
-            users.forEach(user => {
-                user.balance = (parseFloat(user.balance) || 0) + parseFloat(amount);
-            });
-            localStorage.setItem("users", JSON.stringify(users));
-
-            alert("Daily Pay Added!");
-            displayUsers();
-        }
-
-        function addSponsoredPost() {
-            let title = document.getElementById("postTitle").value;
-            let link = document.getElementById("postLink").value;
-
-            if (!title || !link) {
-                alert("Enter both title and link!");
-                return;
-            }
-
-            let posts = JSON.parse(localStorage.getItem("sponsoredPosts")) || [];
-            posts.push({ title, link });
-            localStorage.setItem("sponsoredPosts", JSON.stringify(posts));
-
-            alert("Sponsored Post Added!");
-            displaySponsoredPosts();
-        }
-
-        function displaySponsoredPosts() {
-            let postList = document.getElementById("sponsoredPostList");
-            postList.innerHTML = "";
-            let posts = JSON.parse(localStorage.getItem("sponsoredPosts")) || [];
-
-            posts.forEach(post => {
-                postList.innerHTML += `<li><a href="${post.link}" target="_blank">${post.title}</a></li>`;
-            });
-        }
-
-        checkAdminLogin();
     </script>
 
 </body>
-          </html
+</html
