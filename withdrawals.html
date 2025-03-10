@@ -7,123 +7,94 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: white;
             text-align: center;
         }
-        h2 {
-            color: blue;
-        }
         table {
-            width: 100%;
+            width: 90%;
+            margin: 20px auto;
             border-collapse: collapse;
-            margin-top: 20px;
         }
         th, td {
-            border: 1px solid black;
             padding: 10px;
-            text-align: left;
+            border: 1px solid black;
+            text-align: center;
         }
         th {
-            background-color: blue;
+            background: blue;
             color: white;
         }
         .approve-btn, .reject-btn {
-            padding: 8px;
+            padding: 5px 10px;
             border: none;
             cursor: pointer;
             border-radius: 5px;
         }
         .approve-btn {
-            background-color: green;
+            background: green;
             color: white;
         }
         .reject-btn {
-            background-color: red;
+            background: red;
             color: white;
-        }
-        .approved {
-            color: green;
-            font-weight: bold;
-        }
-        .rejected {
-            color: red;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
     <h2>Withdrawal Requests</h2>
-
     <table>
         <thead>
             <tr>
                 <th>Username</th>
                 <th>Amount (₦)</th>
                 <th>Account Details</th>
-                <th>Request Time</th>
+                <th>Requested Time</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
-        <tbody id="withdrawalTable">
-            <!-- Withdrawals will be loaded here -->
-        </tbody>
+        <tbody id="withdrawalTable"></tbody>
     </table>
 
     <script>
-        let withdrawals = JSON.parse(localStorage.getItem("withdrawals")) || [];
-
+        // Load withdrawal requests from localStorage
         function loadWithdrawals() {
-            let table = document.getElementById("withdrawalTable");
-            table.innerHTML = ""; // Clear the table before loading new data
+            let withdrawals = JSON.parse(localStorage.getItem("withdrawals")) || [];
+
+            let tableBody = document.getElementById("withdrawalTable");
+            tableBody.innerHTML = ""; // Clear existing rows before adding
 
             withdrawals.forEach((withdrawal, index) => {
                 let row = document.createElement("tr");
+
                 row.innerHTML = `
                     <td>${withdrawal.username}</td>
                     <td>₦${withdrawal.amount}</td>
-                    <td>${withdrawal.accountNumber} (${withdrawal.accountName}) - ${withdrawal.bank}</td>
+                    <td>${withdrawal.accountNumber} - ${withdrawal.accountName} (${withdrawal.bank})</td>
                     <td>${withdrawal.time}</td>
-                    <td id="status-${index}">
-                        ${withdrawal.status === "Pending" ? `
-                            <button class="approve-btn" onclick="approveWithdrawal(${index})">Approve</button>
-                            <button class="reject-btn" onclick="rejectWithdrawal(${index})">Reject</button>
-                        ` : `<span class="${withdrawal.status.toLowerCase()}">${withdrawal.status}</span>`}
+                    <td id="status-${index}">${withdrawal.status}</td>
+                    <td>
+                        <button class="approve-btn" onclick="updateStatus(${index}, 'Approved')">Approve</button>
+                        <button class="reject-btn" onclick="updateStatus(${index}, 'Rejected')">Reject</button>
                     </td>
                 `;
-                table.appendChild(row);
+
+                tableBody.appendChild(row);
             });
         }
 
-        function approveWithdrawal(index) {
-            withdrawals[index].status = "Approved";
-            saveWithdrawals();
-            loadWithdrawals();
-        }
-
-        function rejectWithdrawal(index) {
-            withdrawals[index].status = "Rejected";
-            saveWithdrawals();
-            loadWithdrawals();
-        }
-
-        function saveWithdrawals() {
+        // Update withdrawal status
+        function updateStatus(index, newStatus) {
+            let withdrawals = JSON.parse(localStorage.getItem("withdrawals")) || [];
+            withdrawals[index].status = newStatus;
             localStorage.setItem("withdrawals", JSON.stringify(withdrawals));
+
+            document.getElementById(`status-${index}`).innerText = newStatus;
         }
 
-        // Dummy data for testing (Only runs if no withdrawals exist)
-        if (withdrawals.length === 0) {
-            withdrawals = [
-                { username: "User1", amount: "5000", accountNumber: "1234567890", accountName: "John Doe", bank: "Opay", time: "10:30 AM", status: "Pending" },
-                { username: "User2", amount: "2000", accountNumber: "0987654321", accountName: "Jane Smith", bank: "MoniePoint", time: "11:00 AM", status: "Pending" }
-            ];
-            saveWithdrawals();
-        }
-
+        // Load withdrawals on page load
         loadWithdrawals();
     </script>
 
 </body>
-  </html
+</html>
