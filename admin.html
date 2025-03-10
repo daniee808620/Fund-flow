@@ -4,19 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Ensure this file exists -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
+    <!-- Navigation Menu -->
+    <nav class="admin-nav">
+        <button onclick="showSection('generateCoupon')">Generate Coupon</button>
+        <button onclick="showSection('withdrawals')">Withdrawals</button>
+        <button onclick="showSection('openWithdrawal')">Open Withdrawal</button>
+        <button onclick="showSection('closeWithdrawal')">Close Withdrawal</button>
+        <button onclick="showSection('totalUsers')">Total Users</button>
+        <button onclick="showSection('addDailyPay')">Add Daily Pay</button>
+        <button onclick="showSection('addSponsoredPost')">Add Sponsored Post</button>
+    </nav>
+
+    <!-- Admin Panel Content -->
     <div class="admin-container">
         <h1>Admin Panel</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        <button class="logout-btn">Logout</button>
     </div>
 
+    <!-- Sections -->
+    <div id="generateCoupon" class="admin-section">Generate Coupon Section</div>
+    <div id="withdrawals" class="admin-section">Withdrawals Section</div>
+    <div id="openWithdrawal" class="admin-section">Open Withdrawal Section</div>
+    <div id="closeWithdrawal" class="admin-section">Close Withdrawal Section</div>
+    <div id="totalUsers" class="admin-section">Total Users Section</div>
+    <div id="addDailyPay" class="admin-section">Add Daily Pay Section</div>
+    <div id="addSponsoredPost" class="admin-section">Add Sponsored Post Section</div>
+
     <script>
-        function logout() {
-            alert("Logged out successfully!");
-            window.location.href = "login.html"; // Redirect to login page
+        // Hide all sections except the first one
+        document.addEventListener("DOMContentLoaded", function() {
+            let sections = document.querySelectorAll(".admin-section");
+            sections.forEach(section => section.style.display = "none");
+        });
+
+        // Show the selected section
+        function showSection(sectionId) {
+            let sections = document.querySelectorAll(".admin-section");
+            sections.forEach(section => section.style.display = "none"); // Hide all
+            document.getElementById(sectionId).style.display = "block"; // Show selected
         }
     </script>
+
 </body>
-</html>
+        </html>
