@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FundFlow - Login</title>
+    <title>Login to FundFlow</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff7f00, #ffcc00);
             text-align: center;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #ff7f00, #ffcc00);
         }
 
         .container {
@@ -20,10 +20,6 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        h2 {
-            color: blue;
         }
 
         input {
@@ -58,56 +54,42 @@
 <body>
 
     <div class="container">
-        <h2>Login to FundFlow</h2>
+        <h1 style="color: blue;">Login to FundFlow</h1>
         <p>Enter your details below:</p>
 
         <form id="loginForm">
             <input type="text" id="username" placeholder="Username" required>
             <input type="password" id="password" placeholder="Password" required>
-            <input type="text" id="coupon" placeholder="Enter Coupon Code" required>
             <button type="submit" class="login-btn">Login</button>
         </form>
 
-        <p class="error" id="errorMsg"></p>
+        <p class="error" id="errorMessage"></p>
     </div>
 
     <script>
+        // Check if user is already logged in
+        window.onload = function() {
+            let loggedInUser = sessionStorage.getItem("loggedInUser");
+            if (loggedInUser) {
+                window.location.href = "dashboard.html";
+            }
+        };
+
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault();
-            
-            let username = document.getElementById("username").value.trim();
-            let password = document.getElementById("password").value.trim();
-            let couponCode = document.getElementById("coupon").value.trim().toUpperCase();
-            let errorMsg = document.getElementById("errorMsg");
 
-            if (!username || !password || !couponCode) {
-                errorMsg.innerText = "All fields are required!";
-                return;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let validUser = users.find(user => user.username === username && user.password === password);
+
+            if (validUser) {
+                sessionStorage.setItem("loggedInUser", username);
+                window.location.href = "dashboard.html";
+            } else {
+                document.getElementById("errorMessage").innerText = "Invalid username or password!";
             }
-
-            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
-            let couponIndex = coupons.findIndex(c => c.code === couponCode);
-
-            if (couponIndex === -1) {
-                errorMsg.innerText = "Invalid coupon code!";
-                return;
-            }
-
-            if (!coupons[couponIndex].active) {
-                errorMsg.innerText = "This coupon has already been used!";
-                return;
-            }
-
-            // Mark coupon as used
-            coupons[couponIndex].active = false;
-            coupons[couponIndex].usedBy = username;
-            localStorage.setItem("coupons", JSON.stringify(coupons));
-
-            // Store user session
-            localStorage.setItem("loggedInUser", JSON.stringify({ username, password }));
-
-            alert("Login successful!");
-            window.location.href = "dashboard.html"; // Redirect to dashboard
         });
     </script>
 
