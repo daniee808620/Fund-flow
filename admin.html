@@ -98,17 +98,15 @@
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
-        document.getElementById("totalUsers").innerText = localStorage.getItem("totalUsers") || "0";
-
+        // Function to update total users from localStorage
         function updateTotalUsers() {
-            let newCount = prompt("Enter the new total user count:");
-            if (newCount !== null && !isNaN(newCount) && newCount >= 0) {
-                localStorage.setItem("totalUsers", newCount);
-                document.getElementById("totalUsers").innerText = newCount;
-            } else {
-                alert("Please enter a valid number.");
-            }
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let totalUsers = users.length;
+            document.getElementById("totalUsers").innerText = totalUsers;
         }
+
+        // Auto-update users on page load
+        updateTotalUsers();
     </script>
 
 </body>
