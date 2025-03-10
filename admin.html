@@ -4,64 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: black;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .menu {
+            display: none;
+            background: white;
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            width: 220px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: white;
+            background: blue;
+            border-bottom: 2px solid white;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .menu a:hover {
+            background: darkblue;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <button class="menu-btn" onclick="toggleMenu()">🕹️</button>
-        <div class="menu-dropdown" id="menuDropdown">
-            <button onclick="showSection('generateCoupon')">Generate Coupon</button>
-            <button onclick="showSection('withdrawals')">Withdrawals</button>
-            <button onclick="showSection('openWithdrawal')">Open Withdrawal</button>
-            <button onclick="showSection('closeWithdrawal')">Close Withdrawal</button>
-            <button onclick="showSection('totalUsers')">Total Users</button>
-            <button onclick="showSection('addDailyPay')">Add Daily Pay</button>
-            <button onclick="showSection('addSponsoredPost')">Add Sponsored Post</button>
-        </div>
-    </nav>
+    <!-- Hamburger Menu Button -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <!-- Admin Panel Content -->
-    <div class="admin-container">
-        <h1>Admin Panel</h1>
-        <button class="logout-btn">Logout</button>
+    <!-- Navigation Menu -->
+    <div class="menu" id="navMenu">
+        <a href="#">Generate Coupon</a>
+        <a href="#">Withdrawals</a>
+        <a href="#">Open Withdrawal</a>
+        <a href="#">Close Withdrawal</a>
+        <a href="#">Total Users</a>
+        <a href="#">Add Daily Pay</a>
+        <a href="#">Add Sponsored Post</a>
     </div>
 
-    <!-- Sections -->
-    <div id="generateCoupon" class="admin-section">Generate Coupon Section</div>
-    <div id="withdrawals" class="admin-section">Withdrawals Section</div>
-    <div id="openWithdrawal" class="admin-section">Open Withdrawal Section</div>
-    <div id="closeWithdrawal" class="admin-section">Close Withdrawal Section</div>
-    <div id="totalUsers" class="admin-section">Total Users Section</div>
-    <div id="addDailyPay" class="admin-section">Add Daily Pay Section</div>
-    <div id="addSponsoredPost" class="admin-section">Add Sponsored Post Section</div>
-
     <script>
-        // Toggle the navigation menu
         function toggleMenu() {
-            let menu = document.getElementById("menuDropdown");
+            var menu = document.getElementById("navMenu");
             if (menu.style.display === "block") {
                 menu.style.display = "none";
             } else {
                 menu.style.display = "block";
             }
         }
-
-        // Hide all sections except the first one
-        document.addEventListener("DOMContentLoaded", function() {
-            let sections = document.querySelectorAll(".admin-section");
-            sections.forEach(section => section.style.display = "none");
-        });
-
-        // Show the selected section
-        function showSection(sectionId) {
-            let sections = document.querySelectorAll(".admin-section");
-            sections.forEach(section => section.style.display = "none"); // Hide all
-            document.getElementById(sectionId).style.display = "block"; // Show selected
-            document.getElementById("menuDropdown").style.display = "none"; // Hide menu after selection
-        }
     </script>
 
 </body>
-    </html>
+</html>
