@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Sign Up - Fund Flow</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -94,6 +94,36 @@
             margin-left: auto;
             margin-right: auto;
         }
+        /* Motivational Section */
+        .motivation-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 255, 0.8);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.5s ease-in-out;
+        }
+        /* Image Slider */
+        .slider {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
+            position: relative;
+        }
+        .slider img {
+            width: 100%;
+            display: none;
+        }
+        .slider img.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -103,10 +133,17 @@
 
     <!-- Navigation Menu -->
     <div class="menu" id="navMenu">
-        <a href="signup.html">Home</a>  <!-- Updated -->
-        <a href="checkcoupon.html">Check Coupon</a>
+        <a href="signup.html">Home</a>
+        <a href="checkcoupon.html">Check Coupon</a>  
         <a href="buy_coupon.html">Buy Coupon</a>
         <a href="login.html">Login</a>
+    </div>
+
+    <!-- Image Slider -->
+    <div class="slider">
+        <img src="image1.jpg" class="active" alt="Motivation 1">
+        <img src="image2.jpg" alt="Motivation 2">
+        <img src="image3.jpg" alt="Motivation 3">
     </div>
 
     <div class="container">
@@ -134,6 +171,11 @@
         <button class="btn" onclick="window.location.href='login.html'">Log In</button>
     </div>
 
+    <!-- Motivational Section -->
+    <div class="motivation-section" id="motivation">
+        "Success is not final, failure is not fatal: it is the courage to continue that counts."
+    </div>
+
     <script>
         function toggleMenu() {
             var menu = document.getElementById("navMenu");
@@ -159,7 +201,32 @@
             alert("Registration successful!");
             window.location.href = "login.html";
         }
+
+        // Motivational Text Change on Scroll
+        const messages = [
+            "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+            "Every great journey starts with a single step. Keep moving forward!",
+            "Believe in yourself, and you’re already halfway there.",
+            "Opportunities don’t happen. You create them.",
+            "Your future is created by what you do today, not tomorrow."
+        ];
+        let msgIndex = 0;
+        window.addEventListener("scroll", function() {
+            let motivation = document.getElementById("motivation");
+            msgIndex = (msgIndex + 1) % messages.length;
+            motivation.textContent = messages[msgIndex];
+        });
+
+        // Image Slider
+        let currentImage = 0;
+        function changeImage() {
+            let images = document.querySelectorAll(".slider img");
+            images[currentImage].classList.remove("active");
+            currentImage = (currentImage + 1) % images.length;
+            images[currentImage].classList.add("active");
+        }
+        setInterval(changeImage, 5000); // Change image every 5 seconds
     </script>
 
 </body>
-</html>
+    </html>
