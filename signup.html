@@ -21,13 +21,6 @@
             background: #f8f9fa;
         }
 
-        /* Banner Image */
-        .banner-img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
         .swiper {
             width: 100%;
             height: 100vh;
@@ -84,17 +77,12 @@
             font-weight: bold;
         }
 
-        /* Coupon Link */
-        .coupon-text {
-            font-size: 14px;
-            color: #007bff;
+        /* Contact Icons */
+        .contact-icons a {
+            margin: 10px;
             text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .coupon-text:hover {
-            text-decoration: underline;
+            font-size: 30px;
+            color: white;
         }
 
         /* Swipe Indicator */
@@ -102,32 +90,48 @@
             position: absolute;
             bottom: 10px;
         }
+
+        /* Motivational Text */
+        #motivation-text {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px;
+            max-width: 80%;
+        }
+
+        /* FundFlow Banner Image */
+        .banner-img {
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            margin: 10px auto;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
-
-    <!-- FundFlow Banner Image -->
-    <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Banner" class="banner-img">
 
     <!-- Swiper Container -->
     <div class="swiper">
         <div class="swiper-wrapper">
 
-            <!-- Signup Section -->
+            <!-- Signup Section (Default Screen) -->
             <div class="swiper-slide slide-signup">
                 <h2>Join FundFlow</h2>
                 <p>Sign up now and start earning today!</p>
+                
+                <!-- FundFlow Banner Image -->
+                <img src="your-image-link.jpg" alt="FundFlow Banner" class="banner-img">
+                
                 <div class="signup-form">
                     <input type="text" placeholder="Username">
                     <input type="email" placeholder="Email">
                     <input type="tel" placeholder="Phone Number">
-                    
-                    <!-- Coupon Text with Link -->
-                    <a href="buy_coupon.html" class="coupon-text">Don't have a coupon? Buy one here</a>
                     <input type="text" placeholder="Coupon Code">
-                    
                     <input type="password" placeholder="Password">
-                    <button onclick="window.location.href='process_signup.html'">Sign Up</button>
+                    <button>Sign Up</button>
                 </div>
             </div>
 
@@ -156,13 +160,18 @@
             <div class="swiper-slide slide4">
                 <h2>Contact Us</h2>
                 <p>Stay connected with us on social media.</p>
+                <div class="contact-icons">
+                    <a href="https://wa.me/your-number" target="_blank">📱</a>
+                    <a href="https://t.me/your-telegram" target="_blank">💬</a>
+                    <a href="https://facebook.com/your-page" target="_blank">📘</a>
+                </div>
             </div>
 
-            <!-- Section 5: Stay Motivated -->
+            <!-- Section 5: Motivational Quotes & Images -->
             <div class="swiper-slide slide5">
                 <h2>Stay Motivated</h2>
-                <p>"Hard work, dedication, and resilience will always pay off."</p>
-                <img src="https://via.placeholder.com/300x200" alt="Motivation">
+                <p id="motivation-text">"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off."</p>
+                <img id="motivation-image" src="https://via.placeholder.com/300x200" alt="Motivation">
             </div>
         </div>
 
@@ -179,6 +188,33 @@
                 el: '.swiper-pagination',
                 clickable: true,
             },
+        });
+
+        // Motivational Texts & Images
+        const motivationTexts = [
+            "\"The road to success is never easy, but every step forward, no matter how small, is progress. Keep pushing through the challenges, stay consistent, and never give up on your dreams. Your hard work will pay off.\"",
+            "\"Your journey to greatness starts with a single step. Don't be afraid to fail, because every failure brings you closer to success. Stay determined, keep learning, and never stop believing in yourself.\"",
+            "\"Success is not about how fast you reach the top, but about how well you handle the journey. Stay patient, trust the process, and remember that great things take time. Keep going, and you'll get there.\"",
+            "\"Dream big, work hard, and stay focused. The difference between winners and losers is persistence. Keep moving forward, even when things seem tough. Your dedication will lead you to success.\"",
+            "\"Hard work, dedication, and resilience will always pay off. When you feel like giving up, remember why you started. Keep going, keep growing, and never stop chasing your dreams.\""
+        ];
+
+        const motivationImages = [
+            "https://via.placeholder.com/300x200?text=Success+Journey",
+            "https://via.placeholder.com/300x200?text=Never+Give+Up",
+            "https://via.placeholder.com/300x200?text=Trust+The+Process",
+            "https://via.placeholder.com/300x200?text=Stay+Focused",
+            "https://via.placeholder.com/300x200?text=Hard+Work+Pays+Off"
+        ];
+
+        // Change text and image on swipe
+        let currentIndex = 0;
+        swiper.on('slideChange', function () {
+            if (swiper.realIndex === 5) {
+                currentIndex = (currentIndex + 1) % motivationTexts.length;
+                document.getElementById("motivation-text").innerText = motivationTexts[currentIndex];
+                document.getElementById("motivation-image").src = motivationImages[currentIndex];
+            }
         });
     </script>
 
