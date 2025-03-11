@@ -3,69 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join FundFlow</title>
+    <title>FundFlow - Earn Daily</title>
     <style>
+        /* General Styling */
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
+            margin: 0;
+            padding: 0;
             background: #ff8c00;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            width: 300px;
-            margin: auto;
-            border-radius: 10px;
-        }
-        input {
-            width: 90%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background: orange;
             color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
+            text-align: center;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        /* Menu Button */
+        .menu-btn {
+            font-size: 24px;
             cursor: pointer;
-            border-radius: 5px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            color: white;
+        }
+
+        /* Sidebar Menu */
+        .sidebar {
+            width: 0;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: black;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            text-align: left;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 20px;
+            display: block;
+            color: blue;
+            font-family: 'Archivo', sans-serif;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: white;
+            color: black;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Section Boxes */
+        .section {
+            background: white;
+            color: black;
+            padding: 20px;
+            margin: 15px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Join FundFlow</h2>
-        <p>Sign up now and start earning today!</p>
+    <!-- Hamburger Menu Button -->
+    <button class="menu-btn" onclick="openMenu()">☰</button>
 
-        <form id="signupForm">
-            <input type="text" placeholder="Username" required><br>
-            <input type="email" placeholder="Email" required><br>
-            <input type="text" placeholder="Phone Number" required><br>
-            <input type="text" id="referredBy" placeholder="Referred By (Optional)"><br>
-            <input type="text" placeholder="Coupon Code" required><br>
-            <input type="password" placeholder="Password" required><br>
-            <button type="submit">Sign Up</button>
-        </form>
+    <!-- Sidebar Menu -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Sign Up</a>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container">
+        <h2>Welcome to FundFlow</h2>
+        <p>Your #1 platform to earn daily through tasks and referrals!</p>
+
+        <!-- How to Register -->
+        <div class="section">
+            <h3>How to Register</h3>
+            <p>Signing up is simple. Click on <strong>Sign Up</strong> in the menu, enter your details, and start earning!</p>
+        </div>
+
+        <!-- How to Earn -->
+        <div class="section">
+            <h3>How to Earn</h3>
+            <p>Complete daily tasks and invite friends to earn more! Consistency is key, and the more you refer, the more you earn!</p>
+            <p><strong>"Success starts with a single step. Take yours today!"</strong></p>
+        </div>
+
+        <!-- Withdrawals -->
+        <div class="section">
+            <h3>Withdrawals</h3>
+            <p>Withdrawals are combined and processed on:</p>
+            <ul>
+                <li>Monday</li>
+                <li>Wednesday</li>
+                <li>Friday</li>
+            </ul>
+            <p><strong>Time: 5 PM - 6 PM</strong></p>
+        </div>
     </div>
 
     <script>
-        // Function to get URL parameters
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
         }
 
-        // Get the 'user' parameter from the URL and set it in the referredBy field
-        window.onload = function() {
-            const referredBy = getQueryParam('user');
-            if (referredBy) {
-                document.getElementById('referredBy').value = referredBy;
-            }
-        };
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
     </script>
 
 </body>
