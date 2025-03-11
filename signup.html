@@ -45,6 +45,12 @@
         .signup-btn:hover {
             background: #e06b00;
         }
+
+        .disabled-field {
+            background: #f0f0f0;
+            color: gray;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -57,7 +63,7 @@
             <input type="text" name="username" id="username" placeholder="Username" required>
             <input type="email" name="email" id="email" placeholder="Email" required>
             <input type="text" name="phone" id="phone" placeholder="Phone Number" required>
-            <input type="text" name="referredBy" id="referredBy" placeholder="Referred By (Optional)" readonly>
+            <input type="text" name="referredBy" id="referredBy" class="disabled-field" placeholder="Referred By" disabled>
             <input type="text" name="coupon" id="coupon" placeholder="Coupon Code" required>
             <input type="password" name="password" id="password" placeholder="Password" required>
             <button type="submit" class="signup-btn">Sign Up</button>
@@ -65,14 +71,19 @@
     </div>
 
     <script>
-        // Get referral username from URL
+        // Function to get referral username from URL
         function getReferral() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get("ref") || "";
         }
 
         // Set referredBy input field
-        document.getElementById("referredBy").value = getReferral();
+        let referralUser = getReferral();
+        if (referralUser) {
+            document.getElementById("referredBy").value = referralUser;
+        } else {
+            document.getElementById("referredBy").placeholder = "No Referral";
+        }
 
         document.getElementById("signupForm").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -84,6 +95,7 @@
             let password = document.getElementById("password").value;
             let referredBy = document.getElementById("referredBy").value;
 
+            // Validate coupon code
             let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
             let validCoupon = coupons.find(c => c.code === coupon && c.active);
 
@@ -103,7 +115,7 @@
             localStorage.setItem("users", JSON.stringify(users));
 
             // Referral Bonus System
-            if (referredBy) {
+            if (referredBy && referredBy !== "No Referral") {
                 let earnings = JSON.parse(localStorage.getItem("earnings")) || {};
                 earnings[referredBy] = (earnings[referredBy] || 0) + 400;
                 localStorage.setItem("earnings", JSON.stringify(earnings));
