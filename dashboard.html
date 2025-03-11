@@ -3,87 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - FundFlow</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <title>Dashboard</title>
     <style>
         body {
             font-family: 'Anton', sans-serif;
-            background-color: #6a0dad; /* Purple */
+            background-color: #1E3A8A;
             color: white;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
             text-align: center;
         }
-
-        .balance-card {
-            background: black;
-            color: white;
+        .balance-box {
+            background-color: black;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .balance-card p {
-            margin: 5px 0;
-            font-size: 18px;
-        }
-
-        .balance-amount {
-            font-size: 32px;
-            font-weight: bold;
-        }
-
-        .buttons-container {
-            display: flex;
-            justify-content: center;
+            display: inline-block;
             margin-top: 20px;
-            gap: 15px;
         }
-
+        .buttons {
+            margin-top: 20px;
+        }
         .btn {
-            width: 80px;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
+            display: inline-block;
+            padding: 10px;
+            margin: 5px;
             color: white;
             text-decoration: none;
+            border-radius: 5px;
         }
-
-        .withdraw { background: red; }
-        .tasks { background: blue; }
-        .bank { background: green; }
-        .settings { background: orange; }
+        .withdraw { background-color: red; }
+        .tasks { background-color: purple; }
+        .bank { background-color: green; }
+        .settings { background-color: orange; }
     </style>
 </head>
 <body>
+    <h2 id="welcomeText"></h2>
+    <div class="balance-box">
+        <h3>Total Balance</h3>
+        <h1 id="totalBalance">₦0.00</h1>
+    </div>
 
-    <div class="container">
-        <!-- User Profile -->
-        <img src="profile.png" alt="User Profile" width="50" height="50" style="border-radius: 50%;">
-        
-        <!-- Balance Card -->
-        <div class="balance-card">
-            <p>Total Balance</p>
-            <p class="balance-amount" id="totalBalance">₦0.00</p>
-        </div>
-
-        <!-- Buttons -->
-        <div class="buttons-container">
-            <a href="withdraw.html" class="btn withdraw">Withdraw</a>
-            <a href="tasks.html" class="btn tasks">Tasks</a>
-            <a href="bank.html" class="btn bank">Bank</a>
-            <a href="settings.html" class="btn settings">Settings</a>
-        </div>
+    <div class="buttons">
+        <a href="#" class="btn withdraw">Withdraw</a>
+        <a href="#" class="btn tasks">Tasks</a>
+        <a href="#" class="btn bank">Bank</a>
+        <a href="#" class="btn settings">Settings</a>
     </div>
 
     <script>
@@ -93,9 +56,9 @@
             alert("No user found! Redirecting to login...");
             window.location.href = "login.html";
         } else {
-            document.getElementById("totalBalance").innerText = `₦${currentUser.balance || "0.00"}`;
+            document.getElementById("welcomeText").innerText = "Welcome " + currentUser.username;
+            document.getElementById("totalBalance").innerText = "₦" + (currentUser.balance || "0.00");
         }
     </script>
-
 </body>
 </html>
