@@ -4,137 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: url('https://i.postimg.cc/fL3SHTP9/Copy-of-Black-and-Beige-Simple-How-to-Earn-Money-Online-Instagram-Post-20250311-183612-0000.png') no-repeat center center fixed;
+            background: url('https://i.postimg.cc/fL3SHTP9/Copy-of-Black-and-Beige-Simple-How-to-Earn-Money-Online-Instagram-Post-20250311-183612-0000.png') no-repeat center center;
             background-size: cover;
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
+            padding: 20px;
         }
-        .container {
-            width: 90%;
-            max-width: 400px;
-            margin: auto;
+        h1 span {
+            font-family: 'Archivo', sans-serif;
         }
         .box {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: black;
             padding: 15px;
             border-radius: 10px;
-            margin: 10px 0;
+            margin: 10px auto;
+            width: 80%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .box h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-        .withdraw-btn {
+        .withdraw-btn, .downlines-btn {
             background-color: orange;
+            border: none;
             color: white;
             padding: 5px 10px;
-            border: none;
             border-radius: 5px;
-            font-size: 14px;
             cursor: pointer;
         }
         .referral-box {
             background-color: rgba(255, 255, 255, 0.9);
+            color: black;
             padding: 15px;
             border-radius: 10px;
+            margin: 20px auto;
+            width: 80%;
             text-align: left;
-            color: black;
         }
-        .referral-box p {
-            font-size: 14px;
-            margin: 5px 0;
-        }
-        .referral-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background-color: white;
-            padding: 8px;
+        .referral-box input {
+            width: 80%;
+            padding: 5px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            border: 1px solid gray;
-        }
-        .referral-link input {
-            border: none;
-            width: 100%;
-            font-size: 14px;
-            outline: none;
         }
         .copy-btn {
             background-color: orange;
+            border: none;
             color: white;
             padding: 5px 10px;
-            border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         .whatsapp-btn {
-            background-color: #25D366;
+            background-color: green;
+            border: none;
             color: white;
             padding: 10px;
-            border: none;
             border-radius: 5px;
-            width: 100%;
-            font-size: 16px;
+            width: 80%;
+            margin-top: 15px;
             cursor: pointer;
-            margin-top: 10px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Welcome <span id="username">Loading...</span></h1>
+    <h1>Welcome <span id="username">Loading...</span></h1>
 
-        <div class="box">
-            <h3>Total Balance: ₦<span id="balance">0</span></h3>
-            <button class="withdraw-btn">Withdraw</button>
-        </div>
-
-        <div class="box">
-            <h3>Total Downlines: <span id="downlines">0</span></h3>
-            <button class="withdraw-btn">Withdraw</button>
-        </div>
-
-        <div class="referral-box">
-            <h3>Referral Link</h3>
-            <p>Copy your referral link and earn ₦400 per referral!</p>
-            <div class="referral-link">
-                <input type="text" id="referralLink" value="https://example.com/ref?user=" readonly>
-                <button class="copy-btn" onclick="copyReferral()">Copy</button>
-            </div>
-        </div>
-
-        <button class="whatsapp-btn" onclick="joinWhatsApp()">Join WhatsApp Group</button>
+    <div class="box">
+        <span>Total Balance: ₦<span id="balance">0.00</span></span>
+        <button class="withdraw-btn">Withdraw</button>
     </div>
+
+    <div class="box">
+        <span>Total Downlines: <span id="downlines">0</span></span>
+        <a href="downline.html" class="downlines-btn">View</a>
+    </div>
+
+    <div class="referral-box">
+        <strong>Referral Link</strong>
+        <p>Copy your referral link and earn ₦400 per referral!</p>
+        <input type="text" id="referral-link" readonly>
+        <button class="copy-btn" onclick="copyReferral()">Copy</button>
+    </div>
+
+    <a href="https://chat.whatsapp.com/YOUR_GROUP_LINK" class="whatsapp-btn">Join WhatsApp Group</a>
 
     <script>
         function loadUserData() {
             let username = localStorage.getItem("username") || "Guest";
             let balance = localStorage.getItem("balance") || "0.00";
             let downlines = localStorage.getItem("downlines") || "0";
-            let referralLink = "https://example.com/ref?user=" + username;
+            let referralLink = `https://fundflow1.netlify.app/ref?user=${username}`;
 
             document.getElementById("username").innerText = username;
             document.getElementById("balance").innerText = parseFloat(balance).toFixed(2);
             document.getElementById("downlines").innerText = downlines;
-            document.getElementById("referralLink").value = referralLink;
+            document.getElementById("referral-link").value = referralLink;
         }
 
         function copyReferral() {
-            let link = document.getElementById("referralLink");
-            link.select();
-            document.execCommand("copy");
+            let copyText = document.getElementById("referral-link");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
             alert("Referral link copied!");
-        }
-
-        function joinWhatsApp() {
-            window.location.href = "https://chat.whatsapp.com/your-group-link";
         }
 
         loadUserData();
