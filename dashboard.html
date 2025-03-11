@@ -47,9 +47,6 @@
             margin-bottom: 5px;
         }
     </style>
-
-    <!-- FontAwesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -62,39 +59,42 @@
 
     <div class="buttons">
         <a href="withdraw.html" class="button withdraw">
-            <i class="icon fas fa-wallet"></i> Withdraw
+            <span class="icon">💳</span> Withdraw
         </a>
         <a href="tasks.html" class="button tasks">
-            <i class="icon fas fa-link"></i> Tasks
+            <span class="icon">🔗</span> Tasks
         </a>
         <a href="bank.html" class="button bank">
-            <i class="icon fas fa-credit-card"></i> Bank
+            <span class="icon">🏦</span> Bank
         </a>
         <a href="settings.html" class="button settings">
-            <i class="icon fas fa-cog"></i> Settings
+            <span class="icon">⚙️</span> Settings
         </a>
     </div>
 
     <script>
-        async function fetchUserData() {
-            try {
-                const response = await fetch('your-api-endpoint'); // Replace with your actual backend API URL
-                const user = await response.json();
-                
-                // Update username
-                document.getElementById("username").innerText = user.username || "Unknown User";
+        // Function to load user data
+        function loadUserData() {
+            let username = localStorage.getItem("username") || "Guest";
+            let balance = localStorage.getItem("balance") || "0.00";
 
-                // Update balance (If no balance, show ₦0)
-                document.getElementById("balance").innerText = user.balance > 0 ? user.balance.toFixed(2) : "0";
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                document.getElementById("username").innerText = "Error Loading";
-            }
+            document.getElementById("username").innerText = username;
+            document.getElementById("balance").innerText = parseFloat(balance).toFixed(2);
         }
 
-        // Fetch and update on page load
-        fetchUserData();
+        // Function to update user data (Simulating a real update)
+        function updateUserData(newUsername, newBalance) {
+            localStorage.setItem("username", newUsername);
+            localStorage.setItem("balance", newBalance);
+            loadUserData();
+        }
+
+        // Load data on page load
+        loadUserData();
+
+        // Simulate an update (Uncomment to test)
+        // setTimeout(() => { updateUserData("JohnDoe", "5192.95"); }, 3000);
     </script>
 
 </body>
-    </html>
+</html>
