@@ -14,53 +14,6 @@
             padding: 0;
         }
 
-        /* Hamburger Menu */
-        .menu-container {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-
-        .menu-icon {
-            font-size: 30px;
-            cursor: pointer;
-            background: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .menu {
-            display: none;
-            position: absolute;
-            top: 40px;
-            left: 0;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            width: 150px;
-            text-align: left;
-        }
-
-        .menu a {
-            display: block;
-            padding: 10px;
-            color: black;
-            text-decoration: none;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .menu a:last-child {
-            border-bottom: none;
-        }
-
-        .menu a:hover {
-            background: #f2f2f2;
-        }
-
-        h1 {
-            color: blue;
-        }
-
         .container {
             max-width: 400px;
             margin: 50px auto;
@@ -78,18 +31,6 @@
             border-radius: 5px;
         }
 
-        .coupon-link {
-            color: blue;
-            font-size: 14px;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .coupon-link:hover {
-            text-decoration: underline;
-        }
-
         .signup-btn {
             width: 95%;
             padding: 12px;
@@ -104,36 +45,9 @@
         .signup-btn:hover {
             background: #e06b00;
         }
-
-        .motivation {
-            margin-top: 20px;
-            color: white;
-            font-size: 20px;
-            font-family: 'Anton', sans-serif;
-            text-transform: uppercase;
-        }
-
-        .logo {
-            margin-top: 30px;
-        }
-
-        .logo img {
-            width: 150px;
-        }
     </style>
 </head>
 <body>
-
-    <!-- Hamburger Menu -->
-    <div class="menu-container">
-        <span class="menu-icon" onclick="toggleMenu()">☰</span>
-        <div class="menu" id="menu">
-            <a href="index.html">🏠 Home</a>
-            <a href="login.html">🔑 Login</a>
-            <a href="signup.html">📝 Sign Up</a>
-            <a href="check_coupon.html">🎟 Check Coupon</a>
-        </div>
-    </div>
 
     <div class="container">
         <h1>Join FundFlow</h1>
@@ -143,46 +57,32 @@
             <input type="text" name="username" id="username" placeholder="Username" required>
             <input type="email" name="email" id="email" placeholder="Email" required>
             <input type="text" name="phone" id="phone" placeholder="Phone Number" required>
-
-            <!-- "Don't have a coupon?" above the coupon input -->
-            <a href="buy_coupon.html" class="coupon-link">Don't have a coupon code? Click here</a>
+            <input type="text" name="referredBy" id="referredBy" placeholder="Referred By (Optional)" readonly>
             <input type="text" name="coupon" id="coupon" placeholder="Coupon Code" required>
-
             <input type="password" name="password" id="password" placeholder="Password" required>
             <button type="submit" class="signup-btn">Sign Up</button>
         </form>
     </div>
 
-    <!-- Motivational Text in Anton Font -->
-    <div class="motivation">
-        <p>💡 UNLOCK YOUR EARNING POTENTIAL WITH FUNDFLOW! 🚀</p>
-        <p>💰 START SMALL, EARN BIG—YOUR JOURNEY BEGINS NOW!</p>
-        <p>🌟 YOUR SUCCESS STORY STARTS HERE, TAKE ACTION TODAY!</p>
-    </div>
-
-    <!-- FundFlow Logo -->
-    <div class="logo">
-        <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" alt="FundFlow Logo">
-    </div>
-
     <script>
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
-            }
+        // Get referral username from URL
+        function getReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get("ref") || "";
         }
 
+        // Set referredBy input field
+        document.getElementById("referredBy").value = getReferral();
+
         document.getElementById("signupForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent default form submission
-            
+            event.preventDefault();
+
             let username = document.getElementById("username").value;
             let email = document.getElementById("email").value;
             let phone = document.getElementById("phone").value;
             let coupon = document.getElementById("coupon").value;
             let password = document.getElementById("password").value;
+            let referredBy = document.getElementById("referredBy").value;
 
             let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
             let validCoupon = coupons.find(c => c.code === coupon && c.active);
@@ -197,10 +97,17 @@
             validCoupon.usedBy = username;
             localStorage.setItem("coupons", JSON.stringify(coupons));
 
-            // Store user data (Simulating backend database)
+            // Store user data
             let users = JSON.parse(localStorage.getItem("users")) || [];
-            users.push({ username, email, phone, password });
+            users.push({ username, email, phone, password, referredBy });
             localStorage.setItem("users", JSON.stringify(users));
+
+            // Referral Bonus System
+            if (referredBy) {
+                let earnings = JSON.parse(localStorage.getItem("earnings")) || {};
+                earnings[referredBy] = (earnings[referredBy] || 0) + 400;
+                localStorage.setItem("earnings", JSON.stringify(earnings));
+            }
 
             alert("Signup successful! Redirecting to login page...");
             window.location.href = "login.html";
@@ -208,4 +115,4 @@
     </script>
 
 </body>
-    </html>
+</html>
