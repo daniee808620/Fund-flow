@@ -6,99 +6,139 @@
     <title>Dashboard</title>
     <style>
         body {
-            background: url('https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg') no-repeat center center fixed;
+            background: url('https://i.postimg.cc/fL3SHTP9/Copy-of-Black-and-Beige-Simple-How-to-Earn-Money-Online-Instagram-Post-20250311-183612-0000.png') no-repeat center center fixed;
             background-size: cover;
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        .balance-box {
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+        }
+        .box {
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            margin: 20px auto;
-            width: 80%;
-        }
-        .buttons {
+            margin: 10px 0;
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .button {
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 16px;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            width: 80px;
-            height: 80px;
-            justify-content: center;
-            font-weight: bold;
         }
-        .withdraw { background-color: #FF3366; } /* Pink */
-        .tasks { background-color: #6A5ACD; } /* Blue */
-        .bank { background-color: #32CD32; } /* Green */
-        .settings { background-color: #FFA500; } /* Orange */
-        .icon {
-            font-size: 24px;
-            margin-bottom: 5px;
+        .box h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .withdraw-btn {
+            background-color: orange;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .referral-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+            color: black;
+        }
+        .referral-box p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .referral-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: white;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+        .referral-link input {
+            border: none;
+            width: 100%;
+            font-size: 14px;
+            outline: none;
+        }
+        .copy-btn {
+            background-color: orange;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Welcome <span id="username">Loading...</span></h1>
+    <div class="container">
+        <h1>Welcome <span id="username">Loading...</span></h1>
 
-    <div class="balance-box">
-        <h2>Total Balance</h2>
-        <h3>₦<span id="balance">0</span></h3>
-    </div>
+        <div class="box">
+            <h3>Total Balance: ₦<span id="balance">0</span></h3>
+            <button class="withdraw-btn">Withdraw</button>
+        </div>
 
-    <div class="buttons">
-        <a href="withdraw.html" class="button withdraw">
-            <span class="icon" id="withdrawIcon"></span> Withdraw
-        </a>
-        <a href="tasks.html" class="button tasks">
-            <span class="icon" id="tasksIcon"></span> Tasks
-        </a>
-        <a href="bank.html" class="button bank">
-            <span class="icon" id="bankIcon"></span> Bank
-        </a>
-        <a href="settings.html" class="button settings">
-            <span class="icon" id="settingsIcon"></span> Settings
-        </a>
+        <div class="box">
+            <h3>Total Downlines: <span id="downlines">0</span></h3>
+            <button class="withdraw-btn">Withdraw</button>
+        </div>
+
+        <div class="referral-box">
+            <h3>Referral Link</h3>
+            <p>Copy your referral link and earn ₦400 per referral!</p>
+            <div class="referral-link">
+                <input type="text" id="referralLink" value="https://example.com/ref?user=" readonly>
+                <button class="copy-btn" onclick="copyReferral()">Copy</button>
+            </div>
+        </div>
+
+        <button class="whatsapp-btn" onclick="joinWhatsApp()">Join WhatsApp Group</button>
     </div>
 
     <script>
         function loadUserData() {
             let username = localStorage.getItem("username") || "Guest";
             let balance = localStorage.getItem("balance") || "0.00";
+            let downlines = localStorage.getItem("downlines") || "0";
+            let referralLink = "https://example.com/ref?user=" + username;
 
             document.getElementById("username").innerText = username;
             document.getElementById("balance").innerText = parseFloat(balance).toFixed(2);
+            document.getElementById("downlines").innerText = downlines;
+            document.getElementById("referralLink").value = referralLink;
         }
 
-        function updateUserData(newUsername, newBalance) {
-            localStorage.setItem("username", newUsername);
-            localStorage.setItem("balance", newBalance);
-            loadUserData();
+        function copyReferral() {
+            let link = document.getElementById("referralLink");
+            link.select();
+            document.execCommand("copy");
+            alert("Referral link copied!");
         }
 
-        // Dynamic Emojis
-        function loadEmojis() {
-            document.getElementById("withdrawIcon").innerText = "💳";
-            document.getElementById("tasksIcon").innerText = "📋";
-            document.getElementById("bankIcon").innerText = "🏦";
-            document.getElementById("settingsIcon").innerText = "⚙️";
+        function joinWhatsApp() {
+            window.location.href = "https://chat.whatsapp.com/your-group-link";
         }
 
         loadUserData();
-        loadEmojis();
     </script>
 
 </body>
-</html>
+    </html>
