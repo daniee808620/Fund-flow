@@ -3,106 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FundFlow - Home</title>
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.classList.toggle("show");
-        }
-    </script>
+    <title>Join FundFlow</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, blue, yellow);
-            color: white;
             text-align: center;
-            margin: 0;
-            padding: 0;
+            background: #ff8c00;
         }
-
         .container {
-            max-width: 500px;
-            margin: 50px auto;
+            background: white;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
+            width: 300px;
+            margin: auto;
             border-radius: 10px;
         }
-
-        h1 {
-            color: yellow;
-        }
-
-        .menu-icon {
-            font-size: 30px;
-            cursor: pointer;
-            position: absolute;
-            left: 20px;
-            top: 20px;
-        }
-
-        .menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            left: 20px;
-            background: white;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
-
-        .menu.show {
-            display: block;
-        }
-
-        .menu a {
-            display: block;
+        button {
+            background: orange;
+            color: white;
+            border: none;
             padding: 10px;
-            text-decoration: none;
-            color: black;
-        }
-
-        .menu a:hover {
-            background: #f0f0f0;
-        }
-
-        .section {
-            margin-top: 20px;
-        }
-
-        .logo {
-            width: 150px;
-            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Hamburger Menu -->
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-    <div id="menu" class="menu">
-        <a href="signup.html">Sign Up</a>
-        <a href="login.html">Login</a>
-        <a href="about.html">About Us</a>
-    </div>
-
     <div class="container">
-        <h1>FUND<b>FLOW</b></h1>
-        <h2>How FundFlow Works</h2>
-        <p>FundFlow is a platform where users can earn money through referrals, tasks, and investments.</p>
+        <h2>Join FundFlow</h2>
+        <p>Sign up now and start earning today!</p>
 
-        <div class="section">
-            <h2>Withdrawal & Earnings</h2>
-            <p>Withdraw your earnings instantly once you reach the minimum withdrawal limit.</p>
-        </div>
-
-        <div class="section">
-            <h2>Contact Us</h2>
-            <p>Have any questions? Reach out to our support team at <b>support@fundflow.com</b></p>
-        </div>
-
-        <img src="https://i.postimg.cc/QMhB2zw0/fundflow-logo.jpg" class="logo">
+        <form id="signupForm">
+            <input type="text" placeholder="Username" required><br>
+            <input type="email" placeholder="Email" required><br>
+            <input type="text" placeholder="Phone Number" required><br>
+            <input type="text" id="referredBy" placeholder="Referred By (Optional)"><br>
+            <input type="text" placeholder="Coupon Code" required><br>
+            <input type="password" placeholder="Password" required><br>
+            <button type="submit">Sign Up</button>
+        </form>
     </div>
+
+    <script>
+        // Function to get URL parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get the 'user' parameter from the URL and set it in the referredBy field
+        window.onload = function() {
+            const referredBy = getQueryParam('user');
+            if (referredBy) {
+                document.getElementById('referredBy').value = referredBy;
+            }
+        };
+    </script>
 
 </body>
-    </html>
+</html>
