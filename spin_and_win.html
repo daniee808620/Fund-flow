@@ -4,136 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spin and Win</title>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: #16a085;
+            background-color: blue;
             color: white;
-            font-family: 'Archivo', sans-serif;
             text-align: center;
-            padding: 20px;
+            font-family: Arial, sans-serif;
         }
-        h1 {
-            font-size: 28px;
+        .container {
+            margin-top: 50px;
         }
         .wheel-container {
             position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
+            display: inline-block;
         }
         .wheel {
-            width: 100%;
-            height: 100%;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
+            border: 5px solid white;
             overflow: hidden;
-            border: 10px solid white;
-            transition: transform 4s ease-out;
+            position: relative;
+            transition: transform 10s ease-out;
         }
-        .pointer {
+        .wheel div {
+            width: 50%;
+            height: 50%;
             position: absolute;
-            top: -10px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform-origin: 0% 0%;
+            text-align: center;
+            line-height: 150px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .wheel .section1 { background: orange; transform: rotate(0deg); }
+        .wheel .section2 { background: lightgray; transform: rotate(45deg); }
+        .wheel .section3 { background: orange; transform: rotate(90deg); }
+        .wheel .section4 { background: lightgray; transform: rotate(135deg); }
+        .wheel .section5 { background: orange; transform: rotate(180deg); }
+        .wheel .section6 { background: lightgray; transform: rotate(225deg); }
+        .wheel .section7 { background: orange; transform: rotate(270deg); }
+        .wheel .section8 { background: lightgray; transform: rotate(315deg); }
+
+        .pointer {
             width: 0;
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-bottom: 40px solid red;
-            z-index: 2;
+            border-bottom: 30px solid black;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
         }
+
         .spin-btn {
-            background-color: orange;
-            color: white;
-            border: none;
+            margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
-            border-radius: 5px;
+            color: white;
+            background-color: black;
+            border: none;
             cursor: pointer;
-            margin-top: 20px;
         }
         .spin-btn:disabled {
             background-color: gray;
             cursor: not-allowed;
         }
-        #balance {
-            font-size: 20px;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
-
-    <h1>Spin and Win</h1>
-    <p>Click the spin button to win cash rewards!</p>
-
-    <div class="wheel-container">
-        <div class="pointer"></div>
-        <canvas id="wheelCanvas" width="300" height="300"></canvas>
+    <div class="container">
+        <h1>Spin and Win</h1>
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel">
+                <div class="section1">1000</div>
+                <div class="section2">0</div>
+                <div class="section3">500</div>
+                <div class="section4">200</div>
+                <div class="section5">1000</div>
+                <div class="section6">0</div>
+                <div class="section7">500</div>
+                <div class="section8">200</div>
+            </div>
+        </div>
+        <br>
+        <button class="spin-btn" id="spinButton">Spin</button>
+        <p id="message"></p>
     </div>
 
-    <button id="spinButton" class="spin-btn">Spin</button>
-    <p id="balance">Your Balance: ₦<span id="userBalance">0</span></p>
-
     <script>
-        const wheelCanvas = document.getElementById("wheelCanvas");
-        const ctx = wheelCanvas.getContext("2d");
-        const segments = ["0", "50", "100", "200", "500"];
-        const colors = ["#f1c40f", "#e74c3c", "#8e44ad", "#3498db", "#2ecc71"];
-        let angle = 0;
-        let spinning = false;
-        let userBalance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 0;
-        document.getElementById("userBalance").innerText = userBalance;
+        const wheel = document.getElementById("wheel");
+        const spinButton = document.getElementById("spinButton");
+        const message = document.getElementById("message");
 
-        function drawWheel() {
-            const segmentAngle = (2 * Math.PI) / segments.length;
-            for (let i = 0; i < segments.length; i++) {
-                ctx.beginPath();
-                ctx.moveTo(150, 150);
-                ctx.arc(150, 150, 150, i * segmentAngle, (i + 1) * segmentAngle);
-                ctx.fillStyle = colors[i];
-                ctx.fill();
-                ctx.strokeStyle = "white";
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.closePath();
-
-                ctx.save();
-                ctx.translate(150, 150);
-                ctx.rotate(i * segmentAngle + segmentAngle / 2);
-                ctx.fillStyle = "white";
-                ctx.font = "bold 20px Arial";
-                ctx.fillText(segments[i], 70, 10);
-                ctx.restore();
+        // Check if the user has already spun today
+        let lastSpinTime = localStorage.getItem("lastSpinTime");
+        if (lastSpinTime) {
+            let elapsedTime = Date.now() - parseInt(lastSpinTime);
+            if (elapsedTime < 24 * 60 * 60 * 1000) {
+                spinButton.disabled = true;
+                message.innerText = "You can spin again in 24 hours.";
             }
         }
 
-        drawWheel();
+        spinButton.addEventListener("click", function() {
+            let randomDegree = Math.floor(3600 + Math.random() * 360);
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
 
-        document.getElementById("spinButton").addEventListener("click", function () {
-            if (spinning) return;
-            spinning = true;
-            this.disabled = true;
-
-            const spinAngle = Math.floor(2000 + Math.random() * 2000);
-            angle += spinAngle;
-            wheelCanvas.style.transform = `rotate(${angle}deg)`;
+            spinButton.disabled = true;
+            message.innerText = "Spinning...";
 
             setTimeout(() => {
-                let normalizedAngle = angle % 360;
-                let segmentIndex = Math.floor((360 - normalizedAngle) / (360 / segments.length)) % segments.length;
-                let reward = parseInt(segments[segmentIndex]);
-                
-                userBalance += reward;
-                localStorage.setItem("balance", userBalance);
-                document.getElementById("userBalance").innerText = userBalance;
-
-                alert(`You won ₦${reward}!`);
-                spinning = false;
-                document.getElementById("spinButton").disabled = false;
-            }, 4000);
+                message.innerText = "You have won!";
+                localStorage.setItem("lastSpinTime", Date.now());
+            }, 10000); // 10 seconds spin duration
         });
     </script>
-
 </body>
-    </html>
+</html>
