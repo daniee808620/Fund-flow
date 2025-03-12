@@ -71,9 +71,59 @@
             text-align: center;
             text-decoration: none;
         }
+        
+        /* Hamburger Menu Styles */
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: black;
+            color: white;
+            padding-top: 50px;
+            transition: 0.3s;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            border-bottom: 1px solid gray;
+        }
+        .sidebar a:hover {
+            background: orange;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Hamburger Menu Button -->
+    <div class="menu-btn" onclick="openMenu()">☰</div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="close-btn" onclick="closeMenu()">×</div>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="withdraw.html">Withdraw</a>
+        <a href="downline.html">View Downlines</a>
+        <a href="spin_and_win.html">🎰 Spin & Win</a> <!-- Added Spin & Win -->
+        <a href="settings.html">Settings</a>
+    </div>
 
     <h1>Welcome <span id="username">Loading...</span></h1>
 
@@ -97,6 +147,14 @@
     <a href="https://chat.whatsapp.com/YOUR_GROUP_LINK" class="whatsapp-btn">Join WhatsApp Group</a>
 
     <script>
+        function openMenu() {
+            document.getElementById("sidebar").style.left = "0";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.left = "-250px";
+        }
+
         function loadUserData() {
             let username = localStorage.getItem("username") || "Guest";
             let balance = localStorage.getItem("balance") || "0.00";
