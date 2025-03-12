@@ -84,6 +84,13 @@
             background-color: darkgray;
             cursor: not-allowed;
         }
+
+        .prize-label {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -92,50 +99,59 @@
 
     <div class="wheel-container">
         <div class="pointer"></div>
-        <div class="wheel" id="wheel"></div>
+        <div class="wheel" id="wheel">
+            <div class="prize-label" style="top: 10%; left: 45%;">₦0</div>
+            <div class="prize-label" style="top: 30%; left: 80%;">₦50</div>
+            <div class="prize-label" style="top: 70%; left: 80%;">₦100</div>
+            <div class="prize-label" style="bottom: 10%; left: 45%;">₦200</div>
+            <div class="prize-label" style="top: 70%; left: 10%;">₦500</div>
+            <div class="prize-label" style="top: 30%; left: 10%;">₦100</div>
+        </div>
     </div>
 
     <button class="spin-btn" id="spinBtn" onclick="spinWheel()">Spin</button>
 
+    <p id="result"></p>
+
     <script>
         const wheel = document.getElementById("wheel");
         const spinBtn = document.getElementById("spinBtn");
-
-        // Prizes corresponding to wheel sections
-        const prizes = [0, 50, 100, 200, 500, 100];
+        const resultText = document.getElementById("result");
 
         function spinWheel() {
-            let now = new Date().getTime();
-            localStorage.setItem("lastSpinTime", now);
-            spinBtn.disabled = true;
+            spinBtn.disabled = true; // Disable button while spinning
 
-            let randomDegree = 1800 + Math.floor(Math.random() * 360);
+            // Generate a random rotation angle between 2000 and 3600 degrees
+            const randomDegree = Math.floor(Math.random() * 1600) + 2000;
             wheel.style.transform = `rotate(${randomDegree}deg)`;
 
             setTimeout(() => {
-                let actualDegree = randomDegree % 360;
-                let prizeIndex = Math.floor(actualDegree / 60);
-                let prizeWon = prizes[prizeIndex];
+                spinBtn.disabled = false; // Re-enable button after spin
 
-                alert(`Congratulations! You won ₦${prizeWon}`);
+                // Get final rotation angle
+                const finalDegree = randomDegree % 360;
 
+                // Determine prize based on final angle
+                let prize;
+                if (finalDegree >= 0 && finalDegree < 60) {
+                    prize = "₦0";
+                } else if (finalDegree >= 60 && finalDegree < 120) {
+                    prize = "₦50";
+                } else if (finalDegree >= 120 && finalDegree < 180) {
+                    prize = "₦100";
+                } else if (finalDegree >= 180 && finalDegree < 240) {
+                    prize = "₦200";
+                } else if (finalDegree >= 240 && finalDegree < 300) {
+                    prize = "₦500";
+                } else {
+                    prize = "₦100";
+                }
+
+                // Display result
+                resultText.innerText = `You won ${prize}!`;
             }, 3000);
         }
-
-        function checkLastSpin() {
-            let lastSpin = localStorage.getItem("lastSpinTime");
-            if (lastSpin) {
-                let now = new Date().getTime();
-                let timeDiff = now - parseInt(lastSpin);
-                let hoursPassed = timeDiff / (1000 * 60 * 60);
-                if (hoursPassed < 24) {
-                    spinBtn.disabled = true;
-                }
-            }
-        }
-
-        checkLastSpin();
     </script>
 
 </body>
-</html>
+                </html>
