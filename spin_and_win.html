@@ -10,6 +10,8 @@
             text-align: center;
             font-family: Arial, sans-serif;
             color: white;
+            margin: 0;
+            padding: 0;
         }
         h1 {
             font-size: 28px;
@@ -62,9 +64,55 @@
             background-color: darkgray;
             cursor: not-allowed;
         }
+        /* Hamburger Menu */
+        .menu-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: black;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .menu {
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background: white;
+            color: black;
+            width: 150px;
+            display: none;
+            flex-direction: column;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .menu a {
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+            display: block;
+            border-bottom: 1px solid lightgray;
+        }
+        .menu a:last-child {
+            border-bottom: none;
+        }
+        .menu a:hover {
+            background: lightgray;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Hamburger Menu Button -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <!-- Menu Content -->
+    <div class="menu" id="menu">
+        <a href="dashboard.html">Home</a>
+    </div>
 
     <h1>Spin and Win</h1>
 
@@ -146,9 +194,14 @@
             }
         }
 
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+        }
+
         drawWheel();
         checkSpinAvailability(); // Check on page load
     </script>
 
 </body>
-</html>
+    </html>
