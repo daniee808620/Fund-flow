@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin & Win</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-family: 'Archivo', sans-serif;
+        }
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            margin: 20px auto;
+        }
+        .wheel {
+            width: 100%;
+            border-radius: 50%;
+            transition: transform 4s ease-out;
+        }
+        .arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: red;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .spin-btn {
+            background: orange;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎰 Spin & Win</h1>
+    <p>Tap the spin button and win up to ₦200!</p>
+
+    <div class="wheel-container">
+        <div class="arrow"></div>
+        <img id="wheel" class="wheel" src="https://i.postimg.cc/N0zzB7jH/spin-wheel.png" alt="Spin Wheel">
+    </div>
+
+    <button id="spinButton" class="spin-btn" onclick="spinWheel()">Spin</button>
+    <p id="timerMessage"></p>
+    
+    <h2 id="result"></h2>
+
+    <script>
+        let spinning = false;
+        let spinButton = document.getElementById("spinButton");
+        let timerMessage = document.getElementById("timerMessage");
+
+        function spinWheel() {
+            if (spinning || !canSpin()) return;
+            spinning = true;
+
+            let wheel = document.getElementById("wheel");
+            let resultText = document.getElementById("result");
+
+            let rewards = [10, 20, 50, 70, 100, 200];
+            let randomIndex = Math.floor(Math.random() * rewards.length);
+            let reward = rewards[randomIndex];
+
+            let randomRotation = 3600 + (randomIndex * 60);
+            wheel.style.transform = `rotate(${randomRotation}deg)`;
+
+            setTimeout(() => {
+                spinning = false;
+                resultText.innerHTML = `🎉 You won ₦${reward}!`;
+
+                let balance = parseFloat(localStorage.getItem("balance")) || 0;
+                balance += reward;
+                localStorage.setItem("balance", balance.toFixed(2));
+
+                localStorage.setItem("lastSpinTime", Date.now());
+                checkSpinAvailability();
+            }, 4000);
+        }
+
+        function canSpin() {
+            let lastSpin = localStorage.getItem("lastSpinTime");
+            if (!lastSpin) return true;
+
+            let timePassed = Date.now() - parseInt(lastSpin);
+            let hoursPassed = timePassed / (1000 * 60 * 60);
+            
+            return hoursPassed >= 24;
+        }
+
+        function checkSpinAvailability() {
+            if (canSpin()) {
+                spinButton.disabled = false;
+                spinButton.classList.remove("disabled");
+                timerMessage.innerHTML = "";
+            } else {
+                spinButton.disabled = true;
+                spinButton.classList.add("disabled");
+
+                let lastSpin = parseInt(localStorage.getItem("lastSpinTime"));
+                let nextSpinTime = lastSpin + 24 * 60 * 60 * 1000;
+                let countdown = setInterval(() => {
+                    let timeLeft = nextSpinTime - Date.now();
+                    if (timeLeft <= 0) {
+                        clearInterval(countdown);
+                        checkSpinAvailability();
+                    } else {
+                        let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                        timerMessage.innerHTML = `⏳ Next spin in: ${hours}h ${minutes}m ${seconds}s`;
+                    }
+                }, 1000);
+            }
+        }
+
+        checkSpinAvailability();
+    </script>
+
+</body>
+  </html
