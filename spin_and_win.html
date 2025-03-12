@@ -3,140 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin & Win</title>
+    <title>Spin and Win</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: black;
+            background: #16a085;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Archivo', sans-serif;
             text-align: center;
             padding: 20px;
         }
         h1 {
-            font-family: 'Archivo', sans-serif;
+            font-size: 28px;
         }
         .wheel-container {
             position: relative;
             width: 300px;
+            height: 300px;
             margin: 20px auto;
         }
         .wheel {
             width: 100%;
+            height: 100%;
             border-radius: 50%;
+            overflow: hidden;
+            border: 10px solid white;
             transition: transform 4s ease-out;
         }
-        .arrow {
+        .pointer {
             position: absolute;
-            top: 50%;
+            top: -10px;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-            background: red;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 40px solid red;
+            z-index: 2;
         }
         .spin-btn {
-            background: orange;
+            background-color: orange;
             color: white;
-            font-size: 18px;
-            padding: 10px 20px;
             border: none;
+            padding: 10px 20px;
+            font-size: 18px;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
         }
-        .disabled {
-            background: gray;
+        .spin-btn:disabled {
+            background-color: gray;
             cursor: not-allowed;
+        }
+        #balance {
+            font-size: 20px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <h1>🎰 Spin & Win</h1>
-    <p>Tap the spin button and win up to ₦200!</p>
+    <h1>Spin and Win</h1>
+    <p>Click the spin button to win cash rewards!</p>
 
     <div class="wheel-container">
-        <div class="arrow"></div>
-        <img id="wheel" class="wheel" src="https://i.postimg.cc/N0zzB7jH/spin-wheel.png" alt="Spin Wheel">
+        <div class="pointer"></div>
+        <canvas id="wheelCanvas" width="300" height="300"></canvas>
     </div>
 
-    <button id="spinButton" class="spin-btn" onclick="spinWheel()">Spin</button>
-    <p id="timerMessage"></p>
-    
-    <h2 id="result"></h2>
+    <button id="spinButton" class="spin-btn">Spin</button>
+    <p id="balance">Your Balance: ₦<span id="userBalance">0</span></p>
 
     <script>
+        const wheelCanvas = document.getElementById("wheelCanvas");
+        const ctx = wheelCanvas.getContext("2d");
+        const segments = ["0", "50", "100", "200", "500"];
+        const colors = ["#f1c40f", "#e74c3c", "#8e44ad", "#3498db", "#2ecc71"];
+        let angle = 0;
         let spinning = false;
-        let spinButton = document.getElementById("spinButton");
-        let timerMessage = document.getElementById("timerMessage");
+        let userBalance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 0;
+        document.getElementById("userBalance").innerText = userBalance;
 
-        function spinWheel() {
-            if (spinning || !canSpin()) return;
-            spinning = true;
+        function drawWheel() {
+            const segmentAngle = (2 * Math.PI) / segments.length;
+            for (let i = 0; i < segments.length; i++) {
+                ctx.beginPath();
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 150, i * segmentAngle, (i + 1) * segmentAngle);
+                ctx.fillStyle = colors[i];
+                ctx.fill();
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.closePath();
 
-            let wheel = document.getElementById("wheel");
-            let resultText = document.getElementById("result");
-
-            let rewards = [10, 20, 50, 70, 100, 200];
-            let randomIndex = Math.floor(Math.random() * rewards.length);
-            let reward = rewards[randomIndex];
-
-            let randomRotation = 3600 + (randomIndex * 60);
-            wheel.style.transform = `rotate(${randomRotation}deg)`;
-
-            setTimeout(() => {
-                spinning = false;
-                resultText.innerHTML = `🎉 You won ₦${reward}!`;
-
-                let balance = parseFloat(localStorage.getItem("balance")) || 0;
-                balance += reward;
-                localStorage.setItem("balance", balance.toFixed(2));
-
-                localStorage.setItem("lastSpinTime", Date.now());
-                checkSpinAvailability();
-            }, 4000);
-        }
-
-        function canSpin() {
-            let lastSpin = localStorage.getItem("lastSpinTime");
-            if (!lastSpin) return true;
-
-            let timePassed = Date.now() - parseInt(lastSpin);
-            let hoursPassed = timePassed / (1000 * 60 * 60);
-            
-            return hoursPassed >= 24;
-        }
-
-        function checkSpinAvailability() {
-            if (canSpin()) {
-                spinButton.disabled = false;
-                spinButton.classList.remove("disabled");
-                timerMessage.innerHTML = "";
-            } else {
-                spinButton.disabled = true;
-                spinButton.classList.add("disabled");
-
-                let lastSpin = parseInt(localStorage.getItem("lastSpinTime"));
-                let nextSpinTime = lastSpin + 24 * 60 * 60 * 1000;
-                let countdown = setInterval(() => {
-                    let timeLeft = nextSpinTime - Date.now();
-                    if (timeLeft <= 0) {
-                        clearInterval(countdown);
-                        checkSpinAvailability();
-                    } else {
-                        let hours = Math.floor(timeLeft / (1000 * 60 * 60));
-                        let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                        timerMessage.innerHTML = `⏳ Next spin in: ${hours}h ${minutes}m ${seconds}s`;
-                    }
-                }, 1000);
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(i * segmentAngle + segmentAngle / 2);
+                ctx.fillStyle = "white";
+                ctx.font = "bold 20px Arial";
+                ctx.fillText(segments[i], 70, 10);
+                ctx.restore();
             }
         }
 
-        checkSpinAvailability();
+        drawWheel();
+
+        document.getElementById("spinButton").addEventListener("click", function () {
+            if (spinning) return;
+            spinning = true;
+            this.disabled = true;
+
+            const spinAngle = Math.floor(2000 + Math.random() * 2000);
+            angle += spinAngle;
+            wheelCanvas.style.transform = `rotate(${angle}deg)`;
+
+            setTimeout(() => {
+                let normalizedAngle = angle % 360;
+                let segmentIndex = Math.floor((360 - normalizedAngle) / (360 / segments.length)) % segments.length;
+                let reward = parseInt(segments[segmentIndex]);
+                
+                userBalance += reward;
+                localStorage.setItem("balance", userBalance);
+                document.getElementById("userBalance").innerText = userBalance;
+
+                alert(`You won ₦${reward}!`);
+                spinning = false;
+                document.getElementById("spinButton").disabled = false;
+            }, 4000);
+        });
     </script>
 
 </body>
-  </html
+    </html>
