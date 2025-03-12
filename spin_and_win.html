@@ -6,7 +6,7 @@
     <title>Spin and Win</title>
     <style>
         body {
-            background-color: blue;
+            background-color: #00FF00; /* Green Background */
             text-align: center;
             font-family: Arial, sans-serif;
             color: white;
@@ -17,78 +17,57 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            position: relative;
         }
-        /* Hamburger Button */
-        .menu-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: black;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            border-radius: 5px;
-        }
-        /* Menu Container */
-        .menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            left: 15px;
-            background-color: white;
-            color: black;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        }
-        .menu a {
-            display: block;
-            padding: 8px;
-            text-decoration: none;
-            color: black;
-        }
-        .menu a:hover {
-            background-color: lightgray;
-        }
+
         h1 {
             font-size: 28px;
-            color: orange; /* Deep Orange for title */
-            margin-bottom: 20px;
+            color: purple;
+            margin-bottom: 10px;
         }
+
         .wheel-container {
             position: relative;
             width: 300px;
             height: 300px;
-            margin: 20px auto;
         }
+
         .wheel {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             border: 10px solid white;
             position: relative;
-            overflow: hidden;
+            background: conic-gradient(
+                blue 0deg 45deg, 
+                lightgray 45deg 90deg, 
+                blue 90deg 135deg, 
+                lightgray 135deg 180deg, 
+                blue 180deg 225deg, 
+                lightgray 225deg 270deg, 
+                blue 270deg 315deg, 
+                lightgray 315deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(0deg);
+            transition: transform 3s ease-out;
         }
+
         .pointer {
             position: absolute;
-            top: -10px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 30px solid black;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 40px solid black;
         }
-        /* Spin Button at the Bottom */
+
         .spin-btn {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 20px;
             padding: 15px 25px;
             font-size: 20px;
             font-weight: bold;
@@ -98,9 +77,11 @@
             cursor: pointer;
             border-radius: 5px;
         }
+
         .spin-btn:hover {
             background-color: gray;
         }
+
         .spin-btn:disabled {
             background-color: darkgray;
             cursor: not-allowed;
@@ -108,13 +89,6 @@
     </style>
 </head>
 <body>
-    <!-- Hamburger Button -->
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    
-    <!-- Menu -->
-    <div class="menu" id="menu">
-        <a href="dashboard.html">Home</a>
-    </div>
 
     <h1>Spin and Win</h1>
 
@@ -126,13 +100,30 @@
     <button class="spin-btn" id="spinBtn" onclick="spinWheel()">Spin</button>
 
     <script>
-        // Function to toggle menu
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        const wheel = document.getElementById("wheel");
+        const spinBtn = document.getElementById("spinBtn");
+
+        // Prizes corresponding to wheel sections
+        const prizes = [1000, 0, 500, 0, 200, 0, 500, 1000];
+
+        function spinWheel() {
+            let now = new Date().getTime();
+            localStorage.setItem("lastSpinTime", now);
+            spinBtn.disabled = true;
+
+            let randomDegree = 1800 + Math.floor(Math.random() * 360);
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+
+            setTimeout(() => {
+                let actualDegree = randomDegree % 360;
+                let prizeIndex = Math.floor(actualDegree / 45);
+                let prizeWon = prizes[prizeIndex];
+
+                alert(`Congratulations! You won ₦${prizeWon}`);
+
+            }, 3000);
         }
 
-        // Check if user has spun in the last 24 hours
         function checkLastSpin() {
             let lastSpin = localStorage.getItem("lastSpinTime");
             if (lastSpin) {
@@ -140,21 +131,13 @@
                 let timeDiff = now - parseInt(lastSpin);
                 let hoursPassed = timeDiff / (1000 * 60 * 60);
                 if (hoursPassed < 24) {
-                    document.getElementById("spinBtn").disabled = true;
+                    spinBtn.disabled = true;
                 }
             }
         }
 
-        // Function to spin the wheel
-        function spinWheel() {
-            let now = new Date().getTime();
-            localStorage.setItem("lastSpinTime", now);
-            document.getElementById("spinBtn").disabled = true;
-            alert("Wheel Spinning! You can spin again in 24 hours.");
-        }
-
-        // Run check on page load
         checkLastSpin();
     </script>
+
 </body>
-</html>
+                                          </html>
