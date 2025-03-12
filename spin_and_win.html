@@ -11,12 +11,7 @@
             font-family: Arial, sans-serif;
             color: white;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            padding: 20px;
         }
 
         h1 {
@@ -25,25 +20,35 @@
             margin-bottom: 10px;
         }
 
+        .balance {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: black;
+        }
+
         .wheel-container {
             position: relative;
             width: 300px;
             height: 300px;
+            margin: auto;
         }
 
         .wheel {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 10px solid white;
+            border: 5px solid white;
             position: relative;
             background: conic-gradient(
-                blue 0deg 60deg, 
-                lightgray 60deg 120deg, 
-                blue 120deg 180deg, 
-                lightgray 180deg 240deg, 
-                blue 240deg 300deg, 
-                lightgray 300deg 360deg
+                navy 0deg 45deg, 
+                lightgray 45deg 90deg, 
+                navy 90deg 135deg, 
+                lightgray 135deg 180deg, 
+                navy 180deg 225deg, 
+                lightgray 225deg 270deg, 
+                navy 270deg 315deg, 
+                lightgray 315deg 360deg
             );
             display: flex;
             align-items: center;
@@ -54,30 +59,26 @@
 
         .pointer {
             position: absolute;
-            top: -15px;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 40px solid black;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid black;
         }
 
         .spin-btn {
             margin-top: 20px;
             padding: 15px 25px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: white;
-            background-color: black;
+            background-color: darkgreen;
             border: none;
             cursor: pointer;
             border-radius: 5px;
-        }
-
-        .spin-btn:hover {
-            background-color: gray;
         }
 
         .spin-btn:disabled {
@@ -85,11 +86,10 @@
             cursor: not-allowed;
         }
 
-        .prize-label {
-            position: absolute;
+        .message {
             font-size: 16px;
-            font-weight: bold;
             color: black;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -97,61 +97,83 @@
 
     <h1>Spin and Win</h1>
 
+    <p class="balance">Your Balance: <span id="userBalance">₦0</span></p>
+
     <div class="wheel-container">
         <div class="pointer"></div>
-        <div class="wheel" id="wheel">
-            <div class="prize-label" style="top: 10%; left: 45%;">₦0</div>
-            <div class="prize-label" style="top: 30%; left: 80%;">₦50</div>
-            <div class="prize-label" style="top: 70%; left: 80%;">₦100</div>
-            <div class="prize-label" style="bottom: 10%; left: 45%;">₦200</div>
-            <div class="prize-label" style="top: 70%; left: 10%;">₦500</div>
-            <div class="prize-label" style="top: 30%; left: 10%;">₦100</div>
-        </div>
+        <div class="wheel" id="wheel"></div>
     </div>
 
     <button class="spin-btn" id="spinBtn" onclick="spinWheel()">Spin</button>
 
-    <p id="result"></p>
+    <p id="result" class="message"></p>
 
     <script>
         const wheel = document.getElementById("wheel");
         const spinBtn = document.getElementById("spinBtn");
         const resultText = document.getElementById("result");
+        const balanceText = document.getElementById("userBalance");
+
+        const prizes = [0, 0, 200, 200, 500, 500, 1000, 1000];
+
+        function getUserBalance() {
+            return parseInt(localStorage.getItem("userBalance") || "0");
+        }
+
+        function updateUserBalance(amount) {
+            let currentBalance = getUserBalance();
+            let newBalance = currentBalance + amount;
+            localStorage.setItem("userBalance", newBalance);
+            balanceText.innerText = `₦${newBalance}`;
+        }
+
+        function checkSpinStatus() {
+            const lastSpin = localStorage.getItem("lastSpinTime");
+            if (lastSpin) {
+                const lastSpinTime = new Date(parseInt(lastSpin));
+                const now = new Date();
+                const timeDiff = now - lastSpinTime;
+                const hoursPassed = timeDiff / (1000 * 60 * 60);
+                
+                if (hoursPassed < 24) {
+                    const hoursLeft = 24 - hoursPassed;
+                    const minutesLeft = Math.floor((hoursLeft - Math.floor(hoursLeft)) * 60);
+                    spinBtn.disabled = true;
+                    resultText.innerText = `You can spin again in ${Math.floor(hoursLeft)} hours and ${minutesLeft} minutes.`;
+                    return false;
+                }
+            }
+            return true;
+        }
 
         function spinWheel() {
-            spinBtn.disabled = true; // Disable button while spinning
+            if (!checkSpinStatus()) return;
 
-            // Generate a random rotation angle between 2000 and 3600 degrees
+            spinBtn.disabled = true;
+
+            // Generate a random rotation angle
             const randomDegree = Math.floor(Math.random() * 1600) + 2000;
             wheel.style.transform = `rotate(${randomDegree}deg)`;
 
             setTimeout(() => {
-                spinBtn.disabled = false; // Re-enable button after spin
+                spinBtn.disabled = true;
 
-                // Get final rotation angle
                 const finalDegree = randomDegree % 360;
+                const segmentSize = 360 / prizes.length;
+                const prizeIndex = Math.floor(finalDegree / segmentSize);
 
-                // Determine prize based on final angle
-                let prize;
-                if (finalDegree >= 0 && finalDegree < 60) {
-                    prize = "₦0";
-                } else if (finalDegree >= 60 && finalDegree < 120) {
-                    prize = "₦50";
-                } else if (finalDegree >= 120 && finalDegree < 180) {
-                    prize = "₦100";
-                } else if (finalDegree >= 180 && finalDegree < 240) {
-                    prize = "₦200";
-                } else if (finalDegree >= 240 && finalDegree < 300) {
-                    prize = "₦500";
-                } else {
-                    prize = "₦100";
-                }
+                const prize = prizes[prizeIndex];
 
-                // Display result
-                resultText.innerText = `You won ${prize}!`;
+                localStorage.setItem("lastSpinTime", new Date().getTime());
+
+                resultText.innerText = `You won ₦${prize}!`;
+                updateUserBalance(prize);
             }, 3000);
         }
+
+        balanceText.innerText = `₦${getUserBalance()}`;
+        checkSpinStatus();
     </script>
 
 </body>
-                </html>
+</html>
