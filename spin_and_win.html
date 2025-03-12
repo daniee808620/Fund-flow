@@ -7,123 +7,148 @@
     <style>
         body {
             background-color: blue;
-            color: white;
             text-align: center;
             font-family: Arial, sans-serif;
+            color: white;
         }
-        .container {
-            margin-top: 50px;
+        h1 {
+            font-size: 28px;
+            margin-top: 20px;
         }
         .wheel-container {
             position: relative;
-            display: inline-block;
-        }
-        .wheel {
             width: 300px;
             height: 300px;
+            margin: 20px auto;
+        }
+        .wheel {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            border: 5px solid white;
-            overflow: hidden;
+            border: 10px solid white;
             position: relative;
-            transition: transform 10s ease-out;
+            overflow: hidden;
         }
-        .wheel div {
-            width: 50%;
-            height: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform-origin: 0% 0%;
-            text-align: center;
-            line-height: 150px;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
+        .wheel canvas {
+            width: 100%;
+            height: 100%;
         }
-        .wheel .section1 { background: orange; transform: rotate(0deg); }
-        .wheel .section2 { background: lightgray; transform: rotate(45deg); }
-        .wheel .section3 { background: orange; transform: rotate(90deg); }
-        .wheel .section4 { background: lightgray; transform: rotate(135deg); }
-        .wheel .section5 { background: orange; transform: rotate(180deg); }
-        .wheel .section6 { background: lightgray; transform: rotate(225deg); }
-        .wheel .section7 { background: orange; transform: rotate(270deg); }
-        .wheel .section8 { background: lightgray; transform: rotate(315deg); }
-
         .pointer {
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 30px solid black;
             position: absolute;
             top: -10px;
             left: 50%;
             transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid black;
         }
-
         .spin-btn {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
+            font-weight: bold;
             color: white;
             background-color: black;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+        }
+        .spin-btn:hover {
+            background-color: gray;
         }
         .spin-btn:disabled {
-            background-color: gray;
+            background-color: darkgray;
             cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Spin and Win</h1>
-        <div class="wheel-container">
-            <div class="pointer"></div>
-            <div class="wheel" id="wheel">
-                <div class="section1">1000</div>
-                <div class="section2">0</div>
-                <div class="section3">500</div>
-                <div class="section4">200</div>
-                <div class="section5">1000</div>
-                <div class="section6">0</div>
-                <div class="section7">500</div>
-                <div class="section8">200</div>
-            </div>
-        </div>
-        <br>
-        <button class="spin-btn" id="spinButton">Spin</button>
-        <p id="message"></p>
+
+    <h1>Spin and Win</h1>
+
+    <div class="wheel-container">
+        <div class="pointer"></div>
+        <canvas id="wheelCanvas" width="300" height="300"></canvas>
     </div>
 
-    <script>
-        const wheel = document.getElementById("wheel");
-        const spinButton = document.getElementById("spinButton");
-        const message = document.getElementById("message");
+    <button class="spin-btn" id="spinButton" onclick="spinWheel()">Spin</button>
 
-        // Check if the user has already spun today
-        let lastSpinTime = localStorage.getItem("lastSpinTime");
-        if (lastSpinTime) {
-            let elapsedTime = Date.now() - parseInt(lastSpinTime);
-            if (elapsedTime < 24 * 60 * 60 * 1000) {
-                spinButton.disabled = true;
-                message.innerText = "You can spin again in 24 hours.";
+    <script>
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        const segments = ["1000", "0", "500", "0", "200", "0"];
+        const colors = ["orange", "gray"];
+        let angle = 0;
+        let spinning = false;
+
+        function drawWheel() {
+            const segmentAngle = (2 * Math.PI) / segments.length;
+            for (let i = 0; i < segments.length; i++) {
+                ctx.beginPath();
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 150, angle + i * segmentAngle, angle + (i + 1) * segmentAngle);
+                ctx.fillStyle = colors[i % 2];
+                ctx.fill();
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.closePath();
+
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(angle + (i + 0.5) * segmentAngle);
+                ctx.fillStyle = i % 2 === 0 ? "white" : "black";
+                ctx.font = "bold 20px Arial";
+                ctx.fillText(segments[i], 60, 10);
+                ctx.restore();
             }
         }
 
-        spinButton.addEventListener("click", function() {
-            let randomDegree = Math.floor(3600 + Math.random() * 360);
-            wheel.style.transform = `rotate(${randomDegree}deg)`;
+        function spinWheel() {
+            if (spinning) return;
+            spinning = true;
 
-            spinButton.disabled = true;
-            message.innerText = "Spinning...";
+            // Store last spin time
+            localStorage.setItem("lastSpin", Date.now());
 
-            setTimeout(() => {
-                message.innerText = "You have won!";
-                localStorage.setItem("lastSpinTime", Date.now());
-            }, 10000); // 10 seconds spin duration
-        });
+            let spinTime = Math.random() * 2000 + 2000;
+            let start = Date.now();
+            let spinSpeed = Math.random() * 10 + 15;
+
+            function animate() {
+                let elapsed = Date.now() - start;
+                if (elapsed < spinTime) {
+                    angle += spinSpeed * Math.PI / 180;
+                    spinSpeed *= 0.98;
+                    drawWheel();
+                    requestAnimationFrame(animate);
+                } else {
+                    spinning = false;
+                    angle = Math.round(angle / ((2 * Math.PI) / segments.length)) * ((2 * Math.PI) / segments.length);
+                    drawWheel();
+                    checkSpinAvailability(); // Disable button after spin
+                }
+            }
+            animate();
+        }
+
+        function checkSpinAvailability() {
+            const lastSpin = localStorage.getItem("lastSpin");
+            const now = Date.now();
+            const oneDay = 24 * 60 * 60 * 1000;
+
+            if (lastSpin && now - lastSpin < oneDay) {
+                document.getElementById("spinButton").disabled = true;
+            } else {
+                document.getElementById("spinButton").disabled = false;
+            }
+        }
+
+        drawWheel();
+        checkSpinAvailability(); // Check on page load
     </script>
+
 </body>
 </html>
