@@ -3,87 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-        body {
-            background-color: #1E3A8A;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .login-container {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            width: 300px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: white;
-            color: black;
-            font-size: 16px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: orange;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        button:hover {
-            background-color: darkorange;
-        }
-    </style>
-    <script>
-        function login() {
-            let username = document.getElementById("username").value.trim();
-            let password = document.getElementById("password").value.trim();
-
-            if (!username || !password) {
-                alert("Both fields are required!");
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem("users")) || [];
-            let user = users.find(user => user.username === username && user.password === password);
-
-            if (user) {
-                localStorage.setItem("currentUser", JSON.stringify({ username: user.username, balance: 5192.95 }));
-                window.location.href = "dashboard.html";
-            } else {
-                alert("Invalid username or password!");
-            }
-        }
-    </script>
+    <title>Login - FundFlow</title>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Enter Username">
-        <input type="password" id="password" placeholder="Enter Password">
-        <button onclick="login()">Login</button>
-    </div>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="usernameInput" placeholder="Enter Username" required>
+        <input type="password" id="passwordInput" placeholder="Enter Password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            let username = document.getElementById("usernameInput").value;
+            let password = document.getElementById("passwordInput").value;
+
+            if (username.trim() !== "" && password.trim() !== "") {
+                // Save username to localStorage
+                localStorage.setItem("loggedInUser", username);
+
+                // Redirect to dashboard
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Please enter a valid username and password!");
+            }
+        });
+    </script>
 </body>
-    </html>
+</html>
