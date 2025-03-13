@@ -3,199 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Canva+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <title>FundFlow Dashboard</title>
     <style>
         body {
-            background: url('https://i.postimg.cc/fL3SHTP9/Copy-of-Black-and-Beige-Simple-How-to-Earn-Money-Online-Instagram-Post-20250311-183612-0000.png') no-repeat center center;
-            background-size: cover;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        /* Updated Welcome Text */
-        .welcome-text {
             font-family: 'Canva Sans', sans-serif;
-            font-size: 18px; /* Made it smaller */
-            font-weight: bold;
-            position: absolute;
-            top: 25px;
-            left: 80px; /* Moved away from the hamburger */
-        }
-
-        /* Moves the boxes further down */
-        .balance-container {
-            margin-top: 80px; /* Adjust this value to move it lower */
-        }
-
-        .box {
-            background-color: green;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px auto;
-            width: 90%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #0066cc;
             color: white;
-            font-weight: bold;
+            text-align: center;
         }
-        .withdraw-btn, .downlines-btn {
-            background-color: orange;
-            border: none;
-            color: white;
-            padding: 10px 20px;
+        .welcome {
+            font-size: 18px;
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            color: #0066cc;
             border-radius: 5px;
-            cursor: pointer;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .balance-box, .downline-box {
+            background: green;
+            padding: 15px;
+            margin: 10px auto;
+            width: 250px;
+            border-radius: 5px;
         }
         .referral-box {
-            background-color: rgba(255, 255, 255, 0.9);
+            background: white;
             color: black;
             padding: 15px;
-            border-radius: 10px;
-            margin: 60px auto;
-            width: 90%;
-            text-align: left;
-        }
-        .referral-box input {
-            width: 80%;
-            padding: 5px;
-            border: 1px solid #ccc;
+            margin: 10px auto;
+            width: 300px;
             border-radius: 5px;
         }
-        .copy-btn {
-            background-color: orange;
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .whatsapp-btn {
-            background-color: green;
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            width: 90%;
-            margin-top: 20px;
-            cursor: pointer;
-            display: block;
-            text-align: center;
-            text-decoration: none;
-        }
-        
-        /* Hamburger Menu Styles */
-        .menu-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 30px;
-            cursor: pointer;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background: black;
-            color: white;
-            padding-top: 50px;
-            transition: 0.3s;
-        }
-        .sidebar a {
-            display: block;
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-            border-bottom: 1px solid gray;
-        }
-        .sidebar a:hover {
+        button {
             background: orange;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 30px;
+            padding: 10px;
+            border: none;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
             cursor: pointer;
         }
     </style>
 </head>
-<body>
+<body onload="loadUserData()">
 
-    <!-- Hamburger Menu Button -->
-    <div class="menu-btn" onclick="openMenu()">☰</div>
-
-    <!-- Welcome Message -->
-    <div class="welcome-text">Welcome <span id="username">Loading...</span></div>
-
-    <!-- Sidebar Menu -->
-    <div class="sidebar" id="sidebar">
-        <div class="close-btn" onclick="closeMenu()">×</div>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="withdraw.html">Withdraw</a>
-        <a href="downline.html">View Downlines</a>
-        <a href="spin_and_win.html">🎰 Spin & Win</a>
-        <a href="settings.html">Settings</a>
+    <div class="welcome">
+        Welcome <span id="username">User</span>
     </div>
 
-    <!-- Wrapped balance boxes inside a container to move them down -->
-    <div class="balance-container">
-        <div class="box">
-            <span>Total Balance: ₦<span id="balance">0.00</span></span>
-            <button class="withdraw-btn">Withdraw</button>
+    <div class="container">
+        <div class="balance-box">
+            <p>Total Balance: ₦<span id="balance">0.00</span></p>
+            <button>Withdraw</button>
         </div>
 
-        <div class="box">
-            <span>Total Downlines: <span id="downlines">0</span></span>
-            <a href="downline.html" class="downlines-btn">View</a>
+        <div class="downline-box">
+            <p>Total Downlines: <span id="downlines">0</span></p>
+            <button>View</button>
         </div>
-    </div>
 
-    <!-- Referral Section Moved Further Down -->
-    <div class="referral-box">
-        <strong>Referral Link</strong>
-        <p>Copy your referral link and earn ₦400 per referral!</p>
-        <input type="text" id="referral-link" readonly>
-        <button class="copy-btn" onclick="copyReferral()">Copy</button>
-    </div>
+        <div class="referral-box">
+            <strong>Referral Link</strong>
+            <p>Copy your referral link and earn ₦400 per referral!</p>
+            <input type="text" id="referral-link" readonly>
+            <button onclick="copyReferral()">Copy</button>
+        </div>
 
-    <a href="https://chat.whatsapp.com/YOUR_GROUP_LINK" class="whatsapp-btn">Join WhatsApp Group</a>
+        <button style="background: green;">Join WhatsApp Group</button>
+    </div>
 
     <script>
-        function openMenu() {
-            document.getElementById("sidebar").style.left = "0";
-        }
-
-        function closeMenu() {
-            document.getElementById("sidebar").style.left = "-250px";
-        }
-
         function loadUserData() {
-            let username = localStorage.getItem("username") || "Guest";
-            let balance = localStorage.getItem("balance") || "0.00";
+            let username = localStorage.getItem("loggedInUser") || "Guest";
+            let balance = localStorage.getItem("balance") || "650.00"; 
             let downlines = localStorage.getItem("downlines") || "0";
-            let referralLink = `https://fundflow1.netlify.app/ref?user=${username}`;
 
             document.getElementById("username").innerText = username;
             document.getElementById("balance").innerText = parseFloat(balance).toFixed(2);
             document.getElementById("downlines").innerText = downlines;
-            document.getElementById("referral-link").value = referralLink;
+            document.getElementById("referral-link").value = `https://flow1.netlify.app/ref?user=${username}`;
         }
 
         function copyReferral() {
-            let copyText = document.getElementById("referral-link");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
+            let referralInput = document.getElementById("referral-link");
+            referralInput.select();
+            document.execCommand("copy");
             alert("Referral link copied!");
         }
-
-        loadUserData();
     </script>
 
 </body>
