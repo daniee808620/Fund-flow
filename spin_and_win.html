@@ -5,13 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spin & Win</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             text-align: center;
             background-color: #00ff00;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         h1 {
             color: purple;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 22px;
+        }
+        .wheel-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         canvas {
             border-radius: 50%;
@@ -20,7 +40,7 @@
         }
         #pointer {
             position: absolute;
-            top: 150px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
             width: 20px;
@@ -30,13 +50,14 @@
         }
         button {
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 18px;
             font-weight: bold;
             background-color: darkgreen;
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -45,9 +66,11 @@
     <h1>Spin and Win</h1>
     <h2>Your Balance: ₦<span id="balance">0</span></h2>
     
-    <div id="pointer"></div>
-    <canvas id="wheel" width="300" height="300"></canvas>
-    <br>
+    <div class="wheel-container">
+        <div id="pointer"></div>
+        <canvas id="wheel" width="300" height="300"></canvas>
+    </div>
+    
     <button onclick="spinWheel()">Spin</button>
 
     <script>
