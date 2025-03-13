@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin and Win</title>
+    <title>Spin & Win</title>
     <style>
         body {
             text-align: center;
@@ -13,23 +13,26 @@
         h1 {
             color: purple;
         }
-        #balance {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .wheel-container {
-            position: relative;
-            width: 300px;
-            margin: auto;
-        }
         canvas {
             border-radius: 50%;
+            border: 5px solid white;
             background-color: white;
         }
-        #spin {
+        #pointer {
+            position: absolute;
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 40px;
+            background: red;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        button {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
+            font-weight: bold;
             background-color: darkgreen;
             color: white;
             border: none;
@@ -38,80 +41,93 @@
     </style>
 </head>
 <body>
+
     <h1>Spin and Win</h1>
-    <p id="balance">Your Balance: ₦0</p>
-    <div class="wheel-container">
-        <canvas id="wheelCanvas" width="300" height="300"></canvas>
-    </div>
-    <button id="spin">Spin</button>
-    <p id="message"></p>
+    <h2>Your Balance: ₦<span id="balance">0</span></h2>
+    
+    <div id="pointer"></div>
+    <canvas id="wheel" width="300" height="300"></canvas>
+    <br>
+    <button onclick="spinWheel()">Spin</button>
 
     <script>
-        const canvas = document.getElementById("wheelCanvas");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spin");
-        const balanceDisplay = document.getElementById("balance");
-        const message = document.getElementById("message");
+        let canvas = document.getElementById("wheel");
+        let ctx = canvas.getContext("2d");
+        let balance = 0;
+        let lastSpinTime = localStorage.getItem("lastSpinTime");
 
-        let balance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 0;
-        balanceDisplay.textContent = `Your Balance: ₦${balance}`;
-
-        let lastSpinTime = localStorage.getItem("lastSpinTime") ? parseInt(localStorage.getItem("lastSpinTime")) : 0;
-        const spinCooldown = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
-        const segments = [0, 0, 50, 100, 100, 200, 200, 500, 500, 1000, 1000];
-        const colors = ["blue", "white"];
-        const numSegments = segments.length;
-        const anglePerSegment = (2 * Math.PI) / numSegments;
+        const sections = [
+            { value: 0, color: "white" },
+            { value: 50, color: "blue" },
+            { value: 100, color: "white" },
+            { value: 200, color: "blue" },
+            { value: 500, color: "white" },
+            { value: 1000, color: "blue" },
+            { value: 0, color: "white" },
+            { value: 100, color: "blue" }
+        ];
 
         function drawWheel() {
-            for (let i = 0; i < numSegments; i++) {
-                const angle = i * anglePerSegment;
+            let startAngle = 0;
+            let arc = (Math.PI * 2) / sections.length;
+
+            sections.forEach((section, i) => {
+                let endAngle = startAngle + arc;
                 ctx.beginPath();
                 ctx.moveTo(150, 150);
-                ctx.arc(150, 150, 150, angle, angle + anglePerSegment);
-                ctx.closePath();
-                ctx.fillStyle = colors[i % 2];
+                ctx.arc(150, 150, 150, startAngle, endAngle);
+                ctx.fillStyle = section.color;
                 ctx.fill();
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.closePath();
 
-                // Text color for better visibility
-                ctx.fillStyle = i % 2 === 0 ? "white" : "black";
+                ctx.fillStyle = "black";
                 ctx.font = "bold 16px Arial";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
+                let textAngle = startAngle + arc / 2;
+                let x = 150 + Math.cos(textAngle) * 100;
+                let y = 150 + Math.sin(textAngle) * 100;
+                ctx.fillText(section.value, x - 15, y + 5);
 
-                // Position text within each segment
-                const textX = 150 + Math.cos(angle + anglePerSegment / 2) * 100;
-                const textY = 150 + Math.sin(angle + anglePerSegment / 2) * 100;
-                ctx.fillText(segments[i], textX, textY);
-            }
+                startAngle = endAngle;
+            });
         }
 
         function spinWheel() {
-            const now = Date.now();
-            if (now - lastSpinTime < spinCooldown) {
-                const remainingTime = spinCooldown - (now - lastSpinTime);
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                message.textContent = `You can spin again in ${hours}h ${minutes}m`;
+            let now = new Date().getTime();
+            if (lastSpinTime && now - lastSpinTime < 24 * 60 * 60 * 1000) {
+                alert("You can only spin once every 24 hours!");
                 return;
             }
 
-            let randomIndex = Math.floor(Math.random() * numSegments);
-            let prize = segments[randomIndex];
-
-            balance += prize;
-            balanceDisplay.textContent = `Your Balance: ₦${balance}`;
-            localStorage.setItem("balance", balance);
-
-            localStorage.setItem("lastSpinTime", now);
-            lastSpinTime = now;
-
-            message.textContent = `You won ₦${prize}!`;
+            let spins = 3600 + Math.floor(Math.random() * 360);
+            let rotation = 0;
+            let speed = 20;
+            let deceleration = 0.98;
+            let spinInterval = setInterval(() => {
+                rotation += speed;
+                speed *= deceleration;
+                if (speed < 0.2) {
+                    clearInterval(spinInterval);
+                    determineWinning(rotation);
+                    localStorage.setItem("lastSpinTime", now);
+                }
+                canvas.style.transform = `rotate(${rotation}deg)`;
+            }, 20);
         }
 
-        spinBtn.addEventListener("click", spinWheel);
+        function determineWinning(rotation) {
+            let sectionAngle = 360 / sections.length;
+            let index = Math.floor((rotation % 360) / sectionAngle);
+            let winningAmount = sections[(sections.length - 1) - index].value;
+            balance += winningAmount;
+            document.getElementById("balance").innerText = balance;
+            alert("You won ₦" + winningAmount);
+        }
+
         drawWheel();
     </script>
+
 </body>
 </html>
