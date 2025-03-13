@@ -17,12 +17,18 @@
         h1 span {
             font-family: 'Archivo', sans-serif;
         }
+        
+        /* Moves the boxes further down */
+        .balance-container {
+            margin-top: 80px; /* Adjust this value to move it lower */
+        }
+
         .box {
-            background-color: green; /* Changed to green */
+            background-color: green;
             padding: 15px;
             border-radius: 10px;
-            margin: 10px auto;
-            width: 90%; /* Made longer */
+            margin: 20px auto;
+            width: 90%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -42,7 +48,7 @@
             color: black;
             padding: 15px;
             border-radius: 10px;
-            margin: 40px auto; /* Moved further down */
+            margin: 60px auto; /* Increased margin to push it further down */
             width: 90%;
             text-align: left;
         }
@@ -123,20 +129,23 @@
         <a href="dashboard.html">Dashboard</a>
         <a href="withdraw.html">Withdraw</a>
         <a href="downline.html">View Downlines</a>
-        <a href="spin_and_win.html">🎰 Spin & Win</a> <!-- Added Spin & Win -->
+        <a href="spin_and_win.html">🎰 Spin & Win</a>
         <a href="settings.html">Settings</a>
     </div>
 
     <h1>Welcome <span id="username">Loading...</span></h1>
 
-    <div class="box">
-        <span>Total Balance: ₦<span id="balance">0.00</span></span>
-        <button class="withdraw-btn">Withdraw</button>
-    </div>
+    <!-- Wrapped balance boxes inside a container to move them down -->
+    <div class="balance-container">
+        <div class="box">
+            <span>Total Balance: ₦<span id="balance">0.00</span></span>
+            <button class="withdraw-btn">Withdraw</button>
+        </div>
 
-    <div class="box">
-        <span>Total Downlines: <span id="downlines">0</span></span>
-        <a href="downline.html" class="downlines-btn">View</a>
+        <div class="box">
+            <span>Total Downlines: <span id="downlines">0</span></span>
+            <a href="downline.html" class="downlines-btn">View</a>
+        </div>
     </div>
 
     <!-- Referral Section Moved Further Down -->
