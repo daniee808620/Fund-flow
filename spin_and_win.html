@@ -6,193 +6,51 @@
     <title>Spin and Win</title>
     <style>
         body {
-            background-color: #00FF00; /* Green Background */
             text-align: center;
-            font-family: Arial, sans-serif;
-            color: white;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 28px;
-            color: purple;
-            margin-bottom: 10px;
-        }
-
-        .balance {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: black;
-        }
-
-        .wheel-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: auto;
-        }
-
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 5px solid white;
-            position: relative;
-            background: conic-gradient(
-                navy 0deg 45deg, 
-                lightgray 45deg 90deg, 
-                navy 90deg 135deg, 
-                lightgray 135deg 180deg, 
-                navy 180deg 225deg, 
-                lightgray 225deg 270deg, 
-                navy 270deg 315deg, 
-                lightgray 315deg 360deg
-            );
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(0deg);
-            transition: transform 3s ease-out;
-        }
-
-        .pointer {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 30px solid black;
-        }
-
-        .spin-btn {
-            margin-top: 20px;
-            padding: 15px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background-color: darkgreen;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .spin-btn:disabled {
-            background-color: darkgray;
-            cursor: not-allowed;
-        }
-
-        .message {
-            font-size: 16px;
-            color: black;
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Spin and Win</h1>
-
-    <p class="balance">Your Balance: <span id="userBalance">₦0</span></p>
-
-    <div class="wheel-container">
-        <div class="pointer"></div>
-        <div class="wheel" id="wheel"></div>
-    </div>
-
-    <button class="spin-btn" id="spinBtn" onclick="spinWheel()">Spin</button>
-
-    <p id="result" class="message"></p>
-
-    <script>
-        const wheel = document.getElementById("wheel");
-        const spinBtn = document.getElementById("spinBtn");
-        const resultText = document.getElementById("result");
-        const balanceText = document.getElementById("userBalance");
-
-        const prizes = [0, 0, 200, 200, 500, 500, 1000, 1000];
-
-        function getUserBalance() {
-            return parseInt(localStorage.getItem("userBalance") || "0");
-        }
-
-        function updateUserBalance(amount) {
-            let currentBalance = getUserBalance();
-            let newBalance = currentBalance + amount;
-            localStorage.setItem("userBalance", newBalance);
-            balanceText.innerText = `₦${newBalance}`;
-        }
-
-        function checkSpinStatus() {
-            const lastSpin = localStorage.getItem("lastSpinTime");
-            if (lastSpin) {
-                const lastSpinTime = new Date(parseInt(lastSpin));
-                const now = new Date();
-                const timeDiff = now - lastSpinTime;
-                const hoursPassed = timeDiff / (1000 * 60 * 60);
-                
-                if (hoursPassed < 24) {
-                    const hoursLeft = 24 - hoursPassed;
-                    const minutesLeft = Math.floor((hoursLeft - Math.floor(hoursLeft)) * 60);
-                    spinBtn.disabled = true;
-                    resultText.innerText = `You can spin again in ${Math.floor(hoursLeft)} hours and ${minutesLeft} minutes.`;
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        function spinWheel() {
-            if (!checkSpinStatus()) return;
-
-            spinBtn.disabled = true;
-
-            // Generate a random rotation angle
-            const randomDegree = Math.floor(Math.random() * 1600) + 2000;
-            wheel.style.transform = `rotate(${randomDegree}deg)`;
-
-            setTimeout(() => {
-                spinBtn.disabled = true;
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin and Win</title>
-    <style>
-        body {
-            text-align: center;
-            background-color: #00ff00;
+            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
+        
         h1 {
-            color: purple;
+            color: #3498db;
         }
+        
         #balance {
             font-size: 20px;
             font-weight: bold;
         }
+        
         .wheel-container {
             position: relative;
             width: 300px;
             margin: auto;
         }
+        
         canvas {
             border-radius: 50%;
             background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
+        
         #spin {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
-            background-color: darkgreen;
+            background-color: #3498db;
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        #spin:hover {
+            background-color: #2980b9;
+        }
+        
+        #message {
+            font-size: 18px;
+            font-weight: bold;
+            color: #666;
         }
     </style>
 </head>
@@ -204,25 +62,25 @@
     </div>
     <button id="spin">Spin</button>
     <p id="message"></p>
-
     <script>
         const canvas = document.getElementById("wheelCanvas");
         const ctx = canvas.getContext("2d");
         const spinBtn = document.getElementById("spin");
         const balanceDisplay = document.getElementById("balance");
         const message = document.getElementById("message");
-
+        
         let balance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 0;
         let lastSpinTime = localStorage.getItem("lastSpinTime") ? parseInt(localStorage.getItem("lastSpinTime")) : 0;
+        
         const spinCooldown = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
+        
         const segments = [0, 0, 50, 100, 100, 200, 200, 500, 500, 1000, 1000];
-        const colors = ["blue", "white"];
+        const colors = ["#3498db", "#f1c40f"];
         const numSegments = segments.length;
         const anglePerSegment = (2 * Math.PI) / numSegments;
-
+        
         balanceDisplay.textContent = `Your Balance: ₦${balance}`;
-
+        
         function drawWheel() {
             for (let i = 0; i < numSegments; i++) {
                 const angle = i * anglePerSegment;
@@ -239,14 +97,14 @@
                 ctx.save();
                 ctx.translate(150, 150);
                 ctx.rotate(angle + anglePerSegment / 2);
-                ctx.fillStyle = i % 2 === 0 ? "white" : "blue";
+                ctx.fillStyle = i % 2 === 0 ? "#f1c40f" : "#3498db";
                 ctx.font = "bold 16px Arial";
                 ctx.textAlign = "center";
                 ctx.fillText(segments[i], 100, 10);
                 ctx.restore();
             }
         }
-
+        
         function spinWheel() {
             const now = Date.now();
             if (now - lastSpinTime < spinCooldown) {
@@ -256,22 +114,15 @@
                 message.textContent = `You can spin again in ${hours}h ${minutes}m`;
                 return;
             }
-
+            
             let randomIndex = Math.floor(Math.random() * numSegments);
             let prize = segments[randomIndex];
-
             balance += prize;
             balanceDisplay.textContent = `Your Balance: ₦${balance}`;
             localStorage.setItem("balance", balance);
-
             localStorage.setItem("lastSpinTime", now);
             lastSpinTime = now;
-
             message.textContent = `You won ₦${prize}!`;
         }
-
-        spinBtn.addEventListener("click", spinWheel);
-        drawWheel();
-    </script>
-</body>
-</html>
+        
+        spinBtn.addEventListener("click", spin
