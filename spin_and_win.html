@@ -157,23 +157,121 @@
 
             setTimeout(() => {
                 spinBtn.disabled = true;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin and Win</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #00ff00;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: purple;
+        }
+        #balance {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            margin: auto;
+        }
+        canvas {
+            border-radius: 50%;
+            background-color: white;
+        }
+        #spin {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: darkgreen;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spin and Win</h1>
+    <p id="balance">Your Balance: ₦0</p>
+    <div class="wheel-container">
+        <canvas id="wheelCanvas" width="300" height="300"></canvas>
+    </div>
+    <button id="spin">Spin</button>
+    <p id="message"></p>
 
-                const finalDegree = randomDegree % 360;
-                const segmentSize = 360 / prizes.length;
-                const prizeIndex = Math.floor(finalDegree / segmentSize);
+    <script>
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spin");
+        const balanceDisplay = document.getElementById("balance");
+        const message = document.getElementById("message");
 
-                const prize = prizes[prizeIndex];
+        let balance = localStorage.getItem("balance") ? parseInt(localStorage.getItem("balance")) : 0;
+        let lastSpinTime = localStorage.getItem("lastSpinTime") ? parseInt(localStorage.getItem("lastSpinTime")) : 0;
+        const spinCooldown = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-                localStorage.setItem("lastSpinTime", new Date().getTime());
+        const segments = [0, 0, 50, 100, 100, 200, 200, 500, 500, 1000, 1000];
+        const colors = ["blue", "white"];
+        const numSegments = segments.length;
+        const anglePerSegment = (2 * Math.PI) / numSegments;
 
-                resultText.innerText = `You won ₦${prize}!`;
-                updateUserBalance(prize);
-            }, 3000);
+        balanceDisplay.textContent = `Your Balance: ₦${balance}`;
+
+        function drawWheel() {
+            for (let i = 0; i < numSegments; i++) {
+                const angle = i * anglePerSegment;
+                
+                // Draw segment
+                ctx.beginPath();
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 150, angle, angle + anglePerSegment);
+                ctx.closePath();
+                ctx.fillStyle = colors[i % 2];
+                ctx.fill();
+                
+                // Draw text
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(angle + anglePerSegment / 2);
+                ctx.fillStyle = i % 2 === 0 ? "white" : "blue";
+                ctx.font = "bold 16px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText(segments[i], 100, 10);
+                ctx.restore();
+            }
         }
 
-        balanceText.innerText = `₦${getUserBalance()}`;
-        checkSpinStatus();
-    </script>
+        function spinWheel() {
+            const now = Date.now();
+            if (now - lastSpinTime < spinCooldown) {
+                const remainingTime = spinCooldown - (now - lastSpinTime);
+                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                message.textContent = `You can spin again in ${hours}h ${minutes}m`;
+                return;
+            }
 
+            let randomIndex = Math.floor(Math.random() * numSegments);
+            let prize = segments[randomIndex];
+
+            balance += prize;
+            balanceDisplay.textContent = `Your Balance: ₦${balance}`;
+            localStorage.setItem("balance", balance);
+
+            localStorage.setItem("lastSpinTime", now);
+            lastSpinTime = now;
+
+            message.textContent = `You won ₦${prize}!`;
+        }
+
+        spinBtn.addEventListener("click", spinWheel);
+        drawWheel();
+    </script>
 </body>
 </html>
