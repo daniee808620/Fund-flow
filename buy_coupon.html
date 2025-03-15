@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Coupons - FundFlow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        h2 {
+            color: #007bff;
+        }
+        p {
+            font-size: 14px;
+            color: #555;
+        }
+        .note {
+            font-weight: bold;
+            color: red;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        .chat-btn {
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Buy Coupons</h2>
+    <p><a href="index.html">Home</a> • <strong>Buy Coupons</strong></p>
+    <p>Below are our verified vendors list. You can chat with any of them to purchase your coupon code.</p>
+    <p class="note">Note: Do not pay to anyone that's not on this list. We will not be responsible for any loss payments.</p>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Direct Chat Link</th>
+        </tr>
+        <tbody id="vendorList">
+            <tr><td colspan="2">Loading vendors...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function fetchVendors() {
+        fetch('/getVendors') // Replace with your actual backend API
+            .then(response => response.json())
+            .then(data => {
+                let vendorList = document.getElementById("vendorList");
+                vendorList.innerHTML = "";
+
+                if (data.vendors.length === 0) {
+                    vendorList.innerHTML = "<tr><td colspan='2'>No vendors available</td></tr>";
+                    return;
+                }
+
+                data.vendors.forEach(vendor => {
+                    let row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${vendor.name}</td>
+                        <td><a href="https://wa.me/${vendor.phone}" class="chat-btn" target="_blank">Chat Vendor</a></td>
+                    `;
+                    vendorList.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching vendors:", error);
+                document.getElementById("vendorList").innerHTML = "<tr><td colspan='2'>Failed to load vendors</td></tr>";
+            });
+    }
+
+    fetchVendors();
+</script>
+
+</body>
+</html>
