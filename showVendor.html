@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Vendors - FundFlow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007bff;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .vendor-list {
+            margin-top: 20px;
+        }
+        .vendor-item {
+            background: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .chat-btn {
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Dashboard</h2>
+    <p>Total Users: <span id="totalUsers">0</span></p>
+
+    <button onclick="addVendor()">Add Vendor</button>
+
+    <div class="vendor-list" id="vendorList">
+        <!-- Vendors will be added here dynamically -->
+    </div>
+</div>
+
+<script>
+    let totalUsers = 100; // Example total users count
+    document.getElementById("totalUsers").innerText = totalUsers;
+
+    let vendors = [];
+
+    function addVendor() {
+        let vendorName = prompt("Enter Vendor Name:");
+        if (vendorName) {
+            let vendorPhone = prompt("Enter Vendor WhatsApp Number:");
+            if (vendorPhone) {
+                let vendor = { name: vendorName, phone: vendorPhone };
+                vendors.push(vendor);
+                updateVendorList();
+            }
+        }
+    }
+
+    function updateVendorList() {
+        let vendorListDiv = document.getElementById("vendorList");
+        vendorListDiv.innerHTML = "";
+
+        vendors.forEach((vendor, index) => {
+            let vendorItem = document.createElement("div");
+            vendorItem.classList.add("vendor-item");
+            vendorItem.innerHTML = `
+                <span>${vendor.name}</span>
+                <a href="https://wa.me/${vendor.phone}" class="chat-btn" target="_blank">Chat Vendor</a>
+            `;
+            vendorListDiv.appendChild(vendorItem);
+        });
+
+        rotateVendors();
+    }
+
+    function rotateVendors() {
+        setInterval(() => {
+            if (vendors.length > 1) {
+                let firstVendor = vendors.shift();
+                vendors.push(firstVendor);
+                updateVendorList();
+            }
+        }, 5000); // Rotates every 5 seconds
+    }
+</script>
+
+</body>
+</html>
