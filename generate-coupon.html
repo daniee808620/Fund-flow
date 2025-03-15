@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Generate Coupons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .vendor-btn {
+            background-color: green;
+        }
+        .vendor-btn:hover {
+            background-color: darkgreen;
+        }
+        .remove-btn {
+            background-color: red;
+        }
+        .remove-btn:hover {
+            background-color: darkred;
+        }
+        .search-container {
+            display: none;
+            margin-top: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .user-list, .vendor-list {
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f1f1f1;
+        }
+        .user, .vendor {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            background: #fff;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Admin Panel - Coupon Generator</h1>
+        <button onclick="generateCoupon()">Generate New Coupon</button>
+        <button class="vendor-btn" onclick="showAddVendor()">Add Vendor</button>
+        <button class="remove-btn" onclick="showRemoveVendor()">Remove Vendor</button>
+        
+        <h2>Coupon List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Coupon Code</th>
+                    <th>Time Used</th>
+                    <th>Date Used</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="couponTableBody">
+                <!-- Coupons will be displayed here -->
+            </tbody>
+        </table>
+
+        <!-- Add Vendor Section -->
+        <div class="search-container" id="addVendorContainer">
+            <h2>Add Vendor</h2>
+            <input type="text" id="searchUser" placeholder="Search users by username..." onkeyup="filterUsers()">
+            <div class="user-list" id="userList"></div>
+        </div>
+
+        <!-- Remove Vendor Section -->
+        <div class="search-container" id="removeVendorContainer">
+            <h2>Remove Vendor</h2>
+            <div class="vendor-list" id="vendorList"></div>
+        </div>
+
+    </div>
+
+    <script>
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+
+        function generateCoupon() {
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let coupon = "F";
+            for (let i = 0; i < 9; i++) {
+                coupon += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+            let newCoupon = { code: coupon, timeUsed: "Not Used", dateUsed: "Not Used", status: "Active" };
+            
+            coupons.push(newCoupon);
+            localStorage.setItem("coupons", JSON.stringify(coupons));
+            loadCoupons();
+        }
+
+        function loadCoupons() {
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+            let tableBody = document.getElementById("couponTableBody");
+            tableBody.innerHTML = "";
+
+            coupons.forEach(coupon => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${coupon.code}</td>
+                    <td>${coupon.timeUsed}</td>
+                    <td>${coupon.dateUsed}</td>
+                    <td>${coupon.status === 'Active' ? '✔️ Active' : '❌ Used'}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function showAddVendor() {
+            document.getElementById("addVendorContainer").style.display = "block";
+            document.getElementById("removeVendorContainer").style.display = "none";
+        }
+
+        function showRemoveVendor() {
+            document.getElementById("addVendorContainer").style.display = "none";
+            document.getElementById("removeVendorContainer").style.display = "block";
+            loadVendors();
+        }
+
+        function filterUsers() {
+            let searchInput = document.getElementById("searchUser").value.toLowerCase();
+            let userList = document.getElementById("userList");
+            userList.innerHTML = "";
+
+            users.forEach(user => {
+                if (user.username.toLowerCase().includes(searchInput) && !vendors.includes(user.username)) {
+                    let userDiv = document.createElement("div");
+                    userDiv.className = "user";
+                    userDiv.innerHTML = `
+                        <span>${user.username}</span>
+                        <button onclick="addVendor('${user.username}')">Add</button>
+                    `;
+                    userList.appendChild(userDiv);
+                }
+            });
+        }
+
+        function addVendor(username) {
+            if (!vendors.includes(username)) {
+                vendors.push(username);
+                localStorage.setItem("vendors", JSON.stringify(vendors));
+                alert(username + " has been added as a vendor.");
+            }
+        }
+
+        function loadVendors() {
+            let vendorList = document.getElementById("vendorList");
+            vendorList.innerHTML = "";
+
+            vendors.forEach(vendor => {
+                let vendorDiv = document.createElement("div");
+                vendorDiv.className = "vendor";
+                vendorDiv.innerHTML = `
+                    <span>${vendor}</span>
+                    <button onclick="removeVendor('${vendor}')">Remove</button>
+                `;
+                vendorList.appendChild(vendorDiv);
+            });
+        }
+
+        function removeVendor(username) {
+            vendors = vendors.filter(vendor => vendor !== username);
+            localStorage.setItem("vendors", JSON.stringify(vendors));
+            alert(username + " has been removed as a vendor.");
+            loadVendors();
+        }
+
+        window.onload = loadCoupons;
+    </script>
+
+</body>
+</html>
