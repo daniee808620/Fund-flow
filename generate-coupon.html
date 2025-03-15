@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Generate Coupons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .clear-btn {
+            background-color: red;
+        }
+        .clear-btn:hover {
+            background-color: darkred;
+        }
+        .vendor-btn {
+            background-color: green;
+        }
+        .vendor-btn:hover {
+            background-color: darkgreen;
+        }
+        .remove-btn {
+            background-color: orange;
+        }
+        .remove-btn:hover {
+            background-color: darkorange;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .used {
+            color: red;
+        }
+        .active {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Admin Panel - Coupon Generator</h1>
+        <button onclick="generateCoupon()">Generate New Coupon</button>
+        <button class="clear-btn" onclick="clearCouponHistory()">Clear Coupon History</button>
+        <button class="vendor-btn" onclick="showVendor()">Send Code to Vendor</button>
+
+        <h2>Manage Vendors</h2>
+        <input type="text" class="search-box" id="searchUser" onkeyup="searchUser()" placeholder="Search user to add as vendor...">
+        <button class="vendor-btn" onclick="addVendor()">Add Vendor</button>
+        <button class="remove-btn" onclick="removeVendor()">Remove Vendor</button>
+
+        <p>Total Users: <span id="totalUsers">0</span></p>
+
+        <h2>Coupon List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Coupon Code</th>
+                    <th>Time Used</th>
+                    <th>Date Used</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="couponTableBody">
+                <!-- Coupons will be displayed here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function generateCoupon() {
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let coupon = "F"; // Start with "F"
+            for (let i = 0; i < 9; i++) {
+                coupon += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+            
+            let newCoupon = {
+                code: coupon,
+                timeUsed: "Not Used",
+                dateUsed: "Not Used",
+                status: "Active"
+            };
+            
+            coupons.push(newCoupon);
+            localStorage.setItem("coupons", JSON.stringify(coupons));
+            loadCoupons();
+        }
+
+        function clearCouponHistory() {
+            if (confirm("Are you sure you want to clear all coupon history?")) {
+                localStorage.removeItem("coupons");
+                loadCoupons();
+            }
+        }
+
+        function showVendor() {
+            alert("Redirecting to Vendor Page...");
+            window.location.href = "showVendor.html"; // Redirect to vendor page
+        }
+
+        function loadCoupons() {
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+            let tableBody = document.getElementById("couponTableBody");
+            tableBody.innerHTML = "";
+
+            coupons.forEach(coupon => {
+                let row = document.createElement("tr");
+                
+                row.innerHTML = `
+                    <td>${coupon.code}</td>
+                    <td>${coupon.timeUsed}</td>
+                    <td>${coupon.dateUsed}</td>
+                    <td class="${coupon.status === 'Active' ? 'active' : 'used'}">${coupon.status}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function fetchTotalUsers() {
+            fetch('/total-users')  // Replace with your backend API
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("totalUsers").innerText = data.total;
+                })
+                .catch(error => console.error("Error fetching total users:", error));
+        }
+
+        function searchUser() {
+            let input = document.getElementById("searchUser").value.toLowerCase();
+            fetch('/total-users')  // Replace with your backend API
+                .then(response => response.json())
+                .then(data => {
+                    let users = data.users.filter(user => user.name.toLowerCase().includes(input));
+                    if (users.length > 0) {
+                        alert("User found: " + users[0].name);
+                    } else {
+                        alert("User not found.");
+                    }
+                })
+                .catch(error => console.error("Error searching users:", error));
+        }
+
+        function addVendor() {
+            let userName = prompt("Enter the username of the user to add as a vendor:");
+            if (userName) {
+                fetch('/add-vendor', { // Replace with your backend API
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: userName })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`${userName} added as vendor successfully!`);
+                    } else {
+                        alert("Failed to add vendor.");
+                    }
+                })
+                .catch(error => console.error("Error adding vendor:", error));
+            }
+        }
+
+        function removeVendor() {
+            let userName = prompt("Enter the username of the vendor to remove:");
+            if (userName) {
+                fetch('/remove-vendor', { // Replace with your backend API
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: userName })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`${userName} removed from vendors successfully!`);
+                    } else {
+                        alert("Failed to remove vendor.");
+                    }
+                })
+                .catch(error => console.error("Error removing vendor:", error));
+            }
+        }
+
+        window.onload = function () {
+            loadCoupons();
+            fetchTotalUsers();
+        };
+    </script>
+
+</body>
+</html>
