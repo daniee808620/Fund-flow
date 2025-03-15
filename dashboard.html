@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FundFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Arimo&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .welcome {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .balance-box {
+            display: flex;
+            justify-content: space-around;
+            background-color: green;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 350px;
+            font-size: 16px;
+        }
+        .white-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 400px;
+            color: black;
+            font-family: 'Arimo', sans-serif;
+            font-size: 14px;
+        }
+        .vendor-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 400px;
+            color: black;
+            text-align: center;
+        }
+        .invite-box {
+            background: #fff;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        .copy-btn {
+            background: #007bff;
+            color: white;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .menu-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: white;
+            color: black;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 15px;
+            background: white;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+            width: 150px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .menu a {
+            display: block;
+            color: black;
+            padding: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .menu a:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <div class="menu" id="menu">
+        <a href="#">Profile</a>
+        <a href="#">Account Settings</a>
+        <a href="#">Withdraw</a>
+        <a href="#">Daily Pay</a>
+        <a href="#">Sponsored Post</a>
+        <a href="#">Buy Airtime</a>
+        <a href="#">Buy Data</a>
+        <a href="#">Log Out</a>
+    </div>
+
+    <div class="container">
+        <div class="welcome">Welcome, <span id="username">User</span></div>
+
+        <div class="balance-box">
+            <div>Total Balance: <b>₦<span id="totalBalance">0.00</span></b></div>
+            <div><button class="copy-btn">My Downlines</button></div>
+        </div>
+
+        <div class="white-box">
+            FundFlow earnings dashboard. Earn more by inviting friends and completing daily tasks.
+        </div>
+
+        <div class="vendor-box" id="vendorDashboard" style="display: none;">
+            <h3>Vendor Dashboard</h3>
+            Refer using your invite link and earn ₦400 per referral.
+            <div class="invite-box">
+                <b>Your Invite Link:</b><br>
+                <span id="inviteLink">https://fundflow1.netlify.app/register?ref=User</span>
+                <br>
+                <button class="copy-btn" onclick="copyLink()">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isVendor = true;  // Change this based on user type
+        let username = "JohnDoe";  // Get from login
+        let totalBalance = 5000;  // Get from database
+
+        document.getElementById("username").innerText = username;
+        document.getElementById("totalBalance").innerText = totalBalance.toFixed(2);
+
+        if (isVendor) {
+            document.getElementById("vendorDashboard").style.display = "block";
+        }
+
+        function copyLink() {
+            let link = document.getElementById("inviteLink").innerText;
+            navigator.clipboard.writeText(link);
+            alert("Invite link copied!");
+        }
+
+        function toggleMenu() {
+            let menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+    </script>
+
+</body>
+</html>
