@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Vendor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+        }
+        .vendor-list {
+            text-align: left;
+        }
+        .vendor {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #e9ecef;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Remove Vendor</h1>
+        <div id="vendorList" class="vendor-list">
+            <!-- Vendor list will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+
+        function loadVendors() {
+            let vendorListDiv = document.getElementById("vendorList");
+            vendorListDiv.innerHTML = "";
+
+            vendors.forEach((vendor, index) => {
+                let vendorDiv = document.createElement("div");
+                vendorDiv.classList.add("vendor");
+
+                vendorDiv.innerHTML = `
+                    <span>${vendor}</span>
+                    <button onclick="removeVendor(${index})">Remove</button>
+                `;
+
+                vendorListDiv.appendChild(vendorDiv);
+            });
+        }
+
+        function removeVendor(index) {
+            let confirmDelete = confirm("Are you sure you want to remove " + vendors[index] + "?");
+            if (confirmDelete) {
+                vendors.splice(index, 1);
+                localStorage.setItem("vendors", JSON.stringify(vendors));
+                loadVendors();
+            }
+        }
+
+        window.onload = loadVendors;
+    </script>
+
+</body>
+</html>
