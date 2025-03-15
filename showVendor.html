@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Vendor List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .vendor-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .send-btn {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .send-btn:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Vendor List</h1>
+        <h2>Total Vendors: <span id="totalVendors">Loading...</span></h2>
+
+        <table class="vendor-table">
+            <thead>
+                <tr>
+                    <th>Vendor Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="vendorTableBody">
+                <!-- Vendor list will be displayed here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadVendors() {
+            let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+            let tableBody = document.getElementById("vendorTableBody");
+            tableBody.innerHTML = "";
+            document.getElementById("totalVendors").innerText = vendors.length;
+
+            vendors.forEach(vendor => {
+                let row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${vendor}</td>
+                    <td><button class="send-btn" onclick="sendCoupon('${vendor}')">Send Coupon</button></td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function sendCoupon(vendor) {
+            let numCoupons = prompt(`Enter the number of coupons to send to ${vendor}:`);
+            if (numCoupons && !isNaN(numCoupons) && numCoupons > 0) {
+                alert(`${numCoupons} coupons sent to ${vendor}.`);
+            } else {
+                alert("Invalid number of coupons.");
+            }
+        }
+
+        window.onload = loadVendors;
+    </script>
+
+</body>
+</html>
