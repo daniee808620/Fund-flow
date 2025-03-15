@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FundFlow - Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #007bff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
+        }
+        .logo {
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 8px;
+        }
+        .signup-btn:hover {
+            background-color: #0056b3;
+        }
+        .links {
+            margin-top: 8px;
+        }
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://i.postimg.cc/5tYtfXWJ/Copy-of-Copy-of-Black-and-Beige-Simple-How-to-Earn-Money-Online-Instagram-P-20250314-235802-0000-rem.png" 
+             alt="FundFlow Logo" class="logo">
+
+        <h1>Join FundFlow</h1>
+        <p>Sign up now and start earning today!</p>
+        
+        <form id="signupForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="phone" placeholder="Phone Number" required>
+            <input type="text" id="referredBy" placeholder="No Referral" disabled>
+            <input type="text" id="coupon" placeholder="Coupon Code" required>
+            <a href="buy_coupon.html">Buy Coupon</a>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="signup-btn">Sign Up</button>
+        </form>
+
+        <div class="links">
+            <p><a href="login.html">Sign In</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Function to get referral username from URL
+        function getReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get("user") || "";
+        }
+
+        let referralUser = getReferral();
+        if (referralUser) {
+            document.getElementById("referredBy").value = referralUser;
+        }
+
+        document.getElementById("signupForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            let username = document.getElementById("username").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let coupon = document.getElementById("coupon").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let referredBy = document.getElementById("referredBy").value.trim();
+
+            if (!username || !email || !phone || !coupon || !password) {
+                alert("All fields are required!");
+                return;
+            }
+
+            // Check if the username or email is already registered
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            if (users.some(u => u.username === username || u.email === email)) {
+                alert("Username or email already exists! Try a different one.");
+                return;
+            }
+
+            // Validate coupon
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+            let couponIndex = coupons.findIndex(c => c.code === coupon && c.active);
+
+            if (couponIndex === -1) {
+                alert("Invalid or used coupon code. Please try again.");
+                return;
+            }
+
+            // Mark coupon as used
+            coupons[couponIndex].active = false;
+            coupons[couponIndex].usedBy = username;
+            localStorage.setItem("coupons", JSON.stringify(coupons));
+
+            // Hash password using SHA-256
+            async function hashPassword(password) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+
+            let hashedPassword = await hashPassword(password);
+
+            // Save user data in localStorage
+            users.push({ username, email, phone, password: hashedPassword, referredBy });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            // Reward referral bonus
+            if (referredBy && referredBy !== "No Referral") {
+                let earnings = JSON.parse(localStorage.getItem("earnings")) || {};
+                earnings[referredBy] = (earnings[referredBy] || 0) + 400;
+                localStorage.setItem("earnings", JSON.stringify(earnings));
+            }
+
+            alert("Signup successful! Redirecting to login page...");
+            window.location.href = "login.html";
+        });
+    </script>
+
+</body>
+</html>
