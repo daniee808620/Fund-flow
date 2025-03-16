@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: auto;
+        }
+        input, button {
+            width: 90%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Coupon Checker</h2>
+        <input type="text" id="couponCode" placeholder="Enter coupon">
+        <button onclick="checkCoupon()">Validate</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function checkCoupon() {
+            let couponCode = document.getElementById("couponCode").value.trim().toUpperCase();
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || {};
+
+            if (!couponCode) {
+                document.getElementById("result").innerText = "Please enter a coupon code.";
+                return;
+            }
+
+            if (coupons[couponCode]) {
+                if (coupons[couponCode].status === "used") {
+                    document.getElementById("result").innerText = `Used by: ${coupons[couponCode].user}`;
+                } else {
+                    document.getElementById("result").innerText = "Coupon code is active.";
+                }
+            } else {
+                document.getElementById("result").innerText = "Invalid coupon code.";
+            }
+        }
+    </script>
+
+</body>
+</html>
