@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Coupons - FundFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            color: #007bff;
+            font-size: 22px;
+        }
+        .note {
+            font-size: 14px;
+            color: red;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .chat-link {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .chat-link:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Buy Coupons</h2>
+        <p>Below are our verified vendors list. You can chat with any of them to purchase your coupon code.</p>
+        <p class="note"><strong>Note:</strong> Do not pay anyone not on this list. We are not responsible for any losses.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Direct Chat Link</th>
+                </tr>
+            </thead>
+            <tbody id="vendorList">
+                <!-- Vendors will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+            let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {}; // Get logged-in user
+            let username = currentUser.username || "User"; // Default if username not found
+
+            let vendorList = document.getElementById("vendorList");
+            vendorList.innerHTML = ""; // Clear existing entries
+
+            vendors.forEach(vendor => {
+                let chatMessage = `Good%20day%20Vendor%20(${vendor.username})%2C%20I%20want%20to%20purchase%20FundFlow%20coupon%20code.`;
+                let chatLink = `https://wa.me/${vendor.phone}?text=${chatMessage}`;
+
+                let row = `
+                    <tr>
+                        <td>${vendor.username}</td>
+                        <td><a href="${chatLink}" target="_blank" class="chat-link">Chat Vendor</a></td>
+                    </tr>
+                `;
+                vendorList.innerHTML += row;
+            });
+        });
+    </script>
+
+</body>
+</html>
