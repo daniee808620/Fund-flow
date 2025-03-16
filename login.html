@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FundFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .logo {
+            width: 100%;
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #007bff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .message-box {
+            display: none;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .error-border {
+            border: 1px solid red !important;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .signup-text {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .signup-text a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Small Image -->
+        <img src="https://i.postimg.cc/5tYtfXWJ/Copy-of-Copy-of-Black-and-Beige-Simple-How-to-Earn-Money-Online-Instagram-P-20250314-235802-0000-rem.png" alt="FundFlow Logo" class="logo">
+        
+        <!-- Motivational Text -->
+        <h2>Unlock Your Earning Potential</h2>
+
+        <!-- Message Box -->
+        <p id="messageBox" class="message-box"></p>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+        </form>
+
+        <!-- Sign-Up Redirect -->
+        <p class="signup-text">Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let username = document.getElementById("username").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let messageBox = document.getElementById("messageBox");
+
+            // Reset styles
+            messageBox.style.display = "none";
+            messageBox.className = "message-box";
+
+            // Retrieve stored users from localStorage
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            let user = users.find(user => user.username === username && user.email === email && user.password === password);
+
+            if (user) {
+                // Success Message
+                messageBox.textContent = "Login successful! Redirecting...";
+                messageBox.classList.add("success");
+                messageBox.style.display = "block";
+
+                setTimeout(() => {
+                    window.location.href = "dashboard.html"; // Redirect to dashboard
+                }, 2000);
+            } else {
+                // Error Message
+                messageBox.textContent = "Invalid username, email, or password!";
+                messageBox.classList.add("error");
+                messageBox.style.display = "block";
+            }
+        });
+    </script>
+
+</body>
+</html>
