@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Checker</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #couponResult {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .used {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+        /* Hamburger Menu */
+        .menu-icon {
+            cursor: pointer;
+            font-size: 24px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            width: 180px;
+            padding: 10px;
+        }
+        .menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu a:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="menu" id="menu">
+        <a href="signup.html">Sign up</a>
+        <a href="#" onclick="openPage('buy_coupon')">Buy Coupon</a>
+        <a href="#" onclick="openPage('login')">Log in</a>
+        <a href="#" onclick="openPage('top_earners')">Top Earners</a>
+        <a href="#" onclick="openPage('about_us')">About Us</a>
+    </div>
+
+    <div class="container">
+        <h1>Coupon Checker</h1>
+        <p id="couponResult"></p> <!-- Message area above input field -->
+
+        <p>Enter your coupon code to validate</p>
+        <input type="text" id="couponInput" placeholder="Enter coupon">
+        <button onclick="validateCoupon()">Validate</button>
+
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            let menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function openPage(command) {
+            alert("Executing: " + command); // Simulate running commands
+        }
+
+        function validateCoupon() {
+            let userCoupon = document.getElementById("couponInput").value.trim();
+            let resultDiv = document.getElementById("couponResult");
+
+            // Retrieve stored coupons from localStorage
+            let coupons = JSON.parse(localStorage.getItem("coupons")) || [];
+            let foundCoupon = coupons.find(c => c.code === userCoupon);
+
+            if (!foundCoupon) {
+                resultDiv.innerHTML = "<span class='used'>Invalid Coupon! Please try again.</span>";
+            } else if (foundCoupon.status === "Used") {
+                resultDiv.innerHTML = `<span class='used'>Coupon has been used by <strong>${foundCoupon.user}</strong></span>`;
+            } else {
+                resultDiv.innerHTML = "<span class='valid'>Coupon Validated!</span>";
+                foundCoupon.status = "Used";
+                foundCoupon.user = "@username"; // Change this dynamically based on the logged-in user
+                localStorage.setItem("coupons", JSON.stringify(coupons));
+            }
+        }
+    </script>
+
+</body>
+</html>
