@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Coupon - FundFlow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .vendor-list {
+            text-align: left;
+            margin-top: 15px;
+        }
+        .vendor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .chat-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chat-btn:hover {
+            background-color: #1da851;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Buy Coupon from a Vendor</h2>
+        <p>Select a vendor to buy your coupon.</p>
+        <div class="vendor-list" id="vendorList">
+            <!-- Vendors will be listed here -->
+        </div>
+    </div>
+
+    <script>
+        function loadVendors() {
+            let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+            let vendorList = document.getElementById("vendorList");
+            vendorList.innerHTML = "";
+
+            if (vendors.length === 0) {
+                vendorList.innerHTML = "<p>No vendors available yet.</p>";
+                return;
+            }
+
+            vendors.forEach(vendor => {
+                let vendorDiv = document.createElement("div");
+                vendorDiv.className = "vendor";
+                vendorDiv.innerHTML = `
+                    <span>${vendor.name}</span>
+                    <a href="https://wa.me/${vendor.phone}" target="_blank">
+                        <button class="chat-btn">Chat Vendor</button>
+                    </a>
+                `;
+                vendorList.appendChild(vendorDiv);
+            });
+        }
+
+        window.onload = loadVendors;
+    </script>
+
+</body>
+</html>
