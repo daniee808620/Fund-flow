@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vendor - FundFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            color: #007bff;
+            font-size: 22px;
+        }
+        .form-group {
+            margin: 10px 0;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Add Vendor</h2>
+        <form id="vendorForm">
+            <div class="form-group">
+                <label for="vendorName">Vendor Name</label>
+                <input type="text" id="vendorName" placeholder="Enter vendor name" required>
+            </div>
+            <div class="form-group">
+                <label for="vendorPhone">Vendor Phone</label>
+                <input type="tel" id="vendorPhone" placeholder="Enter phone number (without +)" required>
+            </div>
+            <button type="submit">Add Vendor</button>
+        </form>
+
+        <h2>List of Vendors</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="vendorList">
+                <!-- Vendors will be listed here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let vendorForm = document.getElementById("vendorForm");
+            let vendorList = document.getElementById("vendorList");
+
+            function loadVendors() {
+                let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+                vendorList.innerHTML = "";
+                vendors.forEach((vendor, index) => {
+                    let row = `
+                        <tr>
+                            <td>${vendor.username}</td>
+                            <td>${vendor.phone}</td>
+                            <td><button class="delete-btn" onclick="deleteVendor(${index})">Delete</button></td>
+                        </tr>
+                    `;
+                    vendorList.innerHTML += row;
+                });
+            }
+
+            vendorForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                let vendorName = document.getElementById("vendorName").value.trim();
+                let vendorPhone = document.getElementById("vendorPhone").value.trim();
+
+                if (vendorName === "" || vendorPhone === "") {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+
+                let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+                vendors.push({ username: vendorName, phone: vendorPhone });
+                localStorage.setItem("vendors", JSON.stringify(vendors));
+
+                document.getElementById("vendorName").value = "";
+                document.getElementById("vendorPhone").value = "";
+
+                loadVendors();
+            });
+
+            window.deleteVendor = function (index) {
+                let vendors = JSON.parse(localStorage.getItem("vendors")) || [];
+                vendors.splice(index, 1);
+                localStorage.setItem("vendors", JSON.stringify(vendors));
+                loadVendors();
+            };
+
+            loadVendors();
+        });
+    </script>
+
+</body>
+</html>
