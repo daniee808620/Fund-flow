@@ -1,158 +1,472 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - FundFlow</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #ffffff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-        }
-        .container {
-            width: 90%;
-            max-width: 400px;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        .logo {
-            width: 100%;
-            max-width: 100px;
-            margin-bottom: 10px;
-        }
-        h2 {
-            color: #007bff;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .message-box {
-            display: none;
-            padding: 10px;
-            font-size: 14px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        .error-border {
-            border: 1px solid red !important;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .signup-text {
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        .signup-text a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
+	<head>
+		<!-- mone -->
+		<meta name="monetag" content="e33d2197fdcb9612552970b246c0bb86">
+		<!-- endmone -->
+		<!-- trustpilot -->
 
-    <div class="container">
-        <!-- Small Image -->
-        <img src="https://i.postimg.cc/5tYtfXWJ/Copy-of-Copy-of-Black-and-Beige-Simple-How-to-Earn-Money-Online-Instagram-P-20250314-235802-0000-rem.png" alt="FundFlow Logo" class="logo">
+		<meta name="trustpilot-one-time-domain-verification-id" content="7e9c9b77-8920-4f11-8964-ac05f15f4ca2"/>
+
+		<!-- trustpilot -->
+		<!-- meta -->
+		<link rel="shortcut icon" href="https://socialearningbucket3.s3.amazonaws.com/file/img/meta/favicon.ico" type="image/x-icon">
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<!-- animate -->
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+	<!-- endmeta -->
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+	<!-- bootstrap -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta property="og:site_name" content="SocialEarning" />
+		<link rel="shortcut icon" href="https://socialearningbucket3.s3.amazonaws.com/file/img/meta/favicon.ico" type="image/x-icon">
+		
+		<title>Socialearning | Make extra-income online, Make money with your social media |Sign in</title>
+		<meta name="description" content="Earn extra income online, Get large real audiences on your social media account,  make extra money online by performing simple social media tasks">
+		<meta property=“og:title” content="Socialearning | Make extra-income online, Make money with your social media |Sign in" />
+        <meta property="og:description" content="Earn extra income online, Get large real audiences on your social media account,  make extra money online by performing simple social media tasks" />
         
-        <!-- Motivational Text -->
-        <h2>Unlock Your Earning Potential</h2>
+		<meta property="og:url" content="https://socialearning.org" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://socialearningbucket3.s3.amazonaws.com/file/img/meta/faviconold.ico" />
+        <meta property="og:image:secure_url" content="https://socialearningbucket3.s3.amazonaws.com/file/img/meta/faviconold.ico" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="640" />
 
-        <!-- Message Box -->
-        <p id="messageBox" class="message-box"></p>
+		<!-- 3rd party tag -->
 
-        <!-- Login Form -->
-        <form id="loginForm">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit">Log In</button>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-6Y9CNGNXDV"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-6Y9CNGNXDV');
+		</script>
+<!-- adsence -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9547565197041261"
+crossorigin="anonymous"></script>
+		<!-- TrustBox script -->
+		<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+		<!-- End TrustBox script -->
+		<!-- adsence -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6077231345327898"
+		crossorigin="anonymous"></script>
+		<!-- endadsence -->
+
+		<!-- startbrevo -->
+		<!-- <script type="text/javascript">
+			(function() {
+				window.sib = {
+					equeue: [],
+					client_key: "w4e2ath5v0cvtlncvaf3jm12"
+				};
+				/* OPTIONAL: email for identify request*/
+				// window.sib.email_id = 'example@domain.com';
+				window.sendinblue = {};
+				for (var j = ['track', 'identify', 'trackLink', 'page'], i = 0; i < j.length; i++) {
+				(function(k) {
+					window.sendinblue[k] = function() {
+						var arg = Array.prototype.slice.call(arguments);
+						(window.sib[k] || function() {
+								var t = {};
+								t[k] = arg;
+								window.sib.equeue.push(t);
+							})(arg[0], arg[1], arg[2], arg[3]);
+						};
+					})(j[i]);
+				}
+				var n = document.createElement("script"),
+					i = document.getElementsByTagName("script")[0];
+				n.type = "text/javascript", n.id = "sendinblue-js", n.async = !0, n.src = "https://sibautomation.com/sa.js?key=" + window.sib.client_key, i.parentNode.insertBefore(n, i), window.sendinblue.page();
+			})();
+			</script> -->
+			<!-- endbrevo -->
+		<!-- end3rd party -->
+	</head>
+<style>
+#smallnav li{
+	margin: 10px;
+	margin-bottom: 15px;
+}
+.navbar .container-fluid .collapse .navbar-nav .nav-item .nav-link {
+	color: white;
+	font-size: small;
+	font-weight: 600;
+	margin-left: 10px;
+}
+.navbar .container-fluid .collapse .navbar-nav .nav-item .nav-link:hover,footer div .nav-link:hover, .contactus ul li a:hover, .contactus ul li:hover{
+	color: lightblue;
+	
+}
+.collapse{
+	margin-left: 20px;
+}
+.contactus ul li{
+	margin: 20px;
+}
+.contactus ul li a{
+	text-decoration: none;
+	color: white;
+}
+.contactus ul{
+	list-style-type: none;
+}
+.contactus,.ourlinks{
+	margin: auto;
+	margin-bottom: 20px;
+}
+</style>
+	<body class="bg-white font-serif">
+
+<!-- Messenger Chat plugin Code -->
+<div id="fb-root"></div>
+
+<!-- Your Chat plugin code -->
+<div id="fb-customer-chat" class="fb-customerchat">
+</div>
+
+<script>
+  var chatbox = document.getElementById('fb-customer-chat');
+  chatbox.setAttribute("page_id", "100415539605041");
+  chatbox.setAttribute("attribution", "biz_inbox");
+</script>
+
+<!-- Your SDK code -->
+<script>
+  window.fbAsyncInit = function() {
+	FB.init({
+	  xfbml            : true,
+	  version          : 'v15.0'
+	});
+  };
+
+  (function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) return;
+	js = d.createElement(s); js.id = id;
+	js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+	fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+		<nav class="navbar navbar-expand-lg bg-primary sticky-top shadow h6">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/">
+					<img src="https://socialearningbucket3.s3.amazonaws.com/file/img/socialearninglogo.png" alt="Logo" height="80">
+				  </a>
+			  <button class="navbar-toggler text-white bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav">
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="/">HOME</a>
+				  </li> <hr>
+				  <!-- <li class="nav-item">
+					<a class="nav-link" href="/about-us">ABOUT-US</a>
+				  </li> <hr> -->
+				  <li class="nav-item">
+					<a class="nav-link" href="/testimony">TESTIMONY</a>
+				  </li> <hr>
+				  <li class="nav-item">
+					<a class="nav-link" href="/topearner">TOP EARNERS</a>
+				  </li> <hr>
+				  <li class="nav-item dropdown">
+					<a class="nav-link active" aria-current="page" href="/api/doc">
+					  API-DOC
+					</a>
+				  </li> <hr>
+				  <li class="nav-item dropdown">
+					<a class="nav-link active" aria-current="page" href="/blogs">
+					  UPDATES
+					</a>
+				  </li> <hr>
+				  <li class="nav-item">
+					<a class="nav-link" href="/contact-us">CONTACT-US</a>
+				  </li> <hr>
+				  <li class="nav-item">
+					<a class="nav-link" href="/faq">FAQ</a></a>
+				  </li> <hr>
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					  LOGIN/SIGN UP
+					</a>
+					<ul class="dropdown-menu">
+					  <li><a class="dropdown-item" href="/sign-in">LOGIN</a></li>
+					  <li><a class="dropdown-item" href="/sign-up">SIGN UP</a></li>
+					</ul>
+				  </li><hr>
+				  <li class="nav-item">
+					<a class="nav-link" href="https://socialearninglinks.org/" target="_blank">Other Countries</a></a>
+				  </li> <hr>
+				</ul>
+			  </div>
+			</div>
+		  </nav>
+		  <!-- message -->
+		  <div class="row fixed-top" style="margin: auto; margin-top: 80px; max-width: 70vw;">
+			
+		  </div>
+		  
+		
+<style>
+    form div{
+        margin-bottom: 20px;
+    }
+    form div input{
+        height: 50px;
+    }
+</style>
+<div class="rounded bg-primary p-2 shadow" style="margin: auto; max-width: 300px; margin-top: 40px;">
+    <img src="https://socialearningbucket3.s3.amazonaws.com/file/img/socialearninglogo.png" width="200" alt="logo">
+</div>
+<br><br>
+<div class="shadow rounded text-center" id="login" style="background-color: rgb(236, 238, 243); max-width: 80vw; margin: auto; padding: 30px;">
+    <h4>LOGIN</h4>    
+    
+    <form action="" class="row justify-content-center" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="JK29XKWtL6vyqpbD8hGEIE2lnNfwyPHxUgb0GmFpJdatyNrR4GqoUnTFR9r75QmT">
+            <p class="text-danger h6">Note: all input are Case-sensitive</p>
+            <div class="col-md-6 m-3">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="email@email.com" id="inputEmail4">
+              </div>
+              <div class="col-md-6 m-3">
+                <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+            
+              </div>
+            <p class="text-h6">Don't have an account yet? <a href="/sign-up">Click here</a> </p> 
+            <!-- <p><a href="#forgottenpass">Forgotten password?</a></p> -->
+            <br>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>        </form>
+    </div> 
+<div id="forgottenpass"></div>
+    <div class="shadow rounded text-center"  style="background-color: rgb(236, 238, 243); max-width: 80vw; margin: auto; padding: 30px; margin-top: 30px;">
+        <p class="h4" id="">FORGETTEN PASSWORD?</p> <br>
+        <form action="/password/reset/email/link" method="post" class="row justify-content-center">
+            <input type="hidden" name="csrfmiddlewaretoken" value="JK29XKWtL6vyqpbD8hGEIE2lnNfwyPHxUgb0GmFpJdatyNrR4GqoUnTFR9r75QmT">
+            <div class="col-md-6">
+                <label for="forgetpasswordemail">Email</label>
+            <input type="email" placeholder="Email" name="useremail" required id="forgetpasswordemail" class="form-control">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Send Link</button>
+              </div>    
         </form>
-
-        <!-- Sign-Up Redirect -->
-        <p class="signup-text">Don't have an account? <a href="signup.html">Sign up</a></p>
     </div>
+    
+ 
+		<style>
+			.whatsapp-button {
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				background-color: #25D366;
+				color: white;
+				border-radius: 50px;
+				width: 60px;
+				height: 60px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+				text-decoration: none;
+				z-index: 2000;
+				transition: background-color 0.3s, transform 0.3s;
+			}
+	
+			.whatsapp-button:hover {
+				background-color: #128C7E;
+				transform: scale(1.1);
+			}
+	
+			.whatsapp-button i {
+				font-size: 30px;
+			}
+		</style>
+		<a href="https://t.me/socialearning_support" class="whatsapp-button" target="_blank">
+			<i class="fab fa-telegram"></i>
+		</a>
+		<footer class="bg-primary mt-5 d-flex flex-wrap flex-row text-white p-3 " style="height: auto; position: absolute; width: 100%; font-size: 15px;">
+			<div class="ourlinks">
+				<h4 style="text-decoration: underline;">OUR LINKS</h4>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+					  <a class="nav-link" aria-current="page" href="/">HOME</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="/about-us">ABOUT-US</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="/testimony">TESTIMONY</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/topearner">TOP EARNERS</a>
+					  </li>
+					<li class="nav-item">
+					  <a class="nav-link" href="/contact-us">CONTACT-US</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="/faq">FAQ</a></a>
+					</li>
+					<li class="nav-item dropdown">
+					  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						LOGIN/SIGN UP
+					  </a>
+					  <ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="/sign-in">LOGIN</a></li>
+						<li><a class="dropdown-item" href="/sign-up">SIGN UP</a></li>
+					  </ul>
+					</li>
+				  </ul>
+			</div>
+			<div class="contactus">
+				<h4 style="text-decoration: underline;">OUR SOCIAL MEDIA</h4>
+				<ul>
+					<li><i class="bi bi-instagram"></i><a href="https://www.instagram.com/org.social_earning/" target="_blank">&nbsp;Instagram</a> </li>
+					<li><i class="bi bi-twitter"></i> <a href="https://twitter.com/Social_Earning" target="_blank">&nbsp;Twitter</a></li>
+					<li><i class="bi bi-meta"></i><a href="https://web.facebook.com/socialearning.org">&nbsp;Facebook</a> </li>
+					<li><i class="bi bi-tiktok"></i><a href="https://www.tiktok.com/@social_earning">&nbsp;TikTok</a> </li>
+					<li><i class="bi bi-telegram"></i><a href="https://t.me/org_social_earning">&nbsp; Telegram</a> </li>
+				</ul>
+			</div>
+			<div class="copyright text-center" style="flex-basis: 100%; margin-top: 20px;">
+				All right reserved <a href="/" class="text-white">@SocialEarning</a>  
+				&copy; 2025 &nbsp;  
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdroptc">
+					Terms and conditions </button>&nbsp;
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropprivacy">
+Privacy  </button></div>
+		</footer>
+		<!-- Button trigger modal -->
 
-    <script>
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+		<div class="modal fade" id="staticBackdroptc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdroptcLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-scrollable" >
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h1 class="modal-title fs-5" id="staticBackdroptcLabel">SocialEarning Terms and Conditions</h1>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" style="line-height: 30px;">
+					<p class="h4">Introduction</p>
+					<a href="https://socialearning.org">SocialEarning</a> is product of MRIFNOC VENTURES, fully
+					registered and backed by law of the Federal Republic of Nigeria, with <b>RN-3804964 </b> under the 1990
+					Company Allied Matters. <a href="https://socialearning.org">SocialEarning</a> is an online freelance platform that pays it users (Earner) to complete simple everyday tasks 
+					which could range from engaging on sponsored content to submitting reviews or polls on sponsored products posted by our (Advertiser). We offer Viral Social Media Marketing Services to Brands, Corporates, and
+					Individuals. <br> Note this platform does not in any way support Ponzi, get rich quick scheme, or
+					operates as one <br>
+					<p class="h5">Below are our Earner terms and conditions</p>
+					
+					<ol>
+						<li>Our account activation fees after sign-up is N1000 which is onetime payment, lifetime, non-renewable and non-refundable.</li>
+						<li>Your account will get activated only after payment of the activation fee has been made.</li>
+						<li>All tasks submitted by an Earner will be check before the tasks price been paid to the Earner accounts</li>
+						<li>Earner Unliking or Unfollowing a post/page will lead tasks submitted rejected</li>
+						<li>Earner working account i.e. instagram, twitter etc. must be real else your submitted social media account will be rejected</li>
+						<li>Earner Submitting tasks without completing them will get the tasks rejected and your account won't be created</li>
+						<li>Minimum withdrawal threshold is ₦1,000. with 15% charges on every withdraw</li>
+						<li>Earner Withdraw are processed immediately to there added bank account. any failed withdraw is due to bad network and withdraw amount will be refunded to the Earner account immediately</li>
+						<li>We will not be held responsible if a member's account is logged
+							into, should a member expose is his or her login details to a third party. </li>
+						<li>SocialEarning reserves the right to close a freelancer’s account without notice if any of the above mentioned rules are violated or if irresponsible acts are discovered.</li>
+						<li>We do not support any forms of irregularities; fraud activities on this platform.
+							Should we notice such, such accounts would be banned without notice. </li>
+					</ol>
 
-            let username = document.getElementById("username").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let password = document.getElementById("password").value.trim();
-            let messageBox = document.getElementById("messageBox");
+					<p class="h5">Below are our Advertiser terms and conditions</p>
+					
+					<ol>
+						<li>We will not be held responsible if a member's account is logged
+							into, should a member expose is his or her login details to a third party. </li>
+						<li>Advertiser are required to post exactly link for there Post that will be posted else Post will be rejected and money will be refunded</li>
+						<li>Advertiser can only cancel there Post before our admin approved it and only 95% amount will be refunded</li>
+						<li>Reposting a Tasks will reduce is audiences accuracy</li>
+					</ol>
+					<p>
+											<p class="h5">Note:</p>
+											<ol>
+												<li>
+													Dropping negative comments on any of SocialEarning's platform or it’s advertisers will lead to the immediate disabling of the freelancer’s account as well as ramifications will be expected by the freelancer to SocialEarning.
+												</li>
+												<li>We reserves the right to close any member’s account, without notice
+													to the affected member, once any issue termed inappropriate by SocialEarning Team</li>
+													<li>We can update our Terms and Conditions any time</li>
+											</ol>
+					</p>
+ 
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdropprivacy" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropprivacyLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable" >
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h1 class="modal-title fs-5" id="staticBackdropprivacyLabel">SocialEarning Privacy</h1>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<p class="h4">Introduction</p>
+			<a href="https://socialearning.org">SocialEarning</a> is product of MRIFNOC VENTURES, fully
+			registered and backed by law of the Federal Republic of Nigeria, with <b>RN-3804964 </b> under the 1990
+			Company Allied Matters. <a href="https://socialearning.org">SocialEarning</a> is an online freelance platform that pays it users (Earner) to complete simple everyday tasks 
+			which could range from engaging on sponsored content to submitting reviews or polls on sponsored products posted by our (Advertisers). We offer Viral Social Media Marketing Services to Brands, Corporates, and
+			Individuals. <br> Note this platform does not in any way support Ponzi, get rich quick scheme, or
+			operates as one <br>
+			<p class="h5">Below are our Policy, Privacy</p>
+			<ol>
+				<li>
+					We pay you to share sponsored posts and help our advertisers grow their fan base, like Social media followers and fan base.
+				</li>
+				<li><a href="https://socialearning.org">SocialEarning</a> is not a get rich quick scheme or Ponzi and we do not support money laundering or any illegality of any kind.</li>
+				<li><a href="https://socialearning.org">SocialEarning</a>  has the right to increase or reduce any Tasks price without prior notice to members but we will act according to the law and abide by it.</li>
+				<li><a href="https://socialearning.org">SocialEarning</a> can add or remove any feature any time as deem fit for the betterment of the system.
+					On the account that a member try to earn from a task he or she didn't do in a manner to cheat our advertisers, we reserve the right to ban such account, and confiscate the earnings.
+					 </li>
+					 <li><a href="https://socialearning.org">SocialEarning</a> will do everything possible to make sure this platform keeps getting better.</li>
+					 <li>
+						The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.
+					 </li>
+				<li>
+					Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, You will be directed to that third party’s site. We strongly advise You to review the Privacy Policy of every site You visit.We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.
+				</li>
+			</ol>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+		</div>
+	  </div>
+	</div>
+  </div>
 
-            // Reset styles
-            messageBox.style.display = "none";
-            messageBox.className = "message-box";
 
-            // Retrieve stored users from localStorage
-            let users = JSON.parse(localStorage.getItem("users")) || [];
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-            let user = users.find(user => user.username === username && user.email === email && user.password === password);
-
-            if (user) {
-                // Success Message
-                messageBox.textContent = "Login successful! Redirecting...";
-                messageBox.classList.add("success");
-                messageBox.style.display = "block";
-
-                setTimeout(() => {
-                    window.location.href = "dashboard.html"; // Redirect to dashboard
-                }, 2000);
-            } else {
-                // Error Message
-                messageBox.textContent = "Invalid username, email, or password!";
-                messageBox.classList.add("error");
-                messageBox.style.display = "block";
-            }
-        });
-    </script>
-
-</body>
+	</body>
 </html>
